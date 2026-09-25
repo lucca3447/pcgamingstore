@@ -1,0 +1,1 @@
+Landing page para loja gamer
