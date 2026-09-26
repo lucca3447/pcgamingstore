@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 360" width="1440" height="360">
+  <rect width="1440" height="360" fill="#12141A" />
+  <line x1="0" y1="0" x2="1440" y2="0" stroke="#22252E" stroke-width="1" />
+  <line x1="0" y1="359" x2="1440" y2="359" stroke="#22252E" stroke-width="1" />
+
+  <!-- Cabeçalho da Seção -->
+  <g transform="translate(80, 45)">
+    <text x="0" y="0" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#FF5A26" letter-spacing="2">
+      SOBRE A NOSSA MARCA
+    </text>
+    <text x="0" y="32" font-family="'Oxanium', 'Orbitron', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF">
+      ALTA PERFORMANCE E CONFIANÇA EM FEIRA DE SANTANA
+    </text>
+    <text x="0" y="60" font-family="'Inter', sans-serif" font-size="14.5" fill="#9CA3AF" font-weight="400">
+      Nascemos para entregar montagens impecáveis e assistência técnica transparente, elevando o padrão de hardware na Bahia.
+    </text>
+  </g>
+
+  <!-- 4 Cartões de Pilares / Diferenciais Reais -->
+  <g transform="translate(80, 155)">
+    <!-- Pilar 1 -->
+    <g transform="translate(0, 0)">
+      <rect width="300" height="150" rx="10" fill="#181A20" stroke="#2D3139" stroke-width="1.2" />
+      <circle cx="36" cy="38" r="18" fill="#22252E" />
+      <!-- Ícone PC Gamer -->
+      <rect x="26" y="30" width="20" height="14" rx="2" fill="none" stroke="#FF5A26" stroke-width="1.8" />
+      <line x1="32" y1="44" x2="40" y2="44" stroke="#FF5A26" stroke-width="2" />
+      <text x="66" y="35" font-family="'Oxanium', sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">
+        PC Gamer Premium
+      </text>
+      <text x="66" y="49" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#FF5A26">
+        DE VERDADE
+      </text>
+      <text x="24" y="85" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        Montagens sob medida com cable
+      </text>
+      <text x="24" y="103" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        management cirúrgico e testes
+      </text>
+      <text x="24" y="121" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        rigorosos de temperatura e estabilidade.
+      </text>
+    </g>
+
+    <!-- Pilar 2 -->
+    <g transform="translate(325, 0)">
+      <rect width="300" height="150" rx="10" fill="#181A20" stroke="#FF5A26" stroke-width="1.5" />
+      <circle cx="36" cy="38" r="18" fill="#22252E" />
+      <!-- Ícone Escudo Garantia -->
+      <path d="M36 26 L46 30 V38 C46 44 36 48 36 48 C36 48 26 44 26 38 V30 Z" fill="none" stroke="#FF5A26" stroke-width="1.8" />
+      <text x="66" y="35" font-family="'Oxanium', sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">
+        2 Anos de Garantia
+      </text>
+      <text x="66" y="49" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#FFB800">
+        EXCLUSIVIDADE REGIONAL
+      </text>
+      <text x="24" y="85" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        A única assistência da região que
+      </text>
+      <text x="24" y="103" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        oferece cobertura estendida de
+      </text>
+      <text x="24" y="121" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        24 meses para a sua máquina gamer.
+      </text>
+    </g>
+
+    <!-- Pilar 3 -->
+    <g transform="translate(650, 0)">
+      <rect width="300" height="150" rx="10" fill="#181A20" stroke="#2D3139" stroke-width="1.2" />
+      <circle cx="36" cy="38" r="18" fill="#22252E" />
+      <!-- Ícone Peças e Chips -->
+      <rect x="28" y="30" width="16" height="16" rx="2" fill="none" stroke="#FF5A26" stroke-width="1.8" />
+      <line x1="28" y1="34" x2="24" y2="34" stroke="#FF5A26" stroke-width="1.5" />
+      <line x1="28" y1="42" x2="24" y2="42" stroke="#FF5A26" stroke-width="1.5" />
+      <line x1="44" y1="34" x2="48" y2="34" stroke="#FF5A26" stroke-width="1.5" />
+      <line x1="44" y1="42" x2="48" y2="42" stroke="#FF5A26" stroke-width="1.5" />
+      <text x="66" y="35" font-family="'Oxanium', sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">
+        Peças Selecionadas
+      </text>
+      <text x="66" y="49" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#FF5A26">
+        MARCAS CONFIÁVEIS
+      </text>
+      <text x="24" y="85" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        Trabalhamos exclusivamente com
+      </text>
+      <text x="24" y="103" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        componentes originais certificados,
+      </text>
+      <text x="24" y="121" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        com nota fiscal e procedência.
+      </text>
+    </g>
+
+    <!-- Pilar 4 -->
+    <g transform="translate(975, 0)">
+      <rect width="300" height="150" rx="10" fill="#181A20" stroke="#2D3139" stroke-width="1.2" />
+      <circle cx="36" cy="38" r="18" fill="#22252E" />
+      <!-- Ícone Raio / Velocidade -->
+      <path d="M38 26 L30 38 H36 L34 50 L44 36 H38 Z" fill="#FF5A26" />
+      <text x="66" y="35" font-family="'Oxanium', sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">
+        Assistência Rápida
+      </text>
+      <text x="66" y="49" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#FF5A26">
+        SUPORTE ÁGIL
+      </text>
+      <text x="24" y="85" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        Diagnósticos precisos para PCs,
+      </text>
+      <text x="24" y="103" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        notebooks, consoles e impressoras
+      </text>
+      <text x="24" y="121" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        com o menor tempo de espera.
+      </text>
+    </g>
+  </g>
+</svg>

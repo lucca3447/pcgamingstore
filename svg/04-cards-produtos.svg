@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" width="1440" height="600">
+  <defs>
+    <linearGradient id="cardBtnGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF5A26" />
+      <stop offset="100%" stop-color="#FF7748" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1440" height="600" fill="#0D0E12" />
+
+  <!-- Cabeçalho da Seção -->
+  <g transform="translate(80, 40)">
+    <text x="0" y="0" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#FF5A26" letter-spacing="2">
+      CATÁLOGO DE SETUPS COMPLETOS
+    </text>
+    <text x="0" y="32" font-family="'Oxanium', 'Orbitron', sans-serif" font-size="30" font-weight="800" fill="#FFFFFF">
+      MÁQUINAS MONTADAS COM 2 ANOS DE GARANTIA
+    </text>
+    <text x="0" y="58" font-family="'Inter', sans-serif" font-size="14.5" fill="#9CA3AF">
+      Equipamentos calibrados em bancada, com sistema otimizado e prontos para jogar em alta taxa de quadros (FPS).
+    </text>
+  </g>
+
+  <!-- 3 CARDS DE PRODUTOS -->
+  <g transform="translate(80, 135)">
+
+    <!-- CARD 1: PC ARENA -->
+    <g transform="translate(0, 0)">
+      <rect width="400" height="420" rx="14" fill="#181A20" stroke="#2D3139" stroke-width="1.5" />
+      <!-- Top Banner Ilustrativo com Gabinete Mini -->
+      <rect x="0" y="0" width="400" height="150" rx="14" fill="#12141A" />
+      <rect x="150" y="20" width="100" height="110" rx="8" fill="#1A1C24" stroke="#FF5A26" stroke-width="1.2" />
+      <circle cx="200" cy="55" r="22" fill="none" stroke="#FF5A26" stroke-width="3" />
+      <circle cx="200" cy="95" r="22" fill="none" stroke="#00D2FF" stroke-width="3" />
+
+      <!-- Badge de Categoria -->
+      <rect x="20" y="165" width="115" height="24" rx="12" fill="#22252E" />
+      <text x="77" y="181" font-family="'Inter', sans-serif" font-size="10.5" font-weight="700" fill="#FF5A26" text-anchor="middle">
+        MAIS VENDIDO
+      </text>
+
+      <!-- Título da Máquina -->
+      <text x="20" y="220" font-family="'Oxanium', sans-serif" font-size="22" font-weight="800" fill="#FFFFFF">
+        PC Arena Competitivo
+      </text>
+      <text x="20" y="240" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        Foco em eSports: CS2, Valorant, LoL e GTA RP
+      </text>
+
+      <!-- Specs Lista -->
+      <g transform="translate(20, 265)" font-family="'Inter', sans-serif" font-size="12" fill="#D1D5DB">
+        <text x="0" y="0">• AMD Ryzen 5 5600 (6 Cores / 12 Threads)</text>
+        <text x="0" y="20">• GeForce RTX 3060 12GB GDDR6</text>
+        <text x="0" y="40">• 16GB DDR4 3200MHz Dual Channel</text>
+        <text x="0" y="60">• SSD NVMe 1TB M.2 Ultra Rápido</text>
+      </g>
+
+      <!-- Preço e Botão -->
+      <text x="20" y="380" font-family="'Oxanium', sans-serif" font-size="24" font-weight="800" fill="#FF5A26">
+        R$ 3.890<tspan font-size="14" fill="#9CA3AF">,00</tspan>
+      </text>
+      <g transform="translate(240, 350)" cursor="pointer">
+        <rect width="140" height="42" rx="8" fill="url(#cardBtnGlow)" />
+        <text x="70" y="26" font-family="'Inter', sans-serif" font-size="12.5" font-weight="700" fill="#0D0E12" text-anchor="middle">
+          Quero Este
+        </text>
+      </g>
+    </g>
+
+    <!-- CARD 2: PC STREAMER (Destaque Central) -->
+    <g transform="translate(440, 0)">
+      <rect width="400" height="420" rx="14" fill="#181A20" stroke="#FF5A26" stroke-width="2" />
+      <!-- Top Banner Ilustrativo com Gabinete RGB -->
+      <rect x="0" y="0" width="400" height="150" rx="14" fill="#151720" />
+      <rect x="150" y="20" width="100" height="110" rx="8" fill="#1E202B" stroke="#00D2FF" stroke-width="1.5" />
+      <circle cx="200" cy="55" r="24" fill="none" stroke="#00D2FF" stroke-width="3" />
+      <circle cx="200" cy="95" r="24" fill="none" stroke="#FF5A26" stroke-width="3" />
+
+      <!-- Badge Exclusivo -->
+      <rect x="20" y="165" width="125" height="24" rx="12" fill="#FF5A26" />
+      <text x="82" y="181" font-family="'Inter', sans-serif" font-size="10.5" font-weight="800" fill="#0D0E12" text-anchor="middle">
+        RECOMENDADO
+      </text>
+
+      <!-- Título da Máquina -->
+      <text x="20" y="220" font-family="'Oxanium', sans-serif" font-size="22" font-weight="800" fill="#FFFFFF">
+        PC Streamer &amp; Creator
+      </text>
+      <text x="20" y="240" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        Lives fluidas e jogos em Quad HD / 1440p
+      </text>
+
+      <!-- Specs Lista -->
+      <g transform="translate(20, 265)" font-family="'Inter', sans-serif" font-size="12" fill="#D1D5DB">
+        <text x="0" y="0">• Intel Core i5 14400F (10 Cores / 16 Threads)</text>
+        <text x="0" y="20">• GeForce RTX 4060 Ti 8GB DLSS 3</text>
+        <text x="0" y="40">• 32GB RAM DDR5 5600MHz Kingston Fury</text>
+        <text x="0" y="60">• Fonte 650W 80 Plus Gold Modular</text>
+      </g>
+
+      <!-- Preço e Botão -->
+      <text x="20" y="380" font-family="'Oxanium', sans-serif" font-size="24" font-weight="800" fill="#FF5A26">
+        R$ 6.490<tspan font-size="14" fill="#9CA3AF">,00</tspan>
+      </text>
+      <g transform="translate(240, 350)" cursor="pointer">
+        <rect width="140" height="42" rx="8" fill="url(#cardBtnGlow)" />
+        <text x="70" y="26" font-family="'Inter', sans-serif" font-size="12.5" font-weight="700" fill="#0D0E12" text-anchor="middle">
+          Quero Este
+        </text>
+      </g>
+    </g>
+
+    <!-- CARD 3: PC ULTRA 4K -->
+    <g transform="translate(880, 0)">
+      <rect width="400" height="420" rx="14" fill="#181A20" stroke="#2D3139" stroke-width="1.5" />
+      <!-- Top Banner Ilustrativo com Gabinete Aquário -->
+      <rect x="0" y="0" width="400" height="150" rx="14" fill="#12141A" />
+      <rect x="140" y="20" width="120" height="110" rx="8" fill="#1A1C24" stroke="#FFB800" stroke-width="1.2" />
+      <circle cx="180" cy="70" r="22" fill="none" stroke="#FFB800" stroke-width="3" />
+      <circle cx="225" cy="70" r="22" fill="none" stroke="#FF5A26" stroke-width="3" />
+
+      <!-- Badge de Categoria -->
+      <rect x="20" y="165" width="135" height="24" rx="12" fill="#22252E" />
+      <text x="87" y="181" font-family="'Inter', sans-serif" font-size="10.5" font-weight="700" fill="#FFB800" text-anchor="middle">
+        ALTA PERFORMANCE
+      </text>
+
+      <!-- Título da Máquina -->
+      <text x="20" y="220" font-family="'Oxanium', sans-serif" font-size="22" font-weight="800" fill="#FFFFFF">
+        PC Ultra 4K Titan
+      </text>
+      <text x="20" y="240" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        Máximo desempenho em 4K Ray Tracing &amp; IA
+      </text>
+
+      <!-- Specs Lista -->
+      <g transform="translate(20, 265)" font-family="'Inter', sans-serif" font-size="12" fill="#D1D5DB">
+        <text x="0" y="0">• AMD Ryzen 7 7800X3D (O Melhor p/ Jogos)</text>
+        <text x="0" y="20">• GeForce RTX 4080 Super 16GB</text>
+        <text x="0" y="40">• 32GB RAM DDR5 6000MHz RGB CL30</text>
+        <text x="0" y="60">• Water Cooler 360mm ARGB Display</text>
+      </g>
+
+      <!-- Preço e Botão -->
+      <text x="20" y="380" font-family="'Oxanium', sans-serif" font-size="24" font-weight="800" fill="#FF5A26">
+        R$ 12.990<tspan font-size="14" fill="#9CA3AF">,00</tspan>
+      </text>
+      <g transform="translate(240, 350)" cursor="pointer">
+        <rect width="140" height="42" rx="8" fill="url(#cardBtnGlow)" />
+        <text x="70" y="26" font-family="'Inter', sans-serif" font-size="12.5" font-weight="700" fill="#0D0E12" text-anchor="middle">
+          Personalizar
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

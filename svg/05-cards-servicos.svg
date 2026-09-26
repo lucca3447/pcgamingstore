@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 500" width="1440" height="500">
+  <rect width="1440" height="500" fill="#12141A" />
+  <line x1="0" y1="0" x2="1440" y2="0" stroke="#22252E" stroke-width="1" />
+
+  <!-- Cabeçalho da Seção -->
+  <g transform="translate(80, 45)">
+    <text x="0" y="0" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#FF5A26" letter-spacing="2">
+      ASSISTÊNCIA TÉCNICA RÁPIDA
+    </text>
+    <text x="0" y="32" font-family="'Oxanium', 'Orbitron', sans-serif" font-size="30" font-weight="800" fill="#FFFFFF">
+      CUIDADO CIRÚRGICO PARA SEUS DISPOSITIVOS
+    </text>
+    <text x="0" y="58" font-family="'Inter', sans-serif" font-size="14.5" fill="#9CA3AF">
+      Laboratório técnico próprio com equipamentos de ponta para diagnósticos precisos em computadores, consoles e notebooks.
+    </text>
+  </g>
+
+  <!-- 3 CARDS DE SERVIÇOS TÉCNICOS -->
+  <g transform="translate(80, 140)">
+
+    <!-- SERVIÇO 1: Limpeza Preventiva -->
+    <g transform="translate(0, 0)">
+      <rect width="400" height="310" rx="14" fill="#181A20" stroke="#2D3139" stroke-width="1.2" />
+      <circle cx="50" cy="50" r="26" fill="#22252E" />
+      <!-- Ícone Pincel / Limpeza -->
+      <path d="M42 36 L58 52 M54 34 L62 42 C64 44 64 48 60 52 L56 56 C52 60 48 60 44 56 L38 50 C36 48 36 44 38 42 Z" stroke="#FF5A26" stroke-width="2" fill="none" />
+      <path d="M38 52 L32 64 C30 68 34 72 38 70 L48 62" stroke="#FF5A26" stroke-width="2" fill="none" />
+
+      <text x="90" y="46" font-family="'Oxanium', sans-serif" font-size="19" font-weight="800" fill="#FFFFFF">
+        Limpeza Preventiva
+      </text>
+      <text x="90" y="65" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#FF5A26">
+        &amp; Troca de Pasta Térmica
+      </text>
+
+      <text x="24" y="110" font-family="'Inter', sans-serif" font-size="13" fill="#D1D5DB" line-height="1.5">
+        Desmontagem técnica completa, desoxidação,
+      </text>
+      <text x="24" y="130" font-family="'Inter', sans-serif" font-size="13" fill="#D1D5DB">
+        higienização das ventoinhas e aplicação de
+      </text>
+      <text x="24" y="150" font-family="'Inter', sans-serif" font-size="13" fill="#D1D5DB">
+        pasta térmica premium de prata ou thermal pads.
+      </text>
+
+      <g transform="translate(24, 185)" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        <text x="0" y="0">✓ Redução de até 15°C na temperatura</text>
+        <text x="0" y="22">✓ Fotos do antes e depois enviadas no WhatsApp</text>
+        <text x="0" y="44">✓ Testes de estresse antes da liberação</text>
+      </g>
+
+      <g transform="translate(24, 250)" cursor="pointer">
+        <rect width="352" height="40" rx="8" fill="#22252E" stroke="#FF5A26" stroke-width="1.2" />
+        <text x="176" y="25" font-family="'Inter', sans-serif" font-size="13" font-weight="700" fill="#FF5A26" text-anchor="middle">
+          Agendar Limpeza
+        </text>
+      </g>
+    </g>
+
+    <!-- SERVIÇO 2: Diagnóstico & Reparo -->
+    <g transform="translate(440, 0)">
+      <rect width="400" height="310" rx="14" fill="#181A20" stroke="#FF5A26" stroke-width="1.5" />
+      <circle cx="50" cy="50" r="26" fill="#22252E" />
+      <!-- Ícone Chave e Ferramentas -->
+      <path d="M42 40 L58 56 M44 38 C42 34 44 28 50 28 C52 30 52 34 50 36 L58 44 C60 42 64 42 66 44 C66 50 60 52 56 50 Z" stroke="#FF5A26" stroke-width="2" fill="none" />
+      
+      <text x="90" y="46" font-family="'Oxanium', sans-serif" font-size="19" font-weight="800" fill="#FFFFFF">
+        Diagnóstico &amp; Reparos
+      </text>
+      <text x="90" y="65" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#00D2FF">
+        PC, Notebook e Consoles
+      </text>
+
+      <text x="24" y="110" font-family="'Inter', sans-serif" font-size="13" fill="#D1D5DB">
+        Detecção rápida de falhas em placas, fontes,
+      </text>
+      <text x="24" y="130" font-family="'Inter', sans-serif" font-size="13" fill="#D1D5DB">
+        telas azuis, lentidões, formatação limpa e
+      </text>
+      <text x="24" y="150" font-family="'Inter', sans-serif" font-size="13" fill="#D1D5DB">
+        reparos de hardware para PS4, PS5 e Xbox.
+      </text>
+
+      <g transform="translate(24, 185)" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        <text x="0" y="0">✓ Diagnóstico transparente e sem surpresas</text>
+        <text x="0" y="22">✓ Peças de reposição originais com garantia</text>
+        <text x="0" y="44">✓ Reparo em placas e trocas de componentes</text>
+      </g>
+
+      <g transform="translate(24, 250)" cursor="pointer">
+        <rect width="352" height="40" rx="8" fill="#FF5A26" />
+        <text x="176" y="25" font-family="'Inter', sans-serif" font-size="13" font-weight="800" fill="#0D0E12" text-anchor="middle">
+          Solicitar Diagnóstico
+        </text>
+      </g>
+    </g>
+
+    <!-- SERVIÇO 3: Montagem & Upgrades -->
+    <g transform="translate(880, 0)">
+      <rect width="400" height="310" rx="14" fill="#181A20" stroke="#2D3139" stroke-width="1.2" />
+      <circle cx="50" cy="50" r="26" fill="#22252E" />
+      <!-- Ícone Upgrade / Seta para Cima -->
+      <path d="M50 32 L36 46 H44 V64 H56 V46 H64 Z" fill="#FF5A26" />
+
+      <text x="90" y="46" font-family="'Oxanium', sans-serif" font-size="19" font-weight="800" fill="#FFFFFF">
+        Montagem &amp; Upgrades
+      </text>
+      <text x="90" y="65" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#FFB800">
+        Cable Management de Elite
+      </text>
+
+      <text x="24" y="110" font-family="'Inter', sans-serif" font-size="13" fill="#D1D5DB">
+        Você traz as peças ou escolhe conosco.
+      </text>
+      <text x="24" y="130" font-family="'Inter', sans-serif" font-size="13" fill="#D1D5DB">
+        Montamos sua máquina com organização perfeita
+      </text>
+      <text x="24" y="150" font-family="'Inter', sans-serif" font-size="13" fill="#D1D5DB">
+        de cabos, fluxo de ar correto e BIOS atualizada.
+      </text>
+
+      <g transform="translate(24, 185)" font-family="'Inter', sans-serif" font-size="12" fill="#9CA3AF">
+        <text x="0" y="0">✓ Atualização de BIOS com proteção nobreak</text>
+        <text x="0" y="22">✓ Instalação e ativação do Windows otimizado</text>
+        <text x="0" y="44">✓ Configuração de curvas de ventoinha e RGB</text>
+      </g>
+
+      <g transform="translate(24, 250)" cursor="pointer">
+        <rect width="352" height="40" rx="8" fill="#22252E" stroke="#FF5A26" stroke-width="1.2" />
+        <text x="176" y="25" font-family="'Inter', sans-serif" font-size="13" font-weight="700" fill="#FF5A26" text-anchor="middle">
+          Fazer Upgrade
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
