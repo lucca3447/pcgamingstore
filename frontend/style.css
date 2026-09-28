@@ -4,8 +4,17 @@
    Discentes: João Lucca Sotero e Kauan Brandão
    Empresa: Extreme Gamer Informática (Feira de Santana - BA)
    
-   ETAPA 3 - DESENVOLVIMENTO CSS3
-   Fidelidade visual à interface em Sem título 1.png
+   ETAPA 3 – DESENVOLVIMENTO CSS3
+   • 8.1 Propriedades CSS (Transitions, Transforms, Box-shadows, Gradients, etc.)
+   • 8.2 Variáveis CSS (:root) - Design System da Marca
+   • 8.3 CSS Flexbox e Grid
+   • 8.4 Responsividade - Media Queries (Computador, Tablet e Smartphone)
+
+   ETAPA 4 – BOOTSTRAP 5 VIA CDN (Utilização Conjunta de Bootstrap + CSS Próprio)
+   • Componente 1: Navbar/Menu (navbar, navbar-toggler, collapse, nav-link)
+   • Componente 2: Carousel (carousel slide, carousel-inner, carousel-control-prev/next)
+   • Componente 3: Cards (card, card-body, card-title, card-text)
+   • Componente 4: Buttons (btn, btn-primary)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -14,10 +23,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oxanium:wght@600;700;800;900&display=swap');
 
 /* --------------------------------------------------------------------------
-   2. VARIÁVEIS CSS (:root) - DESIGN SYSTEM DA EXTREME GAMER
+   8.2. VARIÁVEIS CSS (:root) - DESIGN SYSTEM DA EXTREME GAMER
+   Facilita a padronização e consistência da identidade visual em todo o site.
    -------------------------------------------------------------------------- */
 :root {
-  /* Paleta Dark Gamer Fiel ao Mockup */
+  /* Paleta Dark Gamer Fiel ao Mockup Oficial */
   --bg-dark: #0A0B0E;
   --bg-surface: #12141A;
   --bg-surface-elevated: #1A1D25;
@@ -25,44 +35,44 @@
   --bg-input: #181B23;
   --bg-icon-circle: #1B1E28;
 
-  /* Cores de Destaque da Marca */
+  /* Cores de Destaque da Marca (Laranja Neon e Variações) */
   --primary-orange: #FF5A26;
   --primary-orange-hover: #FF7244;
   --primary-orange-active: #E04818;
   --primary-orange-glow: rgba(255, 90, 38, 0.35);
   --primary-orange-subtle: rgba(255, 90, 38, 0.12);
 
-  /* Acentos Complementares */
+  /* Acentos Complementares de Hardware */
   --accent-gold: #FFB800;
   --accent-cyan: #38BDF8;
   --accent-green: #10B981;
 
-  /* Tipografia e Cores de Texto */
+  /* Tipografia e Escala de Cores de Texto */
   --text-white: #FFFFFF;
   --text-primary: #F3F4F6;
   --text-muted: #8E95A5;
   --text-subtle: #5B6275;
   --text-dark: #0B0C10;
 
-  /* Bordas Tecnológicas */
+  /* Bordas e Linhas Tecnológicas */
   --border-subtle: #20242F;
   --border-button: #2F3442;
   --border-focus: #FF5A26;
 
-  /* Fontes do Projeto */
+  /* Tipografia Estruturada */
   --font-heading: 'Oxanium', system-ui, -apple-system, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 
-  /* Sombras e Profundidade */
+  /* Sombras e Profundidade 3D */
   --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.5);
   --shadow-neon-sm: 0 0 14px rgba(255, 90, 38, 0.3);
   --shadow-neon: 0 0 25px rgba(255, 90, 38, 0.5);
 
-  /* Transições e Animações */
+  /* Transições Suaves */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Raio de Borda */
+  /* Raios de Arredondamento */
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 14px;
@@ -71,7 +81,8 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. RESET E CONFIGURAÇÕES GLOBAIS
+   8.1. PROPRIEDADES CSS: RESET E NORMALIZAÇÃO DE COMPATIBILIDADE
+   Sobrescreve estilos padrões do Bootstrap para garantir a identidade gamer.
    -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -95,7 +106,18 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Container Responsivo */
+/* Normalização de componentes Bootstrap sobre o tema dark */
+.bg-body-tertiary {
+  background-color: var(--bg-dark) !important;
+}
+
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: inherit;
+}
+
+/* Container Responsivo Padronizado */
 .container {
   width: 100%;
   max-width: 1260px;
@@ -118,7 +140,7 @@ img {
   display: block;
 }
 
-/* Títulos Globais */
+/* Títulos Globais com Oxanium */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--text-white);
@@ -126,11 +148,12 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.18;
 }
 
-.destaque-laranja {
-  color: var(--primary-orange);
+.destaque-laranja,
+.text-orange {
+  color: var(--primary-orange) !important;
 }
 
-/* Cabeçalho de Seções Alinhado à Esquerda (conforme mockup) */
+/* Cabeçalhos de Seções (Alinhados à Esquerda conforme o mockup) */
 .secao-cabecalho.alinhado-esquerda {
   text-align: left;
   max-width: 820px;
@@ -164,7 +187,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --------------------------------------------------------------------------
-   4. COMPONENTES: BOTÕES
+   ETAPA 4: COMPONENTE BOOTSTRAP - BUTTONS (ESTILIZADOS COM CSS3)
    -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
@@ -183,21 +206,27 @@ h1, h2, h3, h4, h5, h6 {
   white-space: nowrap;
 }
 
-/* Botão Primário Laranja */
-.btn-primario {
-  background-color: var(--primary-orange);
-  color: var(--text-dark);
+/* Botão Primário Laranja Neon */
+.btn-primario,
+.btn-primary {
+  background-color: var(--primary-orange) !important;
+  border-color: var(--primary-orange) !important;
+  color: var(--text-dark) !important;
   font-weight: 800;
   box-shadow: var(--shadow-neon-sm);
 }
 
-.btn-primario:hover {
-  background-color: var(--primary-orange-hover);
+.btn-primario:hover,
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--primary-orange-hover) !important;
+  border-color: var(--primary-orange-hover) !important;
+  color: var(--text-dark) !important;
   transform: translateY(-2px);
   box-shadow: var(--shadow-neon);
 }
 
-/* Botão Secundário Dark */
+/* Botão Secundário Dark Outline */
 .btn-secundario {
   background-color: #171A21;
   color: var(--text-white);
@@ -211,7 +240,7 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-2px);
 }
 
-/* Botão WhatsApp no Topo */
+/* Botão WhatsApp no Cabeçalho */
 .btn-whatsapp-header {
   background-color: var(--primary-orange);
   color: var(--text-dark);
@@ -219,20 +248,27 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
   padding: 10px 20px;
   border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-whatsapp-header:hover {
   background-color: var(--primary-orange-hover);
+  color: var(--text-dark);
   transform: translateY(-2px);
   box-shadow: var(--shadow-neon-sm);
 }
 
 .whatsapp-icon {
+  font-size: 1.15rem;
+  line-height: 1;
   flex-shrink: 0;
 }
 
 /* --------------------------------------------------------------------------
-   5. CABEÇALHO E NAVEGAÇÃO PRINCIPAL
+   ETAPA 4: COMPONENTE BOOTSTRAP - NAVBAR / MENU (SEM JAVASCRIPT)
+   A bola laranja segue o link clicado através de CSS puro (:focus / :active / .active)
    -------------------------------------------------------------------------- */
 .cabecalho-principal {
   position: sticky;
@@ -240,7 +276,9 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1000;
   background-color: #0A0B0E;
   border-bottom: 1px solid var(--border-subtle);
-  padding: 18px 0;
+  padding: 14px 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .header-container {
@@ -275,50 +313,74 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Menu de Navegação */
-.navegacao-menu {
-  display: flex;
-  align-items: center;
-}
-
 .menu-lista {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
   list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
 }
 
-.menu-link {
+/* Estilização dos Links do Navbar */
+.navbar-nav .nav-link {
   font-family: var(--font-body);
   font-size: 0.92rem;
   font-weight: 700;
-  color: #D1D5DB;
+  color: #D1D5DB !important;
   position: relative;
-  padding: 4px 0;
+  padding: 6px 4px !important;
+  transition: color var(--transition-fast);
 }
 
-.menu-link:hover {
-  color: var(--text-white);
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus,
+.navbar-nav .nav-link:active,
+.navbar-nav .nav-link.active {
+  color: var(--primary-orange) !important;
+  outline: none;
 }
 
-.menu-link.ativo {
-  color: var(--primary-orange);
-}
-
-/* Ponto Laranja Sob o Link Ativo (conforme mockup) */
-.menu-link.ativo::after {
+/* Bola Laranja em CSS Puro:
+   Aparece e segue o link clicado ou focado via pseudo-classes :focus, :active e classe .active */
+.navbar-nav .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -6px;
+  bottom: -4px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0);
   width: 5px;
   height: 5px;
   background-color: var(--primary-orange);
   border-radius: 50%;
+  opacity: 0;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+.navbar-nav .nav-link.active::after,
+.navbar-nav .nav-link:focus::after,
+.navbar-nav .nav-link:active::after {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
+/* Customização do Toggler do Bootstrap (Mobile) */
+.navbar-toggler {
+  border-color: var(--border-button) !important;
+  padding: 6px 10px;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 10px var(--primary-orange-glow) !important;
+  border-color: var(--primary-orange) !important;
+}
+
+.navbar-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 90, 38, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
 /* --------------------------------------------------------------------------
-   6. SEÇÃO HERO / APRESENTAÇÃO
+   ETAPA 4: COMPONENTE BOOTSTRAP - CAROUSEL NO HERO (SEM BOTÕES CONFUSOS)
    -------------------------------------------------------------------------- */
 .secao-hero {
   position: relative;
@@ -360,7 +422,6 @@ h1, h2, h3, h4, h5, h6 {
 .hero-botoes {
   display: flex;
   gap: 16px;
-  margin-bottom: 35px;
 }
 
 .hero-botoes .btn {
@@ -368,28 +429,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.95rem;
 }
 
-/* Indicadores de Slide / Carrossel */
-.hero-indicadores {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.indicador-barra {
-  width: 34px;
-  height: 4px;
-  background-color: var(--primary-orange);
-  border-radius: var(--radius-full);
-}
-
-.indicador-ponto {
-  width: 5px;
-  height: 5px;
-  background-color: #2F3442;
-  border-radius: 50%;
-}
-
-/* Card Visual do PC no Hero */
+/* Card Visual e Carrossel Bootstrap do Setup Gamer */
 .hero-imagem-wrapper {
   flex: 0.9;
   display: flex;
@@ -397,11 +437,16 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
 }
 
+#carouselExample {
+  max-width: 450px;
+  width: 100%;
+  position: relative;
+}
+
 .hero-card-pc {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 450px;
   width: 100%;
 }
 
@@ -418,8 +463,43 @@ h1, h2, h3, h4, h5, h6 {
   filter: drop-shadow(0 20px 40px var(--primary-orange-glow));
 }
 
+/* Controles de Navegação Anterior / Próximo do Carrossel */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(18, 20, 26, 0.85);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  opacity: 0.8;
+  transition: var(--transition-fast);
+}
+
+.carousel-control-prev {
+  left: -15px;
+}
+
+.carousel-control-next {
+  right: -15px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 16px;
+  height: 16px;
+}
+
 /* --------------------------------------------------------------------------
-   7. SEÇÃO SOBRE A MARCA (4 CARDS)
+   8.3. CSS GRID: SEÇÃO SOBRE A MARCA (4 COLUNAS)
    -------------------------------------------------------------------------- */
 .secao-sobre {
   padding: 70px 0;
@@ -447,9 +527,9 @@ h1, h2, h3, h4, h5, h6 {
   border-color: #373C4C;
 }
 
-/* Card Destaque Garantia (Borda Laranja conforme mockup) */
+/* Card 2 com Destaque de Garantia (Borda Laranja Oficial) */
 .sobre-card.destaque-garantia {
-  border: 1.5px solid var(--primary-orange);
+  border: 1.5px solid var(--primary-orange) !important;
 }
 
 .sobre-card-cabecalho {
@@ -469,6 +549,15 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   color: var(--text-white);
+  font-size: 1.3rem;
+  transition: var(--transition-normal);
+}
+
+.sobre-icone-box i {
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sobre-card-info {
@@ -501,10 +590,11 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.88rem;
   color: var(--text-muted);
   line-height: 1.55;
+  margin-bottom: 0;
 }
 
 /* --------------------------------------------------------------------------
-   8. SEÇÃO PRODUTOS / MÁQUINAS (3 CARDS)
+   8.3. CSS GRID & BOOTSTRAP CARDS: CATÁLOGO DE SETUPS (3 COLUNAS)
    -------------------------------------------------------------------------- */
 .secao-produtos {
   padding: 70px 0;
@@ -532,12 +622,12 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* Card 2 em Destaque com Borda Laranja */
+/* Card em Destaque com Borda Laranja */
 .produto-card.destaque-borda {
-  border: 1.5px solid var(--primary-orange);
+  border: 1.5px solid var(--primary-orange) !important;
 }
 
-/* Topo do Card com Área Escura para o Setup e Badge */
+/* Espaço Visual de Placeholder do Setup */
 .produto-topo-box {
   position: relative;
   background-color: var(--bg-card-placeholder);
@@ -574,7 +664,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--accent-gold);
 }
 
-.produto-conteudo {
+.produto-card .card-body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -597,6 +687,7 @@ h1, h2, h3, h4, h5, h6 {
   list-style: none;
   margin-bottom: 26px;
   flex-grow: 1;
+  padding-left: 0;
 }
 
 .produto-specs li {
@@ -632,21 +723,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-card {
-  background-color: var(--primary-orange);
-  color: var(--text-dark);
+  background-color: var(--primary-orange) !important;
+  color: var(--text-dark) !important;
   font-weight: 800;
   padding: 10px 22px;
   font-size: 0.88rem;
   border-radius: var(--radius-md);
+  border: none !important;
 }
 
 .btn-card:hover {
-  background-color: var(--primary-orange-hover);
+  background-color: var(--primary-orange-hover) !important;
+  color: var(--text-dark) !important;
   transform: translateY(-2px);
 }
 
 /* --------------------------------------------------------------------------
-   9. SEÇÃO SERVIÇOS TÉCNICOS (3 CARDS)
+   8.3. CSS GRID & BOOTSTRAP CARDS: SERVIÇOS TÉCNICOS (3 COLUNAS)
    -------------------------------------------------------------------------- */
 .secao-servicos {
   padding: 70px 0;
@@ -675,7 +768,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Card 2 de Serviços em Destaque */
 .servico-card.destaque-borda {
-  border: 1.5px solid var(--primary-orange);
+  border: 1.5px solid var(--primary-orange) !important;
 }
 
 .servico-card-cabecalho {
@@ -695,6 +788,15 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   color: #C5CAD6;
+  font-size: 1.3rem;
+  transition: var(--transition-normal);
+}
+
+.servico-icone-box i {
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .servico-cabecalho-texto {
@@ -707,6 +809,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
   color: var(--text-white);
   line-height: 1.2;
+  margin-bottom: 0;
 }
 
 .servico-subtitulo-tag {
@@ -736,26 +839,15 @@ h1, h2, h3, h4, h5, h6 {
   list-style: none;
   margin-bottom: 25px;
   flex-grow: 1;
+  padding-left: 0;
 }
 
 .servico-lista-beneficios li {
   font-size: 0.85rem;
   color: #D1D5DB;
   padding: 4px 0;
-  position: relative;
-  padding-left: 18px;
-}
-
-.servico-lista-beneficios li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: #9CA3AF;
-  font-weight: 700;
-}
-
-.servico-btn-wrapper {
-  margin-top: auto;
+  display: flex;
+  align-items: center;
 }
 
 /* Botões da Seção de Serviços */
@@ -771,6 +863,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-outline-servico:hover {
   border-color: var(--primary-orange);
   background-color: rgba(255, 90, 38, 0.08);
+  color: var(--primary-orange);
 }
 
 .btn-primario-servico {
@@ -785,12 +878,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-primario-servico:hover {
   background-color: var(--primary-orange-hover);
+  color: var(--text-dark);
   transform: translateY(-2px);
   box-shadow: var(--shadow-neon-sm);
 }
 
 /* --------------------------------------------------------------------------
-   10. SEÇÃO CALLOUT: GARANTIA DESTAQUE (DIFERENCIAIS)
+   8.3. CSS FLEXBOX: BANNER DE GARANTIA (DIFERENCIAIS)
    -------------------------------------------------------------------------- */
 .secao-banner-garantia {
   padding: 30px 0 60px 0;
@@ -832,6 +926,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.92rem;
   color: var(--text-muted);
   line-height: 1.5;
+  margin-bottom: 0;
 }
 
 .garantia-banner-cta {
@@ -844,7 +939,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --------------------------------------------------------------------------
-   11. FORMULÁRIO DE ORÇAMENTO
+   8.3. CSS GRID: FORMULÁRIO DE ORÇAMENTO (2 COLUNAS)
    -------------------------------------------------------------------------- */
 .secao-orcamento {
   padding: 30px 0 80px 0;
@@ -905,6 +1000,7 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
   border-color: var(--primary-orange);
   background-color: #1F232D;
+  box-shadow: 0 0 10px var(--primary-orange-glow);
 }
 
 .form-select.foco-laranja {
@@ -948,7 +1044,7 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 110px;
 }
 
-/* Checkbox Customizado */
+/* Checkbox */
 .form-grupo-checkbox {
   margin-bottom: 25px;
 }
@@ -987,12 +1083,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-submit:hover {
   background-color: var(--primary-orange-hover);
+  color: var(--text-dark);
   transform: translateY(-2px);
   box-shadow: var(--shadow-neon-sm);
 }
 
 /* --------------------------------------------------------------------------
-   12. RODAPÉ INSTITUCIONAL
+   8.3. CSS GRID: RODAPÉ INSTITUCIONAL (3 COLUNAS)
    -------------------------------------------------------------------------- */
 .rodape-principal {
   border-top: 1px solid var(--border-subtle);
@@ -1025,6 +1122,7 @@ h1, h2, h3, h4, h5, h6 {
 .rodape-links,
 .rodape-contatos {
   list-style: none;
+  padding-left: 0;
 }
 
 .rodape-links li,
@@ -1073,16 +1171,15 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-subtle);
 }
 
-.rodape-creditos .direitos {
-  color: var(--text-subtle);
-}
-
+.rodape-creditos .direitos,
 .rodape-creditos .projeto-academico {
   color: var(--text-subtle);
+  margin-bottom: 0;
 }
 
 /* --------------------------------------------------------------------------
-   13. MEDIA QUERIES (RESPONSIVIDADE COMPLETA)
+   8.4. RESPONSIVIDADE - MEDIA QUERIES (COMPUTADOR, TABLET E SMARTPHONE)
+   Atende ao critério de funcionamento adequado em múltiplos tamanhos de tela.
    -------------------------------------------------------------------------- */
 
 /* TABLETS (Larguras até 991.98px) */
@@ -1095,6 +1192,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 30px;
   }
 
+  /* Grades Adaptadas para 2 Colunas no Tablet */
   .sobre-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1125,22 +1223,21 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 15px;
   }
 
-  /* Header no Mobile */
+  /* Header e Menu Recolhido no Mobile */
   .header-container {
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-
-  .navegacao-menu {
-    order: 3;
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 4px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .menu-lista {
-    gap: 18px;
-    white-space: nowrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 0;
+  }
+
+  .navbar-nav .nav-link::after {
+    display: none;
   }
 
   /* Seção Hero Empilhada */
@@ -1155,7 +1252,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .hero-titulo {
-    font-size: 2.4rem;
+    font-size: 2.35rem;
   }
 
   .hero-botoes {
@@ -1167,16 +1264,12 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
   }
 
-  .hero-indicadores {
-    justify-content: center;
-  }
-
   .hero-imagem-wrapper {
     justify-content: center;
     width: 100%;
   }
 
-  /* Grades em Coluna Única */
+  /* Grades em Coluna Única no Mobile */
   .sobre-grid,
   .cards-grid,
   .servicos-grid {
@@ -1193,7 +1286,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 16px;
   }
 
-  /* Rodapé no Mobile */
+  /* Rodapé em Coluna Única */
   .rodape-grid {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -1203,5 +1296,20 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     gap: 10px;
     text-align: center;
+  }
+}
+
+/* SMARTPHONES PEQUENOS (Larguras até 480px) */
+@media (max-width: 480px) {
+  .hero-titulo {
+    font-size: 1.95rem;
+  }
+
+  .titulo-secao {
+    font-size: 1.6rem;
+  }
+
+  .banner-titulo {
+    font-size: 1.3rem;
   }
 }
