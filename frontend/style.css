@@ -1,0 +1,1160 @@
+/* ==========================================================================
+   PROJETO ACADÊMICO - TDE PARTE I (UNIFAN)
+   Disciplina: Programação Front-End | Docente: Gean Paulo
+   Discentes: João Lucca Sotero e Kauan Brandão
+   Empresa: Extreme Gamer Informática (Feira de Santana - BA)
+   
+   ETAPA 3 - DESENVOLVIMENTO CSS3
+   • Variáveis CSS (:root)
+   • CSS Flexbox e Grid
+   • Propriedades modernas de estilo (Gradients, Glows, Box-shadows)
+   • Responsividade com Media Queries (Desktop, Tablet e Smartphone)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. IMPORTAÇÃO DE TIPOGRAFIA (Google Fonts)
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oxanium:wght@600;700;800;900&display=swap');
+
+/* --------------------------------------------------------------------------
+   2. VARIÁVEIS CSS (:root) - DESIGN SYSTEM DA EXTREME GAMER
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paleta Dark Gamer */
+  --bg-dark: #0D0E12;
+  --bg-surface: #181A20;
+  --bg-surface-elevated: #22252E;
+  --bg-surface-hover: #292D38;
+  --bg-input: #12141A;
+
+  /* Cores de Destaque da Marca */
+  --primary-orange: #FF5A26;
+  --primary-orange-hover: #FF7748;
+  --primary-orange-active: #E04818;
+  --primary-orange-glow: rgba(255, 90, 38, 0.4);
+  --primary-orange-subtle: rgba(255, 90, 38, 0.12);
+
+  /* Acentos Complementares */
+  --accent-gold: #FFB800;
+  --accent-cyan: #00D2FF;
+  --accent-green: #10B981;
+
+  /* Tipografia e Cores de Texto */
+  --text-white: #F3F4F6;
+  --text-primary: #FFFFFF;
+  --text-muted: #9CA3AF;
+  --text-subtle: #6B7280;
+  --text-dark: #0D0E12;
+
+  /* Bordas e Linhas Tecnológicas */
+  --border-subtle: #2D3139;
+  --border-focus: #FF5A26;
+
+  /* Fontes do Projeto */
+  --font-heading: 'Oxanium', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Sombras e Profundidade */
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.6);
+  --shadow-card-hover: 0 15px 35px rgba(255, 90, 38, 0.25);
+  --shadow-neon: 0 0 25px rgba(255, 90, 38, 0.5);
+  --shadow-neon-sm: 0 0 12px rgba(255, 90, 38, 0.35);
+
+  /* Transições e Animações */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.4s ease;
+
+  /* Raio de Borda */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+/* --------------------------------------------------------------------------
+   3. RESET E CONFIGURAÇÕES GLOBAIS
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* Offset da barra fixa */
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  accent-color: var(--primary-orange); /* Modern form control accent */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Container Responsivo Padronizado */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Links Globais */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Títulos Globais com Oxanium */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* Cabeçalho Padrão de Seções */
+.secao-cabecalho {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 50px auto;
+}
+
+.subtitulo-secao {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: var(--primary-orange);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.titulo-secao {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.descricao-secao {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   4. COMPONENTES: BOTÕES ESTILIZADOS COM CSS FLEXBOX
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 26px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: var(--transition-normal);
+  text-align: center;
+}
+
+/* Botão Primário (Laranja Néon) */
+.btn-primario {
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-hover));
+  color: var(--text-dark);
+  box-shadow: var(--shadow-neon-sm);
+}
+
+.btn-primario:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-neon);
+  color: var(--text-dark);
+}
+
+/* Botão Secundário (Outline) */
+.btn-secundario {
+  background-color: var(--bg-surface);
+  color: var(--text-white);
+  border-color: var(--border-subtle);
+}
+
+.btn-secundario:hover {
+  border-color: var(--primary-orange);
+  background-color: var(--bg-surface-elevated);
+  color: var(--primary-orange);
+  transform: translateY(-3px);
+}
+
+/* Botão WhatsApp no Topo */
+.btn-whatsapp-header {
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-hover));
+  color: var(--text-dark);
+  font-size: 0.85rem;
+  padding: 9px 18px;
+  box-shadow: var(--shadow-neon-sm);
+}
+
+.btn-whatsapp-header:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-neon);
+}
+
+/* --------------------------------------------------------------------------
+   5. CABEÇALHO E NAVEGAÇÃO PRINCIPAL (FLEXBOX)
+   -------------------------------------------------------------------------- */
+.cabecalho-principal {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(13, 14, 18, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 0;
+  transition: var(--transition-normal);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  max-height: 48px;
+  width: auto;
+  transition: var(--transition-fast);
+}
+
+.logo-link:hover .logo-img {
+  filter: drop-shadow(0 0 8px var(--primary-orange-glow));
+}
+
+/* Menu de Navegação Flexbox */
+.navegacao-menu {
+  display: flex;
+  align-items: center;
+}
+
+.menu-lista {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.menu-link {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-white);
+  position: relative;
+  padding: 6px 0;
+}
+
+.menu-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--primary-orange);
+  transition: var(--transition-normal);
+}
+
+.menu-link:hover,
+.menu-link.ativo {
+  color: var(--primary-orange);
+}
+
+.menu-link:hover::after,
+.menu-link.ativo::after {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   6. SEÇÃO HERO / APRESENTAÇÃO (FLEXBOX)
+   -------------------------------------------------------------------------- */
+.secao-hero {
+  position: relative;
+  padding: 80px 0 100px 0;
+  background: radial-gradient(circle at 80% 50%, rgba(255, 90, 38, 0.15) 0%, rgba(13, 14, 18, 0) 65%);
+  overflow: hidden;
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.hero-texto {
+  flex: 1;
+  max-width: 620px;
+}
+
+.badge-destaque {
+  display: inline-block;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--primary-orange);
+  color: var(--text-white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 20px;
+}
+
+.hero-titulo {
+  font-size: 3.4rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.destaque-laranja {
+  color: var(--primary-orange);
+  text-shadow: 0 0 20px var(--primary-orange-glow);
+}
+
+.hero-descricao {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  margin-bottom: 35px;
+  line-height: 1.7;
+}
+
+.hero-botoes {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.hero-selos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 25px;
+}
+
+.selo-item {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+.hero-imagem-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-imagem {
+  max-width: 100%;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.8));
+  transition: var(--transition-normal);
+}
+
+.hero-imagem:hover {
+  transform: translateY(-6px);
+  filter: drop-shadow(0 20px 40px var(--primary-orange-glow));
+}
+
+/* --------------------------------------------------------------------------
+   7. SEÇÃO SOBRE A LOJA (GRID FLEXÍVEL)
+   -------------------------------------------------------------------------- */
+.secao-sobre {
+  padding: 90px 0;
+  background-color: #12141A;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sobre-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.sobre-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 30px 24px;
+  transition: var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.sobre-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--primary-orange);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.sobre-card.destaque-garantia {
+  border-color: var(--primary-orange);
+  background: linear-gradient(180deg, rgba(255, 90, 38, 0.08) 0%, var(--bg-surface) 100%);
+}
+
+.sobre-card-titulo {
+  font-size: 1.25rem;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+}
+
+.sobre-card p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   8. SEÇÃO PRODUTOS / MÁQUINAS (ARTICLES COM FLEXBOX)
+   -------------------------------------------------------------------------- */
+.secao-produtos {
+  padding: 100px 0;
+  background-color: var(--bg-dark);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Article Produto Card */
+.produto-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition-normal);
+}
+
+.produto-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary-orange);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.produto-card.destaque-borda {
+  border: 2px solid var(--primary-orange);
+  box-shadow: var(--shadow-neon-sm);
+}
+
+.produto-imagem-box {
+  position: relative;
+  background-color: #12141A;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.badge-card {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: var(--bg-surface-elevated);
+  color: var(--primary-orange);
+  border: 1px solid var(--primary-orange);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.5px;
+}
+
+.badge-ouro {
+  background-color: var(--primary-orange);
+  color: var(--text-dark);
+}
+
+.produto-conteudo {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.produto-nome {
+  font-size: 1.45rem;
+  margin-bottom: 8px;
+}
+
+.produto-foco {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.produto-specs {
+  list-style: none;
+  margin-bottom: 25px;
+  flex-grow: 1;
+}
+
+.produto-specs li {
+  font-size: 0.88rem;
+  color: #D1D5DB;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(45, 49, 57, 0.4);
+}
+
+.produto-specs li:last-child {
+  border-bottom: none;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.produto-rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.preco-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.preco-rotulo {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.preco-valor {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--primary-orange);
+}
+
+.preco-parcelado {
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+}
+
+.btn-card {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-white);
+  padding: 10px 18px;
+  font-size: 0.88rem;
+}
+
+.btn-card:hover {
+  background: var(--primary-orange);
+  color: var(--text-dark);
+  border-color: var(--primary-orange);
+}
+
+.btn-destaque {
+  background: var(--primary-orange);
+  color: var(--text-dark);
+}
+
+/* --------------------------------------------------------------------------
+   9. SEÇÃO SERVIÇOS TÉCNICOS (ARTICLES COM FLEXBOX)
+   -------------------------------------------------------------------------- */
+.secao-servicos {
+  padding: 90px 0;
+  background-color: #12141A;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.servicos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.servico-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-normal);
+}
+
+.servico-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--primary-orange);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.servico-img-box {
+  background-color: #151720;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.servico-detalhes {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.servico-titulo {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.servico-detalhes p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.servico-lista-beneficios {
+  list-style: none;
+  margin-bottom: 25px;
+  flex-grow: 1;
+}
+
+.servico-lista-beneficios li {
+  font-size: 0.85rem;
+  color: #D1D5DB;
+  padding: 5px 0;
+  position: relative;
+  padding-left: 20px;
+}
+
+.servico-lista-beneficios li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--primary-orange);
+  font-weight: 800;
+}
+
+.btn-servico {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--primary-orange);
+  width: 100%;
+}
+
+.btn-servico:hover {
+  background-color: var(--primary-orange);
+  color: var(--text-dark);
+  border-color: var(--primary-orange);
+}
+
+/* --------------------------------------------------------------------------
+   10. SEÇÃO DE DIFERENCIAIS
+   -------------------------------------------------------------------------- */
+.secao-diferenciais {
+  padding: 80px 0;
+  background-color: var(--bg-dark);
+}
+
+.diferenciais-tabela-box {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.diferencial-item {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 30px 20px;
+  transition: var(--transition-fast);
+}
+
+.diferencial-item:hover {
+  border-color: var(--primary-orange);
+}
+
+.diferencial-numero {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--primary-orange);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.diferencial-item h4 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.diferencial-item p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   11. BLOCO ASIDE: GARANTIA DESTAQUE (FLEXBOX)
+   -------------------------------------------------------------------------- */
+.aside-garantia {
+  padding: 40px 0;
+  background-color: var(--bg-dark);
+}
+
+.aside-conteudo {
+  background: linear-gradient(135deg, #1C1512 0%, #151720 100%);
+  border: 2px solid var(--primary-orange);
+  border-radius: var(--radius-lg);
+  padding: 35px 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  box-shadow: var(--shadow-neon-sm);
+}
+
+.aside-badge-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  border-right: 2px solid var(--border-subtle);
+  padding-right: 30px;
+}
+
+.aside-selo-texto {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  letter-spacing: 1px;
+}
+
+.aside-destaque-anos {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--text-white);
+  line-height: 1;
+  margin: 4px 0;
+}
+
+.aside-selo-legenda {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary-orange);
+}
+
+.aside-texto-box {
+  flex: 1;
+}
+
+.aside-titulo {
+  font-size: 1.55rem;
+  margin-bottom: 10px;
+}
+
+.aside-paragrafo {
+  font-size: 0.95rem;
+  color: #D1D5DB;
+  line-height: 1.6;
+}
+
+.btn-aside {
+  background-color: var(--primary-orange);
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.btn-aside:hover {
+  background-color: var(--primary-orange-hover);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-neon);
+}
+
+/* --------------------------------------------------------------------------
+   12. FORMULÁRIO DE ORÇAMENTO (<form> SEMÂNTICO)
+   -------------------------------------------------------------------------- */
+.secao-orcamento {
+  padding: 90px 0;
+  background-color: #12141A;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.formulario-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.form-estilizado {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-card);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.form-grupo {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-grupo.full-width {
+  grid-column: 1 / -1;
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #D1D5DB;
+  margin-bottom: 8px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  background-color: var(--bg-input);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-white);
+  padding: 12px 16px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: var(--transition-fast);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--primary-orange);
+  box-shadow: 0 0 10px var(--primary-orange-glow);
+  background-color: var(--bg-surface-elevated);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-subtle);
+}
+
+.form-select option {
+  background-color: var(--bg-surface);
+  color: var(--text-white);
+}
+
+.form-grupo-checkbox {
+  margin-bottom: 25px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.form-botao-wrapper {
+  text-align: center;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.05rem;
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-hover));
+  color: var(--text-dark);
+  box-shadow: var(--shadow-neon-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-neon);
+}
+
+/* --------------------------------------------------------------------------
+   13. RODAPÉ INSTITUCIONAL (FLEXBOX E GRID)
+   -------------------------------------------------------------------------- */
+.rodape-principal {
+  background-color: #08090C;
+  border-top: 1px solid var(--border-subtle);
+  padding: 60px 0 30px 0;
+}
+
+.rodape-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: 50px;
+  margin-bottom: 50px;
+}
+
+.rodape-logo {
+  max-height: 44px;
+  width: auto;
+  margin-bottom: 18px;
+}
+
+.rodape-slogan {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.rodape-garantia-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.rodape-titulo {
+  font-size: 1.15rem;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.rodape-titulo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 35px;
+  height: 2px;
+  background-color: var(--primary-orange);
+}
+
+.rodape-links,
+.rodape-contatos {
+  list-style: none;
+}
+
+.rodape-links li,
+.rodape-contatos li {
+  font-size: 0.88rem;
+  color: #D1D5DB;
+  margin-bottom: 10px;
+}
+
+.rodape-links a:hover {
+  color: var(--primary-orange);
+  padding-left: 5px;
+}
+
+.rodape-contatos a {
+  color: var(--primary-orange);
+}
+
+.rodape-contatos a:hover {
+  text-decoration: underline;
+}
+
+.rodape-creditos {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--text-subtle);
+}
+
+.rodape-creditos strong {
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   14. MEDIA QUERIES (RESPONSIVIDADE COMPLETA)
+   -------------------------------------------------------------------------- */
+
+/* TABLETS (Larguras até 991.98px) */
+@media (max-width: 991.98px) {
+  .hero-titulo {
+    font-size: 2.8rem;
+  }
+
+  .hero-container {
+    gap: 30px;
+  }
+
+  .sobre-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .servicos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .diferenciais-tabela-box {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .aside-conteudo {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px;
+  }
+
+  .aside-badge-box {
+    border-right: none;
+    border-bottom: 2px solid var(--border-subtle);
+    padding-right: 0;
+    padding-bottom: 20px;
+    width: 100%;
+  }
+
+  .rodape-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+  }
+}
+
+/* SMARTPHONES (Larguras até 767.98px) */
+@media (max-width: 767.98px) {
+  html {
+    font-size: 15px;
+  }
+
+  /* Header e Navegação no Mobile */
+  .header-container {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .navegacao-menu {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .menu-lista {
+    gap: 16px;
+    white-space: nowrap;
+  }
+
+  /* Seção Hero Empilhada */
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .hero-titulo {
+    font-size: 2.3rem;
+  }
+
+  .hero-botoes {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-botoes .btn {
+    width: 100%;
+  }
+
+  .hero-selos {
+    align-items: center;
+  }
+
+  /* Grades em Coluna Única */
+  .sobre-grid,
+  .cards-grid,
+  .servicos-grid,
+  .diferenciais-tabela-box {
+    grid-template-columns: 1fr;
+  }
+
+  /* Formulário em Coluna Única */
+  .form-estilizado {
+    padding: 25px 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Rodapé no Mobile */
+  .rodape-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .rodape-creditos {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* SMARTPHONES PEQUENOS (Larguras até 480px) */
+@media (max-width: 480px) {
+  .hero-titulo {
+    font-size: 1.95rem;
+  }
+
+  .titulo-secao {
+    font-size: 1.7rem;
+  }
+
+  .aside-destaque-anos {
+    font-size: 2.2rem;
+  }
+}
