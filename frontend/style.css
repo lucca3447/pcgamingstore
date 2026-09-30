@@ -1,21 +1,3 @@
-/* ==========================================================================
-   PROJETO ACADÊMICO - TDE PARTE I (UNIFAN)
-   Disciplina: Programação Front-End | Docente: Gean Paulo
-   Discentes: João Lucca Sotero e Kauan Brandão
-   Empresa: Extreme Gamer Informática (Feira de Santana - BA)
-   
-   ETAPA 3 – DESENVOLVIMENTO CSS3
-   • 8.1 Propriedades CSS (Transitions, Transforms, Box-shadows, Gradients, etc.)
-   • 8.2 Variáveis CSS (:root) - Design System da Marca
-   • 8.3 CSS Flexbox e Grid
-   • 8.4 Responsividade - Media Queries (Computador, Tablet e Smartphone)
-
-   ETAPA 4 – BOOTSTRAP 5 VIA CDN (Utilização Conjunta de Bootstrap + CSS Próprio)
-   • Componente 1: Navbar/Menu (navbar, navbar-toggler, collapse, nav-link)
-   • Componente 2: Carousel (carousel slide, carousel-inner, carousel-control-prev/next)
-   • Componente 3: Cards (card, card-body, card-title, card-text)
-   • Componente 4: Buttons (btn, btn-primary)
-   ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. IMPORTAÇÃO DE TIPOGRAFIA (Google Fonts)
@@ -23,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oxanium:wght@600;700;800;900&display=swap');
 
 /* --------------------------------------------------------------------------
-   8.2. VARIÁVEIS CSS (:root) - DESIGN SYSTEM DA EXTREME GAMER
+    VARIÁVEIS CSS (:root) - DESIGN SYSTEM DA EXTREME GAMER
    Facilita a padronização e consistência da identidade visual em todo o site.
    -------------------------------------------------------------------------- */
 :root {
