@@ -470,24 +470,26 @@ h1, h2, h3, h4, h5, h6 {
 /* --------------------------------------------------------------------------
    8.3. CSS FLEXBOX: BANNER DE GARANTIA (DIFERENCIAIS)
    -------------------------------------------------------------------------- */
-.secao-banner-garantia { padding: 30px 0 60px 0; }
+.secao-banner-garantia { padding: 40px 0 65px 0; }
 
 .garantia-banner-box {
   background-color: var(--bg-surface);
   border: 1.5px solid var(--primary-orange);
   border-radius: var(--radius-lg);
-  padding: clamp(24px, 4vw, 36px 44px);
+  padding: 38px 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
 .garantia-banner-texto { flex: 1; }
-.banner-tag { display: block; font-family: var(--font-body); font-size: 0.74rem; font-weight: 800; letter-spacing: 1.4px; color: var(--primary-orange); margin-bottom: 6px; text-transform: uppercase; }
-.banner-titulo { font-size: clamp(1.2rem, 3vw, 1.5rem); font-weight: 800; margin-bottom: 8px; }
-.banner-descricao { font-size: 0.92rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0; }
-.garantia-banner-cta .btn { padding: 14px 28px; font-size: 0.95rem; }
+.banner-tag { display: inline-block; font-family: var(--font-body); font-size: 0.74rem; font-weight: 800; letter-spacing: 1.4px; color: var(--primary-orange); margin-bottom: 8px; text-transform: uppercase; }
+.banner-titulo { font-size: clamp(1.2rem, 3vw, 1.5rem); font-weight: 800; margin-bottom: 10px; line-height: 1.25; }
+.banner-descricao { font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 0; }
+.garantia-banner-cta { flex-shrink: 0; }
+.garantia-banner-cta .btn { padding: 14px 28px; font-size: 0.95rem; white-space: nowrap; }
 
 /* --------------------------------------------------------------------------
    8.3. CSS GRID: FORMULÁRIO DE ORÇAMENTO (2 COLUNAS)
@@ -565,7 +567,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 991.98px) {
   .hero-container { gap: 30px; }
   .sobre-grid, .cards-grid, .servicos-grid { grid-template-columns: repeat(2, 1fr); }
-  .garantia-banner-box { flex-direction: column; text-align: center; padding: 30px; }
+  .garantia-banner-box { flex-direction: column; text-align: center; padding: 32px 24px; gap: 24px; }
   .rodape-grid { grid-template-columns: 1fr 1fr; gap: 35px; }
 }
 
@@ -583,6 +585,8 @@ h1, h2, h3, h4, h5, h6 {
   .hero-card-pc, .hero-imagem { height: 300px; max-height: 300px; }
   .sobre-grid, .cards-grid, .servicos-grid, .form-grid, .rodape-grid { grid-template-columns: 1fr; }
   .form-estilizado { padding: 24px 18px; }
+  .garantia-banner-box { padding: 26px 20px; gap: 20px; }
+  .garantia-banner-cta, .garantia-banner-cta .btn { width: 100%; }
   .rodape-grid { gap: 30px; }
   .rodape-creditos { flex-direction: column; gap: 10px; text-align: center; }
 }
