@@ -1,25 +1,7 @@
-/* ==========================================================================
-   PROJETO ACADÊMICO - TDE PARTE I (UNIFAN)
-   Disciplina: Programação Front-End | Docente: Gean Paulo
-   Discentes: João Lucca Sotero e Kauan Brandão
-   Empresa: Extreme Gamer Informática (Feira de Santana - BA)
 
-   ESTRUTURA DE ESTILOS CSS3 AUTORAL & BOOTSTRAP 5
-   • 8.1 Propriedades CSS (Transitions, Transforms, Box-shadow, Backdrop-filter)
-   • 8.2 Variáveis CSS (:root) - Design System da Marca
-   • 8.3 CSS Flexbox e Grid (Layouts Estruturais das Seções)
-   • 8.4 Responsividade - Media Queries (Desktop, Tablet e Smartphone)
-   • ETAPA 4: Bootstrap 5 via CDN (Navbar, Carrossel, Cards, Botões)
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. IMPORTAÇÃO DE TIPOGRAFIA (Google Fonts)
-   -------------------------------------------------------------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oxanium:wght@600;700;800;900&display=swap');
 
-/* --------------------------------------------------------------------------
-   8.2. VARIÁVEIS CSS (:root) - DESIGN SYSTEM DA EXTREME GAMER
-   -------------------------------------------------------------------------- */
+
 :root {
   /* Paleta Dark Gamer */
   --bg-dark: #0A0B0E;
@@ -155,7 +137,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --------------------------------------------------------------------------
-   ETAPA 4: COMPONENTES BOOTSTRAP - BOTÕES (CSS3 AUTORAL)
+   ETAPA 4: COMPONENTES BOOTSTRAP - BOTÕES 
    -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
@@ -224,7 +206,7 @@ h1, h2, h3, h4, h5, h6 {
 .whatsapp-icon { font-size: 1.15rem; line-height: 1; }
 
 /* --------------------------------------------------------------------------
-   ETAPA 4: COMPONENTE BOOTSTRAP - NAVBAR / MENU (SEM JAVASCRIPT)
+   ETAPA 4: COMPONENTE BOOTSTRAP - NAVBAR / MENU 
    -------------------------------------------------------------------------- */
 .cabecalho-principal {
   position: sticky;
@@ -360,7 +342,7 @@ h1, h2, h3, h4, h5, h6 {
 .carousel-control-prev-icon, .carousel-control-next-icon { width: 16px; height: 16px; }
 
 /* --------------------------------------------------------------------------
-   8.3. CSS GRID: PADRONIZAÇÃO DE CARDS E ÍCONES (DRY)
+   8.3. CSS GRID: PADRONIZAÇÃO DE CARDS E ÍCONES 
    -------------------------------------------------------------------------- */
 .secao-sobre, .secao-produtos, .secao-servicos { padding: 70px 0; }
 .secao-sobre { border-top: 1px solid var(--border-subtle); }
