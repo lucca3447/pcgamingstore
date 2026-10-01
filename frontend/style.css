@@ -93,6 +93,7 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   overflow-x: hidden;
+  overflow-wrap: break-word;
   accent-color: var(--primary-orange);
   -webkit-font-smoothing: antialiased;
 }
@@ -449,7 +450,7 @@ h1, h2, h3, h4, h5, h6 {
 .produto-specs { list-style: none; margin-bottom: 26px; flex-grow: 1; padding-left: 0; }
 .produto-specs li { font-size: 0.86rem; color: #C5CAD6; padding: 4px 0; position: relative; padding-left: 14px; }
 .produto-specs li::before { content: '•'; position: absolute; left: 0; color: #7A8194; font-size: 1.1rem; line-height: 1; top: 2px; }
-.produto-rodape { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; }
+.produto-rodape { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 10px; }
 .preco-valor { font-family: var(--font-heading); font-size: 1.55rem; font-weight: 800; color: var(--primary-orange); }
 
 /* --------------------------------------------------------------------------
@@ -529,10 +530,10 @@ h1, h2, h3, h4, h5, h6 {
 .form-select option { background-color: var(--bg-surface); color: var(--text-white); }
 .form-textarea { resize: vertical; min-height: 110px; }
 .form-grupo-checkbox { margin-bottom: 25px; }
-.checkbox-label { display: flex; align-items: center; gap: 12px; font-size: 0.88rem; color: #D1D5DB; cursor: pointer; }
-.checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary-orange); cursor: pointer; }
+.checkbox-label { display: flex; align-items: flex-start; gap: 12px; font-size: 0.88rem; color: #D1D5DB; cursor: pointer; line-height: 1.45; }
+.checkbox-label input[type="checkbox"] { width: 18px; height: 18px; min-width: 18px; margin-top: 2px; accent-color: var(--primary-orange); cursor: pointer; }
 .checkbox-texto { user-select: none; }
-.form-botao-wrapper .btn-submit { width: 100%; padding: 16px 32px; font-size: 0.98rem; letter-spacing: 0.5px; }
+.form-botao-wrapper .btn-submit { width: 100%; padding: 16px 24px; font-size: 0.98rem; letter-spacing: 0.5px; white-space: normal; line-height: 1.35; }
 
 /* --------------------------------------------------------------------------
    8.3. CSS GRID: RODAPÉ INSTITUCIONAL (3 COLUNAS)
@@ -565,28 +566,110 @@ h1, h2, h3, h4, h5, h6 {
    -------------------------------------------------------------------------- */
 /* Tablets (Telas até 991.98px) */
 @media (max-width: 991.98px) {
-  .hero-container { gap: 30px; }
-  .sobre-grid, .cards-grid, .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+  /* Menu Colapsado do Bootstrap (Drawer Mobile/Tablet) */
+  .navbar-collapse {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-top: 14px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  }
+  .menu-lista {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 0;
+    width: 100%;
+  }
+  .navbar-nav .nav-item { width: 100%; }
+  .navbar-nav .nav-link {
+    display: block;
+    width: 100%;
+    padding: 8px 12px !important;
+    border-radius: var(--radius-sm);
+  }
+  .navbar-nav .nav-link:hover {
+    background-color: var(--bg-surface-elevated);
+  }
+  .navbar-nav .nav-link::after { display: none; }
+
+  /* Hero Section Responsivo */
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 36px;
+  }
+  .hero-texto { max-width: 100%; }
+  .hero-botoes { justify-content: center; }
+  .hero-imagem-wrapper { justify-content: center; width: 100%; }
+  .hero-card-pc, .hero-imagem { height: 350px; max-height: 350px; }
+
+  /* Grades Adaptáveis (2 Colunas com 3º Item Centralizado) */
+  .sobre-grid { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid, .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid > :last-child:nth-child(odd),
+  .servicos-grid > :last-child:nth-child(odd) {
+    grid-column: span 2;
+    max-width: 520px;
+    justify-self: center;
+    width: 100%;
+  }
+
+  /* Banner Callout de Garantia */
   .garantia-banner-box { flex-direction: column; text-align: center; padding: 32px 24px; gap: 24px; }
+
+  /* Rodapé Institucional (Marca em destaque + 2 colunas) */
   .rodape-grid { grid-template-columns: 1fr 1fr; gap: 35px; }
+  .rodape-grid > :first-child { grid-column: span 2; }
 }
 
 /* Smartphones (Telas até 767.98px) */
 @media (max-width: 767.98px) {
   html { font-size: 15px; }
-  .header-container { padding-inline: 15px; }
-  .menu-lista { flex-direction: column; align-items: flex-start; gap: 14px; padding: 16px 0; }
-  .navbar-nav .nav-link::after { display: none; }
-  .hero-container { flex-direction: column; text-align: center; gap: 35px; }
-  .hero-texto { max-width: 100%; }
+  .container { padding-inline: 16px; }
+  .header-container { padding-inline: 0; }
+  
+  /* Hero em Smartphones */
   .hero-botoes { flex-direction: column; gap: 12px; }
   .hero-botoes .btn { width: 100%; }
-  .hero-imagem-wrapper { justify-content: center; width: 100%; }
-  .hero-card-pc, .hero-imagem { height: 300px; max-height: 300px; }
+  .hero-card-pc, .hero-imagem { height: 280px; max-height: 280px; }
+  .carousel-control-prev { left: 4px; }
+  .carousel-control-next { right: 4px; }
+
+  /* Grades em Coluna Única */
   .sobre-grid, .cards-grid, .servicos-grid, .form-grid, .rodape-grid { grid-template-columns: 1fr; }
-  .form-estilizado { padding: 24px 18px; }
+  .cards-grid > :last-child:nth-child(odd),
+  .servicos-grid > :last-child:nth-child(odd),
+  .rodape-grid > :first-child {
+    grid-column: auto;
+    max-width: 100%;
+  }
+
+  /* Banner de Garantia */
   .garantia-banner-box { padding: 26px 20px; gap: 20px; }
   .garantia-banner-cta, .garantia-banner-cta .btn { width: 100%; }
+
+  /* Formulário e Prevenção de Zoom iOS (16px) */
+  .form-estilizado { padding: 24px 18px; }
+  .form-input, .form-select, .form-textarea { font-size: 16px; }
+  .form-botao-wrapper .btn-submit {
+    padding: 14px 18px;
+    font-size: 0.92rem;
+  }
+
+  /* Rodapé */
   .rodape-grid { gap: 30px; }
+  .rodape-contatos a { word-break: break-all; }
   .rodape-creditos { flex-direction: column; gap: 10px; text-align: center; }
+}
+
+/* Smartphones Muito Pequenos (Telas até 420px) */
+@media (max-width: 420px) {
+  .logo-titulo { font-size: 1.15rem; }
+  .logo-sub { font-size: 0.52rem; letter-spacing: 1px; }
+  .produto-rodape .btn-card { width: 100%; text-align: center; }
+  .preco-valor { font-size: 1.35rem; }
+  .garantia-banner-box { padding: 22px 15px; }
+  .banner-titulo { font-size: 1.15rem; }
 }
