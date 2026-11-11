@@ -23,6 +23,7 @@
 
 // Chave utilizada para persistência no navegador
 const STORAGE_KEY = 'extreme_gamer_carrinho';
+const NUMERO_WHATSAPP_LOJA = '5575999999999'; // Número comercial direto (DDD 75)
 
 /**
  * 1.1. Gerenciamento do LocalStorage (Carregar e Salvar)
@@ -31,7 +32,8 @@ function obterCarrinhoStorage() {
   try {
     const dados = localStorage.getItem(STORAGE_KEY);
     if (dados) {
-      return JSON.parse(dados);
+      const parsed = JSON.parse(dados);
+      return Array.isArray(parsed) ? parsed : [];
     } else {
       return [];
     }
@@ -75,6 +77,20 @@ function adicionarAoCarrinho(id, nome, preco, imagem) {
 
   salvarCarrinhoStorage(carrinho);
   exibirNotificacao(`${nome} adicionado ao orçamento!`);
+}
+
+function alterarQuantidade(id, delta) {
+  const carrinho = obterCarrinhoStorage();
+  const novoCarrinho = [];
+  for (let i = 0; i < carrinho.length; i++) {
+    if (carrinho[i].id === id) {
+      carrinho[i].quantidade += delta;
+    }
+    if (carrinho[i].quantidade > 0) {
+      novoCarrinho.push(carrinho[i]);
+    }
+  }
+  salvarCarrinhoStorage(novoCarrinho);
 }
 
 function removerDoCarrinho(id) {
@@ -140,6 +156,11 @@ function atualizarInterfaceCarrinho() {
             <div>
               <h6 class="m-0 text-white">${item.nome}</h6>
               <small class="text-muted">${item.quantidade}x R$ ${item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</small>
+              <div class="carrinho-qtd-controles mt-1 d-flex align-items-center gap-1">
+                <button type="button" class="btn btn-sm btn-qtd btn-qtd-menos" data-id="${item.id}" aria-label="Diminuir quantidade">-</button>
+                <span class="badge bg-dark border border-secondary px-2">${item.quantidade}</span>
+                <button type="button" class="btn btn-sm btn-qtd btn-qtd-mais" data-id="${item.id}" aria-label="Aumentar quantidade">+</button>
+              </div>
             </div>
           </div>
           <div class="text-end">
@@ -329,13 +350,13 @@ function calcularCondicaoPagamento(formaPagamento) {
 
   if (formaPagamento === 'pix') {
     boxPagamento.textContent = '10% de Desconto Especial Aplicado à Vista';
-    boxPagamento.className = 'resumo-valor text-success fw-bold';
+    boxPagamento.className = 'resumo-dado text-success fw-bold';
   } else if (formaPagamento === 'cartao') {
     boxPagamento.textContent = 'Parcelamento em até 12x Sem Juros no Cartão';
-    boxPagamento.className = 'resumo-valor text-warning fw-bold';
+    boxPagamento.className = 'resumo-dado text-warning fw-bold';
   } else {
     boxPagamento.textContent = 'Valor integral à vista sob consulta';
-    boxPagamento.className = 'resumo-valor text-info';
+    boxPagamento.className = 'resumo-dado text-info';
   }
 }
 
@@ -390,6 +411,10 @@ function processarEnvioOrcamento(evento) {
       resumoItens += `\n• ${item.quantidade}x ${item.nome} — R$ ${sub.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
     }
     resumoItens += `\n*Total Estimado:* R$ ${valorTotalCarrinho.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+    if (selectPagamento && selectPagamento.value === 'pix') {
+      const valorPix = valorTotalCarrinho * 0.90;
+      resumoItens += `\n*Total no Pix (10% OFF):* R$ ${valorPix.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+    }
   }
 
   // Montagem da mensagem estruturada para o WhatsApp
@@ -411,7 +436,7 @@ function processarEnvioOrcamento(evento) {
   textoWhatsApp += `\n\n_Mensagem enviada através da landing page oficial (UNIFAN TDE II)_`;
 
   // Codificação da URL oficial do WhatsApp
-  const urlFinal = `https://wa.me/message/BE3T4MHQ7EM3F1?text=${encodeURIComponent(textoWhatsApp)}`;
+  const urlFinal = `https://api.whatsapp.com/send?phone=${NUMERO_WHATSAPP_LOJA}&text=${encodeURIComponent(textoWhatsApp)}`;
   window.open(urlFinal, '_blank');
 }
 
@@ -425,6 +450,9 @@ function abrirGavetaCarrinho() {
   if (painel) {
     painel.classList.add('aberto');
     painel.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    const btnFechar = document.getElementById('btn-fechar-carrinho');
+    if (btnFechar) btnFechar.focus();
   }
 }
 
@@ -433,6 +461,9 @@ function fecharGavetaCarrinho() {
   if (painel) {
     painel.classList.remove('aberto');
     painel.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    const btnCarrinho = document.getElementById('btn-carrinho');
+    if (btnCarrinho) btnCarrinho.focus();
   }
 }
 
@@ -481,15 +512,36 @@ document.addEventListener('DOMContentLoaded', () => {
       removerDoCarrinho(id);
     }
 
+    // Botões de Quantidade (+ / -) no Carrinho
+    const btnMais = e.target.closest('.btn-qtd-mais');
+    if (btnMais) {
+      alterarQuantidade(btnMais.getAttribute('data-id'), 1);
+    }
+
+    const btnMenos = e.target.closest('.btn-qtd-menos');
+    if (btnMenos) {
+      alterarQuantidade(btnMenos.getAttribute('data-id'), -1);
+    }
+
     // Botão de Agendamento Rápido em Serviços
     const btnServico = e.target.closest('[data-selecionar-servico]');
     if (btnServico) {
       const servicoId = btnServico.getAttribute('data-selecionar-servico');
       const selectServico = document.getElementById('campo-servico');
+      const selectOrcamento = document.getElementById('campo-orcamento');
       if (selectServico) {
         selectServico.value = servicoId;
         atualizarDetalhesServico(servicoId);
       }
+      if (selectOrcamento && (servicoId === 'limpeza' || servicoId === 'diagnostico' || servicoId === 'upgrade')) {
+        selectOrcamento.value = 'apenas-manutencao';
+      }
+    }
+
+    // Fechar gaveta ao clicar em 'Orçar no Form'
+    const btnFinalizar = e.target.closest('#btn-finalizar-orcamento');
+    if (btnFinalizar) {
+      fecharGavetaCarrinho();
     }
   });
 

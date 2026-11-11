@@ -1,7 +1,7 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oxanium:wght@600;700;800;900&display=swap');
-
-
+/* --------------------------------------------------------------------------
+   8. IDENTIDADE VISUAL E DESIGN TOKENS (CSS3 AUTORAL)
+   -------------------------------------------------------------------------- */
 :root {
   /* Paleta Dark Gamer */
   --bg-dark: #0A0B0E;
@@ -28,7 +28,7 @@
   --text-primary: #F3F4F6;
   --text-light: #D1D5DB;
   --text-muted: #8E95A5;
-  --text-subtle: #5B6275;
+  --text-subtle: #9CA3AF;
   --text-card-specs: #C5CAD6;
   --text-dark: #0B0C10;
 
@@ -244,11 +244,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar-nav .nav-link:hover,
-.navbar-nav .nav-link:focus,
 .navbar-nav .nav-link:active,
 .navbar-nav .nav-link.active {
   color: var(--primary-orange) !important;
-  outline: none;
+}
+
+.navbar-nav .nav-link:focus-visible {
+  color: var(--primary-orange) !important;
+  outline: 2px solid var(--primary-orange);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }
 
 /* Indicador Ativo Neon em CSS Puro (:active / :focus / .active) */
@@ -325,8 +330,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .carousel-control-prev, .carousel-control-next {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   top: 50%;
   transform: translateY(-50%);
   background-color: rgba(18, 20, 26, 0.85);
@@ -624,6 +629,16 @@ h1, h2, h3, h4, h5, h6 {
   .preco-valor { font-size: 1.35rem; }
   .garantia-banner-box { padding: 22px 15px; }
   .banner-titulo { font-size: 1.15rem; }
+  .filtro-botoes-grupo {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+  }
+  .btn-filtro {
+    white-space: nowrap;
+  }
 }
 
 /* ==========================================================================
@@ -877,4 +892,42 @@ h1, h2, h3, h4, h5, h6 {
 .toast-notificacao.visivel {
   transform: translateY(0);
   opacity: 1;
+}
+
+/* 9.7. Controles de Quantidade no Carrinho */
+.btn-qtd {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-light);
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  font-size: 0.85rem;
+}
+
+.btn-qtd:hover {
+  border-color: var(--primary-orange);
+  color: var(--primary-orange);
+}
+
+/* 9.8. Ementa Acadêmica CSS3: Animação Declarativa @keyframes */
+@keyframes pulsarGlow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 8px var(--primary-orange-glow);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 16px var(--primary-orange);
+  }
+}
+
+.badge-notificacao {
+  animation: pulsarGlow 2.5s infinite ease-in-out;
 }
