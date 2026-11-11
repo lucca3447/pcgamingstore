@@ -28,10 +28,15 @@ const STORAGE_KEY = 'extreme_gamer_carrinho';
  * 1.1. Gerenciamento do LocalStorage (Carregar e Salvar)
  */
 function obterCarrinhoStorage() {
-  const dados = localStorage.getItem(STORAGE_KEY);
-  if (dados) {
-    return JSON.parse(dados);
-  } else {
+  try {
+    const dados = localStorage.getItem(STORAGE_KEY);
+    if (dados) {
+      return JSON.parse(dados);
+    } else {
+      return [];
+    }
+  } catch (erro) {
+    console.warn('Dados inválidos no LocalStorage, reinicializando carrinho:', erro);
     return [];
   }
 }
@@ -198,6 +203,67 @@ function inicializarFiltrosCatalogo() {
   }
 }
 
+/**
+ * 1.5. Sincronização da Barra de Navegação (Scroll Spy e Menu Mobile)
+ * Atualiza dinamicamente a classe .active conforme o usuário rola a página,
+ * movimentando a bolinha neon e fechando o menu hamburguer no mobile.
+ */
+function inicializarScrollSpy() {
+  const secoes = document.querySelectorAll('section[id]');
+  const linksNav = document.querySelectorAll('.navbar-nav .nav-link');
+  const menuCollapse = document.getElementById('navbarNavDropdown');
+
+  function atualizarLinkAtivo() {
+    let secaoAtual = '';
+    const scrollPos = window.scrollY + 140;
+
+    for (let i = 0; i < secoes.length; i++) {
+      const secao = secoes[i];
+      const topo = secao.offsetTop;
+      const altura = secao.offsetHeight;
+      if (scrollPos >= topo && scrollPos < topo + altura) {
+        secaoAtual = secao.getAttribute('id');
+        break;
+      }
+    }
+
+    // Se estiver no topo da página
+    if (!secaoAtual && window.scrollY < 200) {
+      secaoAtual = 'inicio';
+    }
+
+    if (secaoAtual) {
+      for (let j = 0; j < linksNav.length; j++) {
+        const link = linksNav[j];
+        if (link.getAttribute('href') === `#${secaoAtual}`) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      }
+    }
+  }
+
+  // Evento de scroll com listener passivo
+  window.addEventListener('scroll', atualizarLinkAtivo, { passive: true });
+  atualizarLinkAtivo();
+
+  // Clique nos links: fecha menu mobile automaticamente se aberto
+  for (let k = 0; k < linksNav.length; k++) {
+    linksNav[k].addEventListener('click', function() {
+      for (let m = 0; m < linksNav.length; m++) {
+        linksNav[m].classList.remove('active');
+      }
+      this.classList.add('active');
+
+      if (menuCollapse && menuCollapse.classList.contains('show')) {
+        const bsCollapse = bootstrap.Collapse.getInstance(menuCollapse) || new bootstrap.Collapse(menuCollapse);
+        bsCollapse.hide();
+      }
+    });
+  }
+}
+
 
 // =============================================================================
 // Módulos: Simulador de Serviços (switch..case), Condições de Pagamento (if..else)
@@ -281,11 +347,23 @@ function processarEnvioOrcamento(evento) {
 
   const nome = document.getElementById('campo-nome').value.trim();
   const whatsapp = document.getElementById('campo-whatsapp').value.trim();
-  const servico = document.getElementById('campo-servico').value;
-  const orcamento = document.getElementById('campo-orcamento').value;
-  const pagamento = document.getElementById('campo-pagamento').value;
+  const selectServico = document.getElementById('campo-servico');
+  const selectOrcamento = document.getElementById('campo-orcamento');
+  const selectPagamento = document.getElementById('campo-pagamento');
   const mensagemExtra = document.getElementById('campo-mensagem').value.trim();
   const concordo = document.getElementById('campo-concordo').checked;
+
+  const servicoTexto = (selectServico && selectServico.selectedIndex >= 0)
+    ? selectServico.options[selectServico.selectedIndex].text
+    : (selectServico ? selectServico.value : '');
+
+  const orcamentoTexto = (selectOrcamento && selectOrcamento.selectedIndex >= 0)
+    ? selectOrcamento.options[selectOrcamento.selectedIndex].text
+    : (selectOrcamento ? selectOrcamento.value : '');
+
+  const pagamentoTexto = (selectPagamento && selectPagamento.selectedIndex >= 0)
+    ? selectPagamento.options[selectPagamento.selectedIndex].text
+    : (selectPagamento ? selectPagamento.value : '');
 
   // Validação simples com if..else
   if (!nome || !whatsapp) {
@@ -318,9 +396,9 @@ function processarEnvioOrcamento(evento) {
   let textoWhatsApp = `*SOLICITAÇÃO DE ORÇAMENTO — EXTREME GAMER INFORMÁTICA*`;
   textoWhatsApp += `\n\n*Cliente:* ${nome}`;
   textoWhatsApp += `\n*WhatsApp:* ${whatsapp}`;
-  textoWhatsApp += `\n*Serviço Escolhido:* ${servico}`;
-  textoWhatsApp += `\n*Faixa de Investimento:* ${orcamento}`;
-  textoWhatsApp += `\n*Forma de Pagamento:* ${pagamento.toUpperCase()}`;
+  textoWhatsApp += `\n*Serviço Escolhido:* ${servicoTexto}`;
+  textoWhatsApp += `\n*Faixa de Investimento:* ${orcamentoTexto}`;
+  textoWhatsApp += `\n*Forma de Pagamento:* ${pagamentoTexto}`;
   
   if (resumoItens) {
     textoWhatsApp += resumoItens;
@@ -381,7 +459,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Inicializa os filtros do catálogo
   inicializarFiltrosCatalogo();
 
-  // 3. Configura eventos dos botões "Adicionar ao Orçamento" nos cards
+  // 3. Inicializa a sincronização dinâmica da navbar (Scroll Spy e menu mobile)
+  inicializarScrollSpy();
+
+  // 4. Configura eventos dos botões "Adicionar ao Orçamento" nos cards
   document.addEventListener('click', (e) => {
     // Botão Adicionar ao Carrinho
     const btnAdd = e.target.closest('.btn-adicionar-carrinho');
@@ -424,6 +505,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnFechar) btnFechar.addEventListener('click', fecharGavetaCarrinho);
   if (overlay) overlay.addEventListener('click', fecharGavetaCarrinho);
   if (btnLimpar) btnLimpar.addEventListener('click', limparCarrinho);
+
+  // Acessibilidade: Fecha gaveta com a tecla Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      fecharGavetaCarrinho();
+    }
+  });
 
   // 5. Configura eventos dinâmicos no Formulário de Orçamento
   const campoServico = document.getElementById('campo-servico');
