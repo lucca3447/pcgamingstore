@@ -625,3 +625,256 @@ h1, h2, h3, h4, h5, h6 {
   .garantia-banner-box { padding: 22px 15px; }
   .banner-titulo { font-size: 1.15rem; }
 }
+
+/* ==========================================================================
+   9. COMPONENTES E INTERATIVIDADE TDE PARTE II (UNIFAN)
+   ========================================================================== */
+
+/* 9.1. Botão do Carrinho no Header */
+.btn-carrinho-header {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-button);
+  color: var(--text-white);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  transition: var(--transition-fast);
+}
+
+.btn-carrinho-header:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--primary-orange);
+  color: var(--primary-orange);
+}
+
+.badge-carrinho-contador {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  background: var(--primary-orange);
+  color: var(--text-white);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 8px var(--primary-orange-glow);
+}
+
+/* 9.2. Filtros do Catálogo */
+.filtro-container {
+  display: flex;
+  justify-content: center;
+}
+
+.filtro-botoes-grupo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: var(--bg-surface);
+  padding: 6px 8px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-filtro {
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-filtro:hover {
+  color: var(--text-white);
+  background: var(--bg-surface-elevated);
+}
+
+.btn-filtro.active {
+  background: var(--primary-orange);
+  color: var(--text-white);
+  box-shadow: 0 0 14px var(--primary-orange-glow);
+}
+
+/* 9.3. Imagens dos Cards de Serviços */
+.servico-foto-wrapper {
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--bg-dark);
+  margin-bottom: 16px;
+}
+
+.servico-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.servico-card:hover .servico-foto {
+  transform: scale(1.06);
+}
+
+/* 9.4. Painel Reativo de Diagnóstico no Formulário */
+.resumo-atendimento-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--primary-orange);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+
+.resumo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.resumo-rotulo {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.resumo-dado {
+  font-size: 0.92rem;
+}
+
+/* 9.5. Gaveta de Orçamento / Carrinho (Drawer) */
+.carrinho-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.carrinho-drawer.aberto {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carrinho-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.carrinho-conteudo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.carrinho-drawer.aberto .carrinho-conteudo {
+  transform: translateX(0);
+}
+
+.carrinho-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.carrinho-titulo {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--text-white);
+}
+
+.btn-fechar-carrinho {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-fechar-carrinho:hover {
+  color: var(--primary-orange);
+}
+
+.carrinho-lista {
+  flex: 1;
+  overflow-y: auto;
+  padding-block: 16px;
+}
+
+.carrinho-item {
+  background: var(--bg-surface-elevated);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.carrinho-item-img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--bg-dark);
+}
+
+.carrinho-footer {
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* 9.6. Toast Notificação */
+.toast-notificacao {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--bg-surface-elevated);
+  color: var(--text-white);
+  border: 1px solid var(--primary-orange);
+  border-left: 4px solid var(--primary-orange);
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 2000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.toast-notificacao.visivel {
+  transform: translateY(0);
+  opacity: 1;
+}

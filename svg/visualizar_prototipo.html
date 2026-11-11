@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extreme Gamer — Protótipo Vetorial de Alta Fidelidade (SVG)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #07080b;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px 16px 80px;
+    }
+    .top-bar {
+      width: 100%;
+      max-width: 1440px;
+      margin-bottom: 20px;
+      padding: 16px 24px;
+      background: #0f121a;
+      border: 1px solid #1f2738;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      background: rgba(255, 90, 34, 0.15);
+      color: #ff5a22;
+      border: 1px solid rgba(255, 90, 34, 0.3);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .sub {
+      font-size: 13px;
+      color: #8f9cae;
+      margin-top: 2px;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      background: #181d29;
+      color: #fff;
+      border: 1px solid #283347;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      background: #232c3f;
+      border-color: #ff5a22;
+    }
+    .btn-orange {
+      background: #ff5a22;
+      border-color: #ff5a22;
+    }
+    .btn-orange:hover {
+      background: #ff753b;
+    }
+    .canvas-container {
+      width: 100%;
+      max-width: 1440px;
+      background: #08090c;
+      border: 1px solid #1d2331;
+      border-radius: 14px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+    .canvas-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div>
+      <div class="brand-title">
+        EXTREME GAMER INFORMÁTICA
+        <span class="badge">PROTÓTIPO VETORIAL SVG REVISADO</span>
+      </div>
+      <p class="sub">1440 × 3750 px • Fotografias reais em alta definição • Telemetria de bancada • Fichas técnicas com benchmarks</p>
+    </div>
+    <div class="controls">
+      <a href="../previewprototipo.png" target="_blank" class="btn">Ver Mockup Original</a>
+      <a href="prototipo_novo_design.svg" download class="btn">Baixar SVG (1.2 MB)</a>
+      <a href="prototipo_novo_design.svg" target="_blank" class="btn btn-orange">Abrir SVG Direto</a>
+    </div>
+  </div>
+
+  <div class="canvas-container">
+    <img src="prototipo_novo_design.svg" alt="Protótipo SVG Extreme Gamer Informática">
+  </div>
+</body>
+</html>

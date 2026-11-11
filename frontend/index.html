@@ -63,8 +63,12 @@
             </li>
           </ul>
 
-          <!-- Botão WhatsApp no menu recolhido (Mobile) -->
-          <div class="d-lg-none mt-3 text-center">
+          <!-- Botão WhatsApp e Carrinho no menu recolhido (Mobile) -->
+          <div class="d-lg-none mt-3 text-center d-flex flex-column gap-2">
+            <button type="button" id="btn-carrinho-mobile" class="btn btn-outline-warning w-100 d-flex align-items-center justify-content-center gap-2">
+              <i class="bi bi-cart3"></i>
+              <span>Ver Orçamento (<strong id="badge-carrinho-mobile">0</strong>)</span>
+            </button>
             <a href="https://wa.me/message/BE3T4MHQ7EM3F1" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-header w-100">
               <i class="bi bi-whatsapp whatsapp-icon me-2" aria-hidden="true"></i>
               Falar no Whatsapp
@@ -72,8 +76,14 @@
           </div>
         </div>
 
-        <!-- Botão WhatsApp (Desktop) -->
-        <div class="header-cta d-none d-lg-block">
+        <!-- Ações do Header (Desktop: Carrinho + WhatsApp) -->
+        <div class="header-cta d-none d-lg-flex align-items-center gap-3">
+          <button type="button" id="btn-carrinho" class="btn btn-carrinho-header position-relative" aria-label="Abrir orçamento">
+            <i class="bi bi-cart3 me-1"></i>
+            <span>Orçamento</span>
+            <span id="badge-carrinho" class="badge-carrinho-contador">0</span>
+          </button>
+
           <a href="https://wa.me/message/BE3T4MHQ7EM3F1" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-header">
             <i class="bi bi-whatsapp whatsapp-icon me-2" aria-hidden="true"></i>
             Falar no Whatsapp
@@ -255,12 +265,30 @@
           </p>
         </header>
 
+        <!-- Barra de Filtros Interativos (Laço for + if..else) -->
+        <div class="filtro-container mb-4" id="container-filtros">
+          <div class="filtro-botoes-grupo">
+            <button type="button" class="btn btn-filtro active" data-categoria="todos">
+              <i class="bi bi-grid-fill me-1"></i> Todos os Setups
+            </button>
+            <button type="button" class="btn btn-filtro" data-categoria="esports">
+              <i class="bi bi-controller me-1"></i> eSports &amp; Entrada
+            </button>
+            <button type="button" class="btn btn-filtro" data-categoria="streamer">
+              <i class="bi bi-broadcast me-1"></i> Streamer &amp; Criação
+            </button>
+            <button type="button" class="btn btn-filtro" data-categoria="entusiasta">
+              <i class="bi bi-fire me-1"></i> Alta Performance 4K
+            </button>
+          </div>
+        </div>
+
         <div class="cards-grid">
           
           <!-- Setup 1: PC Arena Competitivo -->
-          <article class="card produto-card" id="pc-arena">
+          <article class="card produto-card" id="pc-arena" data-categoria="esports">
             <div class="produto-topo-box">
-              <img src="img/pc3.png" class="card-img-top produto-img" alt="PC Arena Competitivo">
+              <img src="img/pc-tigeryt.jpg" class="card-img-top produto-img" alt="PC Arena Competitivo">
               <span class="badge-card badge-dark">MAIS VENDIDO</span>
             </div>
             
@@ -279,21 +307,23 @@
                 <div class="preco-box">
                   <span class="preco-valor">R$ 3.890,00</span>
                 </div>
-                <a href="#orcamento" class="btn btn-primary btn-card">Quero Este</a>
+                <button type="button" class="btn btn-primary btn-card btn-adicionar-carrinho" data-id="pc-arena" data-nome="PC Arena Competitivo" data-preco="3890" data-img="img/pc-tigeryt.jpg">
+                  <i class="bi bi-cart-plus me-1"></i> Quero Este
+                </button>
               </div>
             </div>
           </article>
 
-          <!-- Setup 2: PC Streamer & Creator -->
-          <article class="card produto-card" id="pc-streamer">
+          <!-- Setup 2: PC Streamer & Creator White Edition -->
+          <article class="card produto-card" id="pc-streamer" data-categoria="streamer">
             <div class="produto-topo-box">
-              <img src="img/pc1.png" class="card-img-top produto-img" alt="PC Streamer &amp; Creator">
-              <span class="badge-card badge-dark">RECOMENDADO</span>
+              <img src="img/pc-h7-white.png" class="card-img-top produto-img" alt="PC Streamer &amp; Creator White Edition">
+              <span class="badge-card badge-dark">WHITE EDITION</span>
             </div>
 
             <div class="card-body">
               <h5 class="card-title produto-nome">PC Streamer &amp; Creator</h5>
-              <p class="card-text produto-foco">Lives fluidas e jogos em Quad HD</p>
+              <p class="card-text produto-foco">Gabinete Vidro Curvo &amp; Quad HD</p>
               
               <ul class="produto-specs">
                 <li>Intel Core i5 14400F (10C / 16T)</li>
@@ -306,15 +336,17 @@
                 <div class="preco-box">
                   <span class="preco-valor">R$ 6.490,00</span>
                 </div>
-                <a href="#orcamento" class="btn btn-primary btn-card">Quero Este</a>
+                <button type="button" class="btn btn-primary btn-card btn-adicionar-carrinho" data-id="pc-streamer" data-nome="PC Streamer & Creator" data-preco="6490" data-img="img/pc-h7-white.png">
+                  <i class="bi bi-cart-plus me-1"></i> Quero Este
+                </button>
               </div>
             </div>
           </article>
 
-          <!-- Setup 3: PC Ultra 4K Titan -->
-          <article class="card produto-card" id="pc-titan">
+          <!-- Setup 3: PC Ultra 4K Titan (H9 Flow Black) -->
+          <article class="card produto-card" id="pc-titan" data-categoria="entusiasta">
             <div class="produto-topo-box">
-              <img src="img/pc2.png" class="card-img-top produto-img" alt="PC Ultra 4K Titan">
+              <img src="img/pc-h9-titan.png" class="card-img-top produto-img" alt="PC Ultra 4K Titan">
               <span class="badge-card badge-ouro-escuro">ALTA PERFORMANCE</span>
             </div>
 
@@ -333,7 +365,38 @@
                 <div class="preco-box">
                   <span class="preco-valor">R$ 12.990,00</span>
                 </div>
-                <a href="#orcamento" class="btn btn-primary btn-card">Personalizar</a>
+                <button type="button" class="btn btn-primary btn-card btn-adicionar-carrinho" data-id="pc-titan" data-nome="PC Ultra 4K Titan" data-preco="12990" data-img="img/pc-h9-titan.png">
+                  <i class="bi bi-cart-plus me-1"></i> Quero Este
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Setup 4: PC Full Custom Ryzen 7000 AM5 -->
+          <article class="card produto-card" id="pc-custom" data-categoria="entusiasta">
+            <div class="produto-topo-box">
+              <img src="img/pc-custom-ryzen.jpg" class="card-img-top produto-img" alt="PC Full Custom Ryzen 7000 AM5">
+              <span class="badge-card badge-dark">FULL CUSTOM</span>
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title produto-nome">PC Full Custom AM5</h5>
+              <p class="card-text produto-foco">Plataforma DDR5 com Water Cooler</p>
+              
+              <ul class="produto-specs">
+                <li>AMD Ryzen 7 7700X (8C / 16T)</li>
+                <li>GeForce RTX 4070 Ti Super 16GB</li>
+                <li>32GB DDR5 6000MHz Kingston Fury</li>
+                <li>Water Cooler 360mm ARGB &amp; NVMe 1TB</li>
+              </ul>
+
+              <div class="produto-rodape">
+                <div class="preco-box">
+                  <span class="preco-valor">R$ 8.790,00</span>
+                </div>
+                <button type="button" class="btn btn-primary btn-card btn-adicionar-carrinho" data-id="pc-custom" data-nome="PC Full Custom AM5" data-preco="8790" data-img="img/pc-custom-ryzen.jpg">
+                  <i class="bi bi-cart-plus me-1"></i> Quero Este
+                </button>
               </div>
             </div>
           </article>
@@ -361,6 +424,9 @@
           
           <!-- Serviço 1: Limpeza Preventiva -->
           <article class="card servico-card">
+            <div class="servico-foto-wrapper">
+              <img src="img/servico-pasta-termica.jpg" alt="Aplicação de pasta térmica em socket AMD Ryzen" class="card-img-top servico-foto" loading="lazy">
+            </div>
             <div class="card-body p-0 d-flex flex-column h-100">
               <div class="servico-card-cabecalho">
                 <div class="servico-icone-box">
@@ -373,7 +439,7 @@
               </div>
 
               <p class="card-text servico-descricao">
-                Desmontagem técnica completa, desoxidação, higienização das ventoinhas e aplicação de pasta térmica premium de prata.
+                Desmontagem técnica completa, desoxidação, higienização das ventoinhas e aplicação de pasta térmica premium Arctic MX-4.
               </p>
 
               <ul class="servico-lista-beneficios">
@@ -382,13 +448,16 @@
               </ul>
 
               <div class="servico-btn-wrapper mt-auto">
-                <a href="#orcamento" class="btn btn-outline-servico">Agendar Limpeza</a>
+                <a href="#orcamento" class="btn btn-outline-servico" data-selecionar-servico="limpeza">Agendar Limpeza</a>
               </div>
             </div>
           </article>
 
           <!-- Serviço 2: Diagnóstico & Reparos -->
           <article class="card servico-card">
+            <div class="servico-foto-wrapper">
+              <img src="img/servico-diagnostico.jpg" alt="Bancada de diagnóstico técnico de hardware" class="card-img-top servico-foto" loading="lazy">
+            </div>
             <div class="card-body p-0 d-flex flex-column h-100">
               <div class="servico-card-cabecalho">
                 <div class="servico-icone-box">
@@ -410,13 +479,16 @@
               </ul>
 
               <div class="servico-btn-wrapper mt-auto">
-                <a href="#orcamento" class="btn btn-outline-servico">Solicitar Diagnóstico</a>
+                <a href="#orcamento" class="btn btn-outline-servico" data-selecionar-servico="diagnostico">Solicitar Diagnóstico</a>
               </div>
             </div>
           </article>
 
           <!-- Serviço 3: Montagem & Upgrades -->
           <article class="card servico-card">
+            <div class="servico-foto-wrapper">
+              <img src="img/servico-montagem.jpg" alt="Montagem cirúrgica e cable management profissional" class="card-img-top servico-foto" loading="lazy">
+            </div>
             <div class="card-body p-0 d-flex flex-column h-100">
               <div class="servico-card-cabecalho">
                 <div class="servico-icone-box">
@@ -438,7 +510,7 @@
               </ul>
 
               <div class="servico-btn-wrapper mt-auto">
-                <a href="#orcamento" class="btn btn-outline-servico">Fazer Upgrade</a>
+                <a href="#orcamento" class="btn btn-outline-servico" data-selecionar-servico="upgrade">Fazer Upgrade</a>
               </div>
             </div>
           </article>
@@ -533,6 +605,43 @@
                 </div>
               </div>
 
+              <!-- Campo: Forma de Pagamento e Descontos (if..else) -->
+              <div class="form-grupo">
+                <label for="campo-pagamento" class="form-label">Condição de Pagamento Pretendida *</label>
+                <div class="select-wrapper">
+                  <select id="campo-pagamento" name="pagamento" class="form-select foco-laranja" required>
+                    <option value="pix" selected>Pix à Vista (10% de Desconto Especial)</option>
+                    <option value="cartao">Cartão de Crédito (em até 12x Sem Juros)</option>
+                    <option value="boleto">Boleto Bancário</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Painel Reativo de Diagnóstico e Prazo (switch..case + if..else) -->
+            <div id="resumo-atendimento" class="resumo-atendimento-box full-width my-3">
+              <div class="resumo-cabecalho d-flex align-items-center gap-2 mb-2">
+                <i class="bi bi-cpu-fill text-orange fs-5"></i>
+                <h5 id="resumo-titulo-servico" class="m-0 text-white fs-6">Montagem de PC Gamer Completo Sob Medida</h5>
+              </div>
+              <div class="resumo-grid">
+                <div class="resumo-col">
+                  <span class="resumo-rotulo">Prazo Estimado:</span>
+                  <strong id="prazo-estimado" class="resumo-dado text-orange">2 a 3 dias úteis</strong>
+                </div>
+                <div class="resumo-col">
+                  <span class="resumo-rotulo">Garantia Técnica:</span>
+                  <strong id="garantia-estimada" class="resumo-dado text-warning">2 Anos (24 Meses)</strong>
+                </div>
+                <div class="resumo-col">
+                  <span class="resumo-rotulo">Condição de Pagamento:</span>
+                  <strong id="pagamento-estimado" class="resumo-dado text-success">10% de Desconto Especial Aplicado à Vista</strong>
+                </div>
+              </div>
+              <p id="procedimento-estimado" class="resumo-procedimento text-muted small mt-2 mb-0">
+                Montagem com cable management cirúrgico e stress test de 24h na bancada.
+              </p>
             </div>
 
             <!-- Campo: Detalhes do Pedido ou Sintomas do Aparelho -->
@@ -615,15 +724,59 @@
           &copy; 2026 Extreme Gamer Informática. Todos os direitos reservados.
         </p>
         <p class="projeto-academico">
-          UNIFAN • TDE Parte I • Programação Front-End (Prof. Gean Paulo) • João Lucca Sotero e Kauan Brandão
+          UNIFAN • TDE Parte II • Programação Front-End (Prof. Gean Paulo) • João Lucca Sotero e Kauan Brandão
         </p>
       </div>
 
     </div>
   </footer>
 
-  <!-- ETAPA 4: Bootstrap 5 Bundle JS via CDN (para funcionamento dos componentes nativos) -->
+  <!-- =========================================================================
+       4. GAVETA / OFFCANVAS DE ORÇAMENTO (CARRINHO LOCALSTORAGE)
+       ========================================================================= -->
+  <div id="painel-carrinho" class="carrinho-drawer" aria-hidden="true">
+    <div class="carrinho-overlay" id="carrinho-overlay"></div>
+    <aside class="carrinho-conteudo" role="dialog" aria-labelledby="carrinho-titulo">
+      <header class="carrinho-header">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-cart3 text-orange fs-4"></i>
+          <h3 id="carrinho-titulo" class="carrinho-titulo m-0">Seu Orçamento</h3>
+        </div>
+        <button type="button" id="btn-fechar-carrinho" class="btn-fechar-carrinho" aria-label="Fechar orçamento">&times;</button>
+      </header>
+
+      <div id="lista-carrinho" class="carrinho-lista">
+        <!-- Itens renderizados dinamicamente via JS com laço for -->
+      </div>
+
+      <footer class="carrinho-footer">
+        <div class="carrinho-totais">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="text-muted">Total Estimado:</span>
+            <strong id="total-carrinho" class="total-valor text-white fs-5">R$ 0,00</strong>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-success small">À vista no Pix (10% OFF):</span>
+            <strong id="total-pix" class="text-success fs-6">R$ 0,00</strong>
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="button" id="btn-limpar-carrinho" class="btn btn-outline-danger btn-sm w-50">
+            <i class="bi bi-trash3 me-1"></i> Limpar
+          </button>
+          <a href="#orcamento" id="btn-finalizar-orcamento" class="btn btn-submit btn-sm w-50 text-center" onclick="fecharGavetaCarrinho()">
+            <i class="bi bi-check2-circle me-1"></i> Orçar no Form
+          </a>
+        </div>
+      </footer>
+    </aside>
+  </div>
+
+  <!-- ETAPA 4: Bootstrap 5 Bundle JS via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <!-- ETAPA 5: Script Autoral TDE Parte II (Vanilla JavaScript) -->
+  <script src="script.js"></script>
 
 </body>
 </html>
