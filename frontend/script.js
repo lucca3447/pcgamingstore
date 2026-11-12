@@ -574,9 +574,83 @@ function mostrarNotificacao(mensagem) {
   }, 3500);
 }
 
+/* =============================================================================
+   10. SINCRONIZAÇÃO DA BARRA DE NAVEGAÇÃO (SCROLL SPY E MENU MOBILE)
+   ============================================================================= */
+function inicializarScrollSpy() {
+  const secoes = document.querySelectorAll('section[id]');
+  const linksNav = document.querySelectorAll('.navbar-nav .nav-link');
+  const menuCollapse = document.getElementById('navbarNavDropdown');
+
+  function atualizarLinkAtivo() {
+    let secaoAtual = '';
+
+    // Se estiver no final da página, ativa a última seção (Orçamento)
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50) {
+      secaoAtual = 'orcamento';
+    } else {
+      for (let i = 0; i < secoes.length; i++) {
+        const rect = secoes[i].getBoundingClientRect();
+        if (rect.top <= 150 && rect.bottom >= 150) {
+          secaoAtual = secoes[i].id;
+          break;
+        }
+      }
+    }
+
+    if (!secaoAtual && window.scrollY < 200) {
+      secaoAtual = 'inicio';
+    }
+
+    if (secaoAtual) {
+      for (let j = 0; j < linksNav.length; j++) {
+        const link = linksNav[j];
+        if (link.getAttribute('href') === '#' + secaoAtual) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      }
+    }
+  }
+
+  window.addEventListener('scroll', atualizarLinkAtivo, { passive: true });
+  atualizarLinkAtivo();
+
+  // Fecha o menu hambúrguer no mobile e sincroniza active no clique
+  for (let k = 0; k < linksNav.length; k++) {
+    linksNav[k].addEventListener('click', function() {
+      for (let m = 0; m < linksNav.length; m++) {
+        linksNav[m].classList.remove('active');
+      }
+      this.classList.add('active');
+
+      if (menuCollapse && menuCollapse.classList.contains('show') && typeof bootstrap !== 'undefined') {
+        const instancia = bootstrap.Collapse.getInstance(menuCollapse);
+        if (instancia) {
+          instancia.hide();
+        }
+      }
+    });
+  }
+
+  const logoLink = document.querySelector('.logo-link');
+  if (logoLink) {
+    logoLink.addEventListener('click', function() {
+      if (menuCollapse && menuCollapse.classList.contains('show') && typeof bootstrap !== 'undefined') {
+        const instancia = bootstrap.Collapse.getInstance(menuCollapse);
+        if (instancia) {
+          instancia.hide();
+        }
+      }
+    });
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   atualizarInterface();
   alternarModoFormulario('pre-montado');
+  inicializarScrollSpy();
 
   // Eventos da Gaveta Lateral
   document.getElementById('btn-carrinho').addEventListener('click', abrirGavetaCarrinho);
