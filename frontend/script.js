@@ -7,8 +7,8 @@
  * LÓGICA DE DUAS OPÇÕES NO FORMULÁRIO + VALIDAÇÃO COMPLETA DE CAMPOS:
  * - Opção 1 ('pre-montado'): Envia os PCs pré-prontos do carrinho.
  * - Opção 2 ('personalizado'): Escolhe faixa de orçamento e descreve o pedido.
- * - O campo "O que você deseja fazer?" (#campo-servico) fica posicionado fora do
- *   formulário, atualizando prazos e garantias via switch...case a qualquer momento.
+ * - O campo "O que você deseja fazer?" (#campo-servico) fica posicionado no topo
+ *   do formulário, atualizando prazos e garantias via switch...case a qualquer momento.
  * - Travas de Segurança: Bloqueia letras no telefone, impede números no nome
  *   e limita a quantidade máxima de caracteres em todos os campos.
  * =============================================================================
@@ -22,7 +22,7 @@ let modoAtualFormulario = 'pre-montado';
 
 /* 1. TRAVAS DE DIGITAÇÃO NOS CAMPOS (NOME, TELEFONE E LIMITE DE TEXTO) */
 
-// Bloqueia letras no WhatsApp e formata automaticamente como (75) 99999-9999
+// Bloqueia letras no WhatsApp e formata como (75) 3221-1234 (10 dígitos) ou (75) 99999-9999 (11 dígitos)
 function mascaraTelefone(campo) {
   let apenasNumeros = campo.value.replace(/\D/g, '');
 
@@ -30,8 +30,12 @@ function mascaraTelefone(campo) {
     apenasNumeros = apenasNumeros.slice(0, 11);
   }
 
-  if (apenasNumeros.length > 6) {
+  if (apenasNumeros.length > 10) {
+    // 11 dígitos: Celular com 9º dígito
     campo.value = '(' + apenasNumeros.slice(0, 2) + ') ' + apenasNumeros.slice(2, 7) + '-' + apenasNumeros.slice(7);
+  } else if (apenasNumeros.length > 6) {
+    // Até 10 dígitos: Telefone fixo ou número em digitação
+    campo.value = '(' + apenasNumeros.slice(0, 2) + ') ' + apenasNumeros.slice(2, 6) + '-' + apenasNumeros.slice(6);
   } else if (apenasNumeros.length > 2) {
     campo.value = '(' + apenasNumeros.slice(0, 2) + ') ' + apenasNumeros.slice(2);
   } else if (apenasNumeros.length > 0) {
@@ -58,23 +62,32 @@ function atualizarContadorTexto(campo) {
 }
 
 /* =============================================================================
-   2. LOCALSTORAGE: LER E SALVAR OS PCS PRÉ-PRONTOS DO CARRINHO
+   2. LOCALSTORAGE: LER E SALVAR OS PCS PRÉ-PRONTOS DO CARRINHO (COM TRY...CATCH)
    ============================================================================= */
 function obterCarrinho() {
-  const dadosSalvos = localStorage.getItem(CHAVE_STORAGE);
-  if (dadosSalvos) {
-    return JSON.parse(dadosSalvos);
-  } else {
+  try {
+    const dadosSalvos = localStorage.getItem(CHAVE_STORAGE);
+    if (!dadosSalvos) {
+      return [];
+    }
+    const lista = JSON.parse(dadosSalvos);
+    return Array.isArray(lista) ? lista : [];
+  } catch (erro) {
+    console.warn('Dados inválidos no LocalStorage, reinicializando carrinho:', erro);
     return [];
   }
 }
 
 function salvarCarrinho(listaItens) {
-  localStorage.setItem(CHAVE_STORAGE, JSON.stringify(listaItens));
+  try {
+    localStorage.setItem(CHAVE_STORAGE, JSON.stringify(listaItens));
+  } catch (erro) {
+    console.error('Falha ao salvar carrinho no LocalStorage:', erro);
+  }
   atualizarInterface();
 }
 
-/*3. MANIPULAÇÃO DO CARRINHO  */
+/* 3. MANIPULAÇÃO DO CARRINHO */
 function adicionarAoCarrinho(id, nome, preco, imagem) {
   const carrinho = obterCarrinho();
   let itemJaExiste = false;
@@ -100,8 +113,15 @@ function adicionarAoCarrinho(id, nome, preco, imagem) {
     });
   }
 
+  // Sincroniza o modo e o select de serviço antes da renderização em ciclo único
+  modoAtualFormulario = 'pre-montado';
+  const selectServico = document.getElementById('campo-servico');
+  if (selectServico) {
+    selectServico.value = 'pc-completo';
+  }
+
   salvarCarrinho(carrinho);
-  alternarModoFormulario('pre-montado');
+  atualizarVisibilidadeModo();
   mostrarNotificacao(nome + ' adicionado à Opção 1 (PC Pré-Pronto)!');
 }
 
@@ -350,17 +370,21 @@ function atualizarPainelResumo() {
       break;
   }
 
-  // 2) Calcula a condição de pagamento com 
+  // 2) Calcula a condição de pagamento (apenas se for compra de PC completo na Opção 1)
   let somaCarrinho = 0;
-  if (modoAtualFormulario === 'pre-montado') {
+  const deveExibirPrecoCarrinho = (tipoServico === 'pc-completo' && modoAtualFormulario === 'pre-montado');
+
+  if (deveExibirPrecoCarrinho) {
     const carrinho = obterCarrinho();
     for (let i = 0; i < carrinho.length; i++) {
       somaCarrinho += carrinho[i].preco * carrinho[i].quantidade;
     }
   }
 
+  const exibirValoresCalculados = deveExibirPrecoCarrinho && (somaCarrinho > 0);
+
   if (formaPagamento === 'pix') {
-    if (modoAtualFormulario === 'pre-montado' && somaCarrinho > 0) {
+    if (exibirValoresCalculados) {
       const valorPix = somaCarrinho * 0.90;
       boxPagamento.textContent = 'R$ ' + valorPix.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + ' no Pix (10% OFF)';
     } else {
@@ -368,7 +392,7 @@ function atualizarPainelResumo() {
     }
     boxPagamento.className = 'resumo-dado text-success fw-bold';
   } else if (formaPagamento === 'cartao') {
-    if (modoAtualFormulario === 'pre-montado' && somaCarrinho > 0) {
+    if (exibirValoresCalculados) {
       const parcela = somaCarrinho / 12;
       boxPagamento.textContent = '12x de R$ ' + parcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + ' sem juros';
     } else {
@@ -376,7 +400,7 @@ function atualizarPainelResumo() {
     }
     boxPagamento.className = 'resumo-dado text-warning fw-bold';
   } else {
-    if (modoAtualFormulario === 'pre-montado' && somaCarrinho > 0) {
+    if (exibirValoresCalculados) {
       boxPagamento.textContent = 'R$ ' + somaCarrinho.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + ' no Boleto';
     } else {
       boxPagamento.textContent = 'Valor à vista no Boleto Bancário';
@@ -407,10 +431,6 @@ function filtrarCatalogo(categoriaEscolhida, botaoClicado) {
 
 function selecionarServicoRapido(servicoId) {
   document.getElementById('campo-servico').value = servicoId;
-  const selectOrcamento = document.getElementById('campo-orcamento');
-  if (selectOrcamento) {
-    selectOrcamento.value = 'apenas-manutencao';
-  }
   atualizarVisibilidadeModo();
 }
 
@@ -430,25 +450,29 @@ function enviarOrcamentoWhatsApp(evento) {
 
   // 1) Validação do Nome (mínimo 3 letras, máximo 80, sem números)
   if (nome.length < 3 || nome.length > 80) {
-    alert('Por favor, informe um nome válido (entre 3 e 80 caracteres).');
+    mostrarNotificacao('Por favor, informe um nome válido (entre 3 e 80 caracteres).');
+    document.getElementById('campo-nome').focus();
     return;
   }
 
   // 2) Validação do WhatsApp (exige 10 ou 11 dígitos numéricos com DDD)
   if (whatsappApenasNumeros.length < 10 || whatsappApenasNumeros.length > 11) {
-    alert('Por favor, digite um WhatsApp válido com DDD (apenas números, ex: 75 99999-9999).');
+    mostrarNotificacao('Por favor, digite um WhatsApp válido com DDD (ex: (75) 99999-9999).');
+    document.getElementById('campo-whatsapp').focus();
     return;
   }
 
   // 3) Validação de limite da descrição (máximo 500 caracteres)
   if (descricao.length > 500) {
-    alert('A mensagem excedeu o limite máximo de 500 caracteres.');
+    mostrarNotificacao('A mensagem excedeu o limite máximo de 500 caracteres.');
+    document.getElementById('campo-mensagem').focus();
     return;
   }
 
   // 4) Validação do termo de concordância
   if (!concordo) {
-    alert('Confirme a caixa de concordância para enviar.');
+    mostrarNotificacao('Confirme a caixa de concordância para enviar.');
+    document.getElementById('campo-concordo').focus();
     return;
   }
 
@@ -461,7 +485,8 @@ function enviarOrcamentoWhatsApp(evento) {
   if (selectServico.value !== 'pc-completo') {
     // Serviços Técnicos (Upgrade, Limpeza, Diagnóstico)
     if (descricao.length < 5) {
-      alert('Por favor, descreva no campo de mensagem o serviço necessário ou os sintomas do aparelho (mínimo de 5 caracteres).');
+      mostrarNotificacao('Por favor, descreva no campo de mensagem o serviço ou sintomas (mínimo 5 caracteres).');
+      document.getElementById('campo-mensagem').focus();
       return;
     }
 
@@ -472,7 +497,7 @@ function enviarOrcamentoWhatsApp(evento) {
     const carrinho = obterCarrinho();
 
     if (carrinho.length === 0) {
-      alert('Adicione pelo menos um PC Pré-Pronto no catálogo ou mude para a Opção 2 (Montar pelo Meu Orçamento)!');
+      mostrarNotificacao('Adicione pelo menos um PC Pré-Pronto no catálogo ou mude para a Opção 2!');
       return;
     }
 
@@ -500,7 +525,8 @@ function enviarOrcamentoWhatsApp(evento) {
   } else {
     // Opção 2 de Montar PC: Exige que o cliente escreva pelo menos 5 caracteres descrevendo o pedido
     if (descricao.length < 5) {
-      alert('Por favor, descreva no campo de mensagem o que você deseja montar no PC (mínimo de 5 caracteres).');
+      mostrarNotificacao('Por favor, descreva no campo de mensagem o que deseja no seu PC (mínimo 5 caracteres).');
+      document.getElementById('campo-mensagem').focus();
       return;
     }
 
@@ -521,20 +547,31 @@ function enviarOrcamentoWhatsApp(evento) {
    9. CONTROLE DA GAVETA LATERAL E INICIALIZAÇÃO DE EVENTOS
    ============================================================================= */
 function abrirGavetaCarrinho() {
-  document.getElementById('painel-carrinho').classList.add('aberto');
+  const gaveta = document.getElementById('painel-carrinho');
+  if (gaveta) {
+    gaveta.classList.add('aberto');
+    gaveta.setAttribute('aria-hidden', 'false');
+  }
 }
 
 function fecharGavetaCarrinho() {
-  document.getElementById('painel-carrinho').classList.remove('aberto');
+  const gaveta = document.getElementById('painel-carrinho');
+  if (gaveta) {
+    gaveta.classList.remove('aberto');
+    gaveta.setAttribute('aria-hidden', 'true');
+  }
 }
 
+let timerNotificacao;
 function mostrarNotificacao(mensagem) {
   const toast = document.getElementById('toast-notificacao');
+  if (!toast) return;
   toast.textContent = mensagem;
   toast.classList.add('visivel');
-  setTimeout(function() {
+  clearTimeout(timerNotificacao);
+  timerNotificacao = setTimeout(function() {
     toast.classList.remove('visivel');
-  }, 3000);
+  }, 3500);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -550,6 +587,13 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('btn-finalizar-orcamento').addEventListener('click', function() {
     fecharGavetaCarrinho();
     alternarModoFormulario('pre-montado');
+  });
+
+  // Fechamento da gaveta com a tecla Escape
+  document.addEventListener('keydown', function(evento) {
+    if (evento.key === 'Escape') {
+      fecharGavetaCarrinho();
+    }
   });
 
   // Eventos dos Selects do Formulário

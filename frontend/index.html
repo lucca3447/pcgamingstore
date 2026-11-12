@@ -504,23 +504,23 @@
 
         <div class="formulario-wrapper">
 
-          <!-- Campo Geral (Fora do Formulário): O que você deseja fazer? -->
-          <div id="grupo-tipo-servico" class="bloco-servico-externo mb-4">
-            <label for="campo-servico" class="form-label d-flex align-items-center gap-2 mb-2">
-              <i class="bi bi-gear-wide-connected text-orange" aria-hidden="true"></i>
-              <span>O que você deseja fazer? *</span>
-            </label>
-            <div class="select-wrapper">
-              <select id="campo-servico" name="servico" class="form-select foco-laranja" required form="form-orcamento">
-                <option value="pc-completo" selected>Compra / Montagem de PC Gamer Completo (2 Anos Garantia)</option>
-                <option value="upgrade">Upgrade de Peças (Placa de Vídeo, RAM, SSD, Fonte)</option>
-                <option value="limpeza">Limpeza Preventiva &amp; Troca de Pasta Térmica</option>
-                <option value="diagnostico">Diagnóstico &amp; Conserto (PC, Notebook ou Console)</option>
-              </select>
-            </div>
-          </div>
-
           <form id="form-orcamento" class="form-estilizado">
+
+            <!-- Campo 1: O que você deseja fazer? (Integrado ao topo do formulário) -->
+            <div id="grupo-tipo-servico" class="bloco-servico-interno mb-4">
+              <label for="campo-servico" class="form-label d-flex align-items-center gap-2 mb-2">
+                <i class="bi bi-gear-wide-connected text-orange" aria-hidden="true"></i>
+                <span>O que você deseja fazer? *</span>
+              </label>
+              <div class="select-wrapper">
+                <select id="campo-servico" name="servico" class="form-select foco-laranja" required>
+                  <option value="pc-completo" selected>Compra / Montagem de PC Gamer Completo (2 Anos Garantia)</option>
+                  <option value="upgrade">Upgrade de Peças (Placa de Vídeo, RAM, SSD, Fonte)</option>
+                  <option value="limpeza">Limpeza Preventiva &amp; Troca de Pasta Térmica</option>
+                  <option value="diagnostico">Diagnóstico &amp; Conserto (PC, Notebook ou Console)</option>
+                </select>
+              </div>
+            </div>
 
             <!-- SELETOR DAS 2 OPÇÕES DO FORMULÁRIO (Exclusivo da opção Montar PC) -->
             <div id="seletor-modo-pc" class="seletor-modo-wrapper mb-4">
@@ -607,7 +607,6 @@
                     <option value="4000-7000" selected>De R$ 4.000 a R$ 7.000</option>
                     <option value="7000-12000">De R$ 7.000 a R$ 12.000</option>
                     <option value="acima-12000">Acima de R$ 12.000 (Linha Entusiasta 4K)</option>
-                    <option value="apenas-manutencao">Apenas valor da manutenção / serviço técnico</option>
                   </select>
                 </div>
               </div>

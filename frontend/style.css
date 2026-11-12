@@ -370,9 +370,9 @@ h1, h2, h3, h4, h5, h6 {
    6. FORMULÁRIO COM SELETOR DE 2 OPÇÕES (PRÉ-PRONTO VS ORÇAMENTO)
    -------------------------------------------------------------------------- */
 .secao-orcamento { padding: 30px 0 80px 0; }
-.bloco-servico-externo {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+.bloco-servico-interno, .bloco-servico-externo {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-button);
   border-radius: var(--radius-lg);
   padding: 18px 22px;
 }
