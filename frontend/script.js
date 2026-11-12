@@ -1,592 +1,559 @@
 /**
  * =============================================================================
- * EXTREME GAMER INFORMÁTICA — SISTEMA DE INTERATIVIDADE E ORÇAMENTOS
- * -----------------------------------------------------------------------------
- * Trabalho Discente Efetivo (TDE Parte II) — Programação Front-End
+ * EXTREME GAMER INFORMÁTICA — TDE PARTE II (PROGRAMAÇÃO FRONT-END)
  * Centro Universitário Nobre (UNIFAN) | Prof. Gean Paulo
- * Estudantes: João Lucca Sotero e Kauan Brandão
- * 
- * ESTRUTURAS JAVASCRIPT UTILIZADAS NO PROJETO:
- * - if...else (Validações, regras de desconto Pix e filtros)
- * - switch...case (Cálculo dinâmico de prazos, procedimentos e garantias)
- * - for (Iteração sobre produtos do catálogo e cálculo de itens no carrinho)
- * - function (Funções modulares e reutilizáveis)
- * - DOM / document.getElementById (Manipulação reativa da interface)
- * - localStorage (Persistência do carrinho e preferências do cliente)
- * - Eventos (click, change, submit, DOMContentLoaded)
+ * Equipe: João Lucca Sotero e Kauan Brandão
+ *
+ * LÓGICA DE DUAS OPÇÕES NO FORMULÁRIO + VALIDAÇÃO COMPLETA DE CAMPOS:
+ * - Opção 1 ('pre-montado'): Envia os PCs pré-prontos do carrinho.
+ * - Opção 2 ('personalizado'): Escolhe faixa de orçamento e descreve o pedido.
+ * - O campo "O que você deseja fazer?" (#campo-servico) fica posicionado fora do
+ *   formulário, atualizando prazos e garantias via switch...case a qualquer momento.
+ * - Travas de Segurança: Bloqueia letras no telefone, impede números no nome
+ *   e limita a quantidade máxima de caracteres em todos os campos.
  * =============================================================================
  */
 
-// =============================================================================
-// Módulos: Estado da Aplicação, Filtro do Catálogo e Gerenciador de LocalStorage
-// =============================================================================
+const CHAVE_STORAGE = 'extreme_gamer_carrinho';
+const WHATSAPP_LOJA = '5575999999999';
 
-// Chave utilizada para persistência no navegador
-const STORAGE_KEY = 'extreme_gamer_carrinho';
-const NUMERO_WHATSAPP_LOJA = '5575999999999'; // Número comercial direto (DDD 75)
+// Guarda qual opção está ativa no formulário ('pre-montado' ou 'personalizado')
+let modoAtualFormulario = 'pre-montado';
 
-/**
- * 1.1. Gerenciamento do LocalStorage (Carregar e Salvar)
- */
-function obterCarrinhoStorage() {
-  try {
-    const dados = localStorage.getItem(STORAGE_KEY);
-    if (dados) {
-      const parsed = JSON.parse(dados);
-      return Array.isArray(parsed) ? parsed : [];
-    } else {
-      return [];
-    }
-  } catch (erro) {
-    console.warn('Dados inválidos no LocalStorage, reinicializando carrinho:', erro);
+/* 1. TRAVAS DE DIGITAÇÃO NOS CAMPOS (NOME, TELEFONE E LIMITE DE TEXTO) */
+
+// Bloqueia letras no WhatsApp e formata automaticamente como (75) 99999-9999
+function mascaraTelefone(campo) {
+  let apenasNumeros = campo.value.replace(/\D/g, '');
+
+  if (apenasNumeros.length > 11) {
+    apenasNumeros = apenasNumeros.slice(0, 11);
+  }
+
+  if (apenasNumeros.length > 6) {
+    campo.value = '(' + apenasNumeros.slice(0, 2) + ') ' + apenasNumeros.slice(2, 7) + '-' + apenasNumeros.slice(7);
+  } else if (apenasNumeros.length > 2) {
+    campo.value = '(' + apenasNumeros.slice(0, 2) + ') ' + apenasNumeros.slice(2);
+  } else if (apenasNumeros.length > 0) {
+    campo.value = '(' + apenasNumeros;
+  } else {
+    campo.value = '';
+  }
+}
+
+// Impede que o cliente digite números no campo de Nome e limita a 80 caracteres
+function filtrarCampoNome(campo) {
+  campo.value = campo.value.replace(/[0-9]/g, '').slice(0, 80);
+}
+
+// Atualiza o contador visual de caracteres da descrição (máximo de 500)
+function atualizarContadorTexto(campo) {
+  if (campo.value.length > 500) {
+    campo.value = campo.value.slice(0, 500);
+  }
+  const contador = document.getElementById('contador-caracteres');
+  if (contador) {
+    contador.textContent = campo.value.length;
+  }
+}
+
+/* =============================================================================
+   2. LOCALSTORAGE: LER E SALVAR OS PCS PRÉ-PRONTOS DO CARRINHO
+   ============================================================================= */
+function obterCarrinho() {
+  const dadosSalvos = localStorage.getItem(CHAVE_STORAGE);
+  if (dadosSalvos) {
+    return JSON.parse(dadosSalvos);
+  } else {
     return [];
   }
 }
 
-function salvarCarrinhoStorage(itens) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(itens));
-  atualizarInterfaceCarrinho();
+function salvarCarrinho(listaItens) {
+  localStorage.setItem(CHAVE_STORAGE, JSON.stringify(listaItens));
+  atualizarInterface();
 }
 
-/**
- * 1.2. Manipulação de Itens no Carrinho (Adicionar, Remover e Limpar)
- */
+/*3. MANIPULAÇÃO DO CARRINHO  */
 function adicionarAoCarrinho(id, nome, preco, imagem) {
-  const carrinho = obterCarrinhoStorage();
-  
-  // Verifica se o item já existe no carrinho para incrementar a quantidade
-  let encontrado = false;
+  const carrinho = obterCarrinho();
+  let itemJaExiste = false;
+
+  // Laço FOR para verificar se o PC já está no carrinho (limite de 10 unidades)
   for (let i = 0; i < carrinho.length; i++) {
     if (carrinho[i].id === id) {
-      carrinho[i].quantidade += 1;
-      encontrado = true;
+      if (carrinho[i].quantidade < 10) {
+        carrinho[i].quantidade += 1;
+      }
+      itemJaExiste = true;
       break;
     }
   }
 
-  // Se for um item novo, adiciona ao array
-  if (!encontrado) {
+  if (!itemJaExiste) {
     carrinho.push({
       id: id,
       nome: nome,
-      preco: parseFloat(preco),
+      preco: Number(preco),
       imagem: imagem,
       quantidade: 1
     });
   }
 
-  salvarCarrinhoStorage(carrinho);
-  exibirNotificacao(`${nome} adicionado ao orçamento!`);
+  salvarCarrinho(carrinho);
+  alternarModoFormulario('pre-montado');
+  mostrarNotificacao(nome + ' adicionado à Opção 1 (PC Pré-Pronto)!');
 }
 
-function alterarQuantidade(id, delta) {
-  const carrinho = obterCarrinhoStorage();
+function alterarQuantidade(id, mudanca) {
+  const carrinho = obterCarrinho();
   const novoCarrinho = [];
+
   for (let i = 0; i < carrinho.length; i++) {
     if (carrinho[i].id === id) {
-      carrinho[i].quantidade += delta;
+      const novaQtd = carrinho[i].quantidade + mudanca;
+      if (novaQtd <= 10) {
+        carrinho[i].quantidade = novaQtd;
+      }
     }
     if (carrinho[i].quantidade > 0) {
       novoCarrinho.push(carrinho[i]);
     }
   }
-  salvarCarrinhoStorage(novoCarrinho);
+
+  salvarCarrinho(novoCarrinho);
 }
 
 function removerDoCarrinho(id) {
-  const carrinho = obterCarrinhoStorage();
-  const carrinhoAtualizado = [];
+  const carrinho = obterCarrinho();
+  const novoCarrinho = [];
 
-  // Filtra removendo o item selecionado
   for (let i = 0; i < carrinho.length; i++) {
     if (carrinho[i].id !== id) {
-      carrinhoAtualizado.push(carrinho[i]);
+      novoCarrinho.push(carrinho[i]);
     }
   }
 
-  salvarCarrinhoStorage(carrinhoAtualizado);
+  salvarCarrinho(novoCarrinho);
 }
 
 function limparCarrinho() {
-  if (confirm('Deseja realmente limpar todos os itens do orçamento?')) {
-    salvarCarrinhoStorage([]);
-    exibirNotificacao('Orçamento limpo com sucesso.');
-  }
+  salvarCarrinho([]);
+  mostrarNotificacao('Carrinho de PCs pré-prontos limpo.');
 }
 
-/**
- * 1.3. Renderização Dinâmica do Carrinho no DOM (Uso de for e getElementById)
- */
-function atualizarInterfaceCarrinho() {
-  const carrinho = obterCarrinhoStorage();
-  const listaContainer = document.getElementById('lista-carrinho');
-  const badgeHeader = document.getElementById('badge-carrinho');
-  const badgeMobile = document.getElementById('badge-carrinho-mobile');
-  const totalContainer = document.getElementById('total-carrinho');
-  const totalPixContainer = document.getElementById('total-pix');
+/* 4. ALTERNAR ENTRE AS OPÇÕES DE MONTAR PC E VISIBILIDADE DE SERVIÇOS*/
+function atualizarVisibilidadeModo() {
+  const tipoServico = document.getElementById('campo-servico').value;
+  const seletorModo = document.getElementById('seletor-modo-pc');
+  const btnPronto = document.getElementById('btn-modo-pronto');
+  const btnPersonalizado = document.getElementById('btn-modo-personalizado');
+  const blocoModoPronto = document.getElementById('bloco-modo-pronto');
+  const grupoOrcamento = document.getElementById('grupo-faixa-orcamento');
+  const grupoPagamento = document.getElementById('grupo-pagamento');
+  const labelMensagem = document.getElementById('label-mensagem');
+  const campoMensagem = document.getElementById('campo-mensagem');
+  const btnEnviar = document.getElementById('btn-enviar-form');
 
-  let totalGeral = 0;
+  // As opções de Montar PC aparecem SOMENTE se a opção for "Compra / Montagem de PC Gamer Completo"
+  if (tipoServico === 'pc-completo') {
+    if (seletorModo) seletorModo.style.display = 'block';
+
+    if (modoAtualFormulario === 'pre-montado') {
+      btnPronto.classList.add('active');
+      btnPersonalizado.classList.remove('active');
+
+      blocoModoPronto.style.display = 'block';
+      grupoOrcamento.style.display = 'none';
+      if (grupoPagamento) {
+        grupoPagamento.classList.add('full-width');
+      }
+
+      labelMensagem.textContent = 'Observações Adicionais (Periféricos, Alteração de Gabinete, etc.)';
+      campoMensagem.placeholder = 'Opcional: escreva se quiser adicionar monitor, periféricos ou tirar dúvidas sobre o PC escolhido...';
+      campoMensagem.required = false;
+      btnEnviar.innerHTML = '<i class="bi bi-whatsapp me-2"></i> ENVIAR PEDIDO DO PC PRÉ-PRONTO NO WHATSAPP';
+    } else {
+      btnPersonalizado.classList.add('active');
+      btnPronto.classList.remove('active');
+
+      blocoModoPronto.style.display = 'none';
+      grupoOrcamento.style.display = 'flex';
+      if (grupoPagamento) {
+        grupoPagamento.classList.remove('full-width');
+      }
+
+      labelMensagem.textContent = 'Descreva o que você quer no seu PC (Jogos, Peças ou Sintomas) *';
+      campoMensagem.placeholder = 'Ex: Quero montar um PC dentro desse orçamento para rodar Warzone e GTA no Ultra, de preferência com Ryzen e gabinete branco...';
+      campoMensagem.required = true;
+      btnEnviar.innerHTML = '<i class="bi bi-whatsapp me-2"></i> ENVIAR MEU ORÇAMENTO E DESCRIÇÃO NO WHATSAPP';
+    }
+  } else {
+    // Serviços Técnicos (Upgrade, Limpeza, Diagnóstico): oculta blocos exclusivos de Montar PC
+    if (seletorModo) seletorModo.style.display = 'none';
+    blocoModoPronto.style.display = 'none';
+    grupoOrcamento.style.display = 'none';
+    if (grupoPagamento) {
+      grupoPagamento.classList.add('full-width');
+    }
+
+    labelMensagem.textContent = 'Descreva os Detalhes do Serviço ou Sintomas do Aparelho *';
+    campoMensagem.placeholder = 'Ex: PC desligando sozinho após 10 minutos de jogo, ou quero trocar para pasta térmica Arctic MX-4...';
+    campoMensagem.required = true;
+    btnEnviar.innerHTML = '<i class="bi bi-whatsapp me-2"></i> SOLICITAR ATENDIMENTO NO WHATSAPP';
+  }
+
+  atualizarPainelResumo();
+}
+
+function alternarModoFormulario(modoEscolhido) {
+  modoAtualFormulario = modoEscolhido;
+  const selectServico = document.getElementById('campo-servico');
+  if (selectServico) {
+    selectServico.value = 'pc-completo';
+  }
+  atualizarVisibilidadeModo();
+}
+
+/* =============================================================================
+   5. RENDERIZAÇÃO DO CARRINHO (GAVETA + OPÇÃO 1 DO FORMULÁRIO) COM FOR
+   ============================================================================= */
+function atualizarInterface() {
+  const carrinho = obterCarrinho();
+
+  const listaGaveta = document.getElementById('lista-carrinho');
+  const badgeTopo = document.getElementById('badge-carrinho');
+  const badgeMobile = document.getElementById('badge-carrinho-mobile');
+  const totalGaveta = document.getElementById('total-carrinho');
+  const totalPixGaveta = document.getElementById('total-pix');
+  const listaForm = document.getElementById('lista-carrinho-form');
+  const qtdItensForm = document.getElementById('qtd-itens-form');
+
+  let somaTotal = 0;
   let quantidadeTotal = 0;
 
-  // Renderiza a lista de itens caso o container exista
-  if (listaContainer) {
-    listaContainer.innerHTML = '';
+  listaGaveta.innerHTML = '';
+  listaForm.innerHTML = '';
 
-    if (carrinho.length === 0) {
-      listaContainer.innerHTML = `
-        <div class="carrinho-vazio text-center py-4">
-          <i class="bi bi-cart-x fs-1 text-muted"></i>
-          <p class="mt-2 text-muted">Nenhuma máquina selecionada ainda.</p>
-          <a href="#produtos" class="btn btn-outline-servico btn-sm" onclick="fecharGavetaCarrinho()">Ver Catálogo</a>
+  if (carrinho.length === 0) {
+    listaGaveta.innerHTML = '<p class="text-muted text-center py-4">Nenhum PC pré-pronto selecionado.</p>';
+    listaForm.innerHTML = `
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
+        <span class="text-muted small">Você ainda não escolheu um PC pré-pronto no catálogo acima.</span>
+        <div class="d-flex gap-2">
+          <a href="#produtos" class="btn btn-sm btn-outline-servico py-1 px-3">Escolher PC no Catálogo</a>
+          <button type="button" class="btn btn-sm btn-secundario py-1 px-3" onclick="alternarModoFormulario('personalizado')">Ou Montar pelo Meu Orçamento</button>
         </div>
-      `;
-    } else {
-      // Laço FOR para percorrer e somar os itens salvos
-      for (let i = 0; i < carrinho.length; i++) {
-        const item = carrinho[i];
-        const subtotal = item.preco * item.quantidade;
-        totalGeral += subtotal;
-        quantidadeTotal += item.quantidade;
+      </div>
+    `;
+  } else {
+    for (let i = 0; i < carrinho.length; i++) {
+      const item = carrinho[i];
+      const subtotal = item.preco * item.quantidade;
+      somaTotal += subtotal;
+      quantidadeTotal += item.quantidade;
 
-        const itemElement = document.createElement('div');
-        itemElement.className = 'carrinho-item d-flex align-items-center justify-content-between mb-3';
-        itemElement.innerHTML = `
+      const precoFormatado = subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+      // Renderiza na Gaveta Lateral
+      listaGaveta.innerHTML += `
+        <div class="carrinho-item d-flex align-items-center justify-content-between mb-3">
           <div class="d-flex align-items-center gap-2">
             <img src="${item.imagem}" alt="${item.nome}" class="carrinho-item-img">
             <div>
               <h6 class="m-0 text-white">${item.nome}</h6>
-              <small class="text-muted">${item.quantidade}x R$ ${item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</small>
-              <div class="carrinho-qtd-controles mt-1 d-flex align-items-center gap-1">
-                <button type="button" class="btn btn-sm btn-qtd btn-qtd-menos" data-id="${item.id}" aria-label="Diminuir quantidade">-</button>
-                <span class="badge bg-dark border border-secondary px-2">${item.quantidade}</span>
-                <button type="button" class="btn btn-sm btn-qtd btn-qtd-mais" data-id="${item.id}" aria-label="Aumentar quantidade">+</button>
+              <div class="d-flex align-items-center gap-1 mt-1">
+                <button type="button" class="btn-qtd" onclick="alterarQuantidade('${item.id}', -1)">-</button>
+                <span class="px-2 small">${item.quantidade}x</span>
+                <button type="button" class="btn-qtd" onclick="alterarQuantidade('${item.id}', 1)">+</button>
               </div>
             </div>
           </div>
           <div class="text-end">
-            <span class="d-block text-orange fw-bold">R$ ${subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-            <button class="btn btn-link text-danger p-0 btn-remover" data-id="${item.id}" title="Remover item">
-              <i class="bi bi-trash"></i>
-            </button>
+            <span class="d-block text-orange fw-bold">R$ ${precoFormatado}</span>
+            <button type="button" class="btn btn-link text-danger p-0 small" onclick="removerDoCarrinho('${item.id}')">Remover</button>
           </div>
-        `;
-        listaContainer.appendChild(itemElement);
-      }
+        </div>
+      `;
+
+      // Renderiza na Opção 1 dentro do Formulário
+      listaForm.innerHTML += `
+        <div class="item-form-card">
+          <div class="d-flex align-items-center gap-2">
+            <img src="${item.imagem}" alt="${item.nome}" class="carrinho-item-img">
+            <div>
+              <strong class="text-white d-block">${item.nome}</strong>
+              <span class="text-muted small">Quantidade: ${item.quantidade} unidade(s)</span>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-1">
+              <button type="button" class="btn-qtd" onclick="alterarQuantidade('${item.id}', -1)">-</button>
+              <button type="button" class="btn-qtd" onclick="alterarQuantidade('${item.id}', 1)">+</button>
+            </div>
+            <strong class="text-orange">R$ ${precoFormatado}</strong>
+            <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2" onclick="removerDoCarrinho('${item.id}')">&times;</button>
+          </div>
+        </div>
+      `;
     }
   }
 
-  // Atualiza os contadores no cabeçalho
-  if (badgeHeader) badgeHeader.textContent = quantidadeTotal;
-  if (badgeMobile) badgeMobile.textContent = quantidadeTotal;
+  badgeTopo.textContent = quantidadeTotal;
+  badgeMobile.textContent = quantidadeTotal;
+  qtdItensForm.textContent = quantidadeTotal;
 
-  // Atualiza totais formatados
-  if (totalContainer) {
-    totalContainer.textContent = `R$ ${totalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-  }
-  if (totalPixContainer) {
-    const valorComDescontoPix = totalGeral * 0.90; // 10% OFF no Pix
-    totalPixContainer.textContent = `R$ ${valorComDescontoPix.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-  }
+  totalGaveta.textContent = 'R$ ' + somaTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+  totalPixGaveta.textContent = 'R$ ' + (somaTotal * 0.90).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+  atualizarPainelResumo();
 }
 
-/**
- * 1.4. Filtro Interativo de Máquinas por Categoria (Laço for + if..else)
- */
-function inicializarFiltrosCatalogo() {
-  const containerFiltros = document.getElementById('container-filtros');
-  if (!containerFiltros) return;
-
-  const botoes = containerFiltros.getElementsByClassName('btn-filtro');
-  const cards = document.querySelectorAll('.cards-grid .produto-card');
-
-  for (let i = 0; i < botoes.length; i++) {
-    botoes[i].addEventListener('click', function() {
-      // Remove classe ativa de todos e adiciona no clicado
-      for (let j = 0; j < botoes.length; j++) {
-        botoes[j].classList.remove('active');
-      }
-      this.classList.add('active');
-
-      const categoriaSelecionada = this.getAttribute('data-categoria');
-
-      // Percorre todos os cards aplicando o filtro
-      for (let k = 0; k < cards.length; k++) {
-        const card = cards[k];
-        const categoriaCard = card.getAttribute('data-categoria');
-
-        if (categoriaSelecionada === 'todos' || categoriaCard === categoriaSelecionada) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      }
-    });
-  }
-}
-
-/**
- * 1.5. Sincronização da Barra de Navegação (Scroll Spy e Menu Mobile)
- * Atualiza dinamicamente a classe .active conforme o usuário rola a página,
- * movimentando a bolinha neon e fechando o menu hamburguer no mobile.
- */
-function inicializarScrollSpy() {
-  const secoes = document.querySelectorAll('section[id]');
-  const linksNav = document.querySelectorAll('.navbar-nav .nav-link');
-  const menuCollapse = document.getElementById('navbarNavDropdown');
-
-  function atualizarLinkAtivo() {
-    let secaoAtual = '';
-    const scrollPos = window.scrollY + 140;
-
-    for (let i = 0; i < secoes.length; i++) {
-      const secao = secoes[i];
-      const topo = secao.offsetTop;
-      const altura = secao.offsetHeight;
-      if (scrollPos >= topo && scrollPos < topo + altura) {
-        secaoAtual = secao.getAttribute('id');
-        break;
-      }
-    }
-
-    // Se estiver no topo da página
-    if (!secaoAtual && window.scrollY < 200) {
-      secaoAtual = 'inicio';
-    }
-
-    if (secaoAtual) {
-      for (let j = 0; j < linksNav.length; j++) {
-        const link = linksNav[j];
-        if (link.getAttribute('href') === `#${secaoAtual}`) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
-      }
-    }
-  }
-
-  // Evento de scroll com listener passivo
-  window.addEventListener('scroll', atualizarLinkAtivo, { passive: true });
-  atualizarLinkAtivo();
-
-  // Clique nos links: fecha menu mobile automaticamente se aberto
-  for (let k = 0; k < linksNav.length; k++) {
-    linksNav[k].addEventListener('click', function() {
-      for (let m = 0; m < linksNav.length; m++) {
-        linksNav[m].classList.remove('active');
-      }
-      this.classList.add('active');
-
-      if (menuCollapse && menuCollapse.classList.contains('show')) {
-        const bsCollapse = bootstrap.Collapse.getInstance(menuCollapse) || new bootstrap.Collapse(menuCollapse);
-        bsCollapse.hide();
-      }
-    });
-  }
-}
-
-
-// =============================================================================
-// Módulos: Simulador de Serviços (switch..case), Condições de Pagamento (if..else)
-// e Integração do WhatsApp com os dados do LocalStorage
-// =============================================================================
-
-/**
- * 2.1. Simulador Dinâmico de Serviços (Estrutura: switch..case)
- */
-function atualizarDetalhesServico(tipoServico) {
+/* 6. PAINEL REATIVO DO FORMULÁRIO (SWITCH...CASE + IF...ELSE)*/
+function atualizarPainelResumo() {
+  const tipoServico = document.getElementById('campo-servico').value;
   const resumoTitulo = document.getElementById('resumo-titulo-servico');
   const prazoEstimado = document.getElementById('prazo-estimado');
   const garantiaEstimada = document.getElementById('garantia-estimada');
   const procedimentoEstimado = document.getElementById('procedimento-estimado');
+  const boxPagamento = document.getElementById('pagamento-estimado');
+  const formaPagamento = document.getElementById('campo-pagamento').value;
 
-  if (!resumoTitulo || !prazoEstimado || !garantiaEstimada || !procedimentoEstimado) return;
-
-  // Avaliação do tipo de serviço pretendido com switch..case
+  // 1) Estrutura SWITCH...CASE obrigatória do TDE avaliando "O que você deseja fazer?"
   switch (tipoServico) {
     case 'pc-completo':
-      resumoTitulo.textContent = 'Montagem de PC Gamer Completo Sob Medida';
-      prazoEstimado.textContent = '2 a 3 dias úteis';
+      resumoTitulo.textContent = 'Compra / Montagem de PC Gamer Completo';
+      prazoEstimado.textContent = '1 a 3 dias úteis';
       garantiaEstimada.textContent = '2 Anos (24 Meses) de Garantia Premium';
-      procedimentoEstimado.textContent = 'Montagem com cable management cirúrgico e stress test de 24h na bancada';
-      break;
-
-    case 'limpeza':
-      resumoTitulo.textContent = 'Limpeza Preventiva & Otimização Térmica';
-      prazoEstimado.textContent = '24 horas úteis';
-      garantiaEstimada.textContent = '90 Dias de Garantia de Bancada';
-      procedimentoEstimado.textContent = 'Desoxidação química, limpeza dos fans e aplicação de pasta térmica Arctic MX-4';
-      break;
-
-    case 'diagnostico':
-      resumoTitulo.textContent = 'Diagnóstico Avançado & Reparo de Placas';
-      prazoEstimado.textContent = '24 a 48 horas';
-      garantiaEstimada.textContent = '90 Dias sobre o reparo realizado';
-      procedimentoEstimado.textContent = 'Análise de tensões em osciloscópio, reparo de VRM, regravação de BIOS e testes';
+      procedimentoEstimado.textContent = 'Montagem com cable management cirúrgico, BIOS atualizada e stress test de 24h.';
       break;
 
     case 'upgrade':
       resumoTitulo.textContent = 'Upgrade de Componentes & Calibração';
       prazoEstimado.textContent = 'Mesmo dia ou 24 horas';
-      garantiaEstimada.textContent = 'Garantia do fabricante nas peças + suporte de bancada';
-      procedimentoEstimado.textContent = 'Instalação de GPU/RAM/SSD, atualização de drivers e otimização para jogos';
+      garantiaEstimada.textContent = 'Garantia oficial das peças + suporte técnico';
+      procedimentoEstimado.textContent = 'Instalação de placa de vídeo, SSD, fonte ou memória com organização de cabos.';
+      break;
+
+    case 'limpeza':
+      resumoTitulo.textContent = 'Limpeza Preventiva & Troca de Pasta Térmica';
+      prazoEstimado.textContent = '24 horas úteis';
+      garantiaEstimada.textContent = '90 Dias de Garantia de Bancada';
+      procedimentoEstimado.textContent = 'Desmontagem completa, higienização e aplicação de pasta Arctic MX-4.';
       break;
 
     default:
-      resumoTitulo.textContent = 'Atendimento Personalizado Extreme Gamer';
-      prazoEstimado.textContent = 'A combinar com a equipe técnica';
-      garantiaEstimada.textContent = 'Conforme orçamento';
-      procedimentoEstimado.textContent = 'Avaliação presencial em nosso laboratório em Feira de Santana';
+      resumoTitulo.textContent = 'Diagnóstico Técnico & Reparo Especializado';
+      prazoEstimado.textContent = '24 a 48 horas';
+      garantiaEstimada.textContent = '90 Dias sobre o reparo realizado';
+      procedimentoEstimado.textContent = 'Diagnóstico preciso na bancada para PCs, notebooks e videogames.';
       break;
   }
-}
 
-/**
- * 2.2. Cálculo de Condições de Pagamento e Desconto (Estrutura: if..else)
- */
-function calcularCondicaoPagamento(formaPagamento) {
-  const boxPagamento = document.getElementById('pagamento-estimado');
-  if (!boxPagamento) return;
+  // 2) Calcula a condição de pagamento com 
+  let somaCarrinho = 0;
+  if (modoAtualFormulario === 'pre-montado') {
+    const carrinho = obterCarrinho();
+    for (let i = 0; i < carrinho.length; i++) {
+      somaCarrinho += carrinho[i].preco * carrinho[i].quantidade;
+    }
+  }
 
   if (formaPagamento === 'pix') {
-    boxPagamento.textContent = '10% de Desconto Especial Aplicado à Vista';
+    if (modoAtualFormulario === 'pre-montado' && somaCarrinho > 0) {
+      const valorPix = somaCarrinho * 0.90;
+      boxPagamento.textContent = 'R$ ' + valorPix.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + ' no Pix (10% OFF)';
+    } else {
+      boxPagamento.textContent = '10% de Desconto Especial à Vista no Pix';
+    }
     boxPagamento.className = 'resumo-dado text-success fw-bold';
   } else if (formaPagamento === 'cartao') {
-    boxPagamento.textContent = 'Parcelamento em até 12x Sem Juros no Cartão';
+    if (modoAtualFormulario === 'pre-montado' && somaCarrinho > 0) {
+      const parcela = somaCarrinho / 12;
+      boxPagamento.textContent = '12x de R$ ' + parcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + ' sem juros';
+    } else {
+      boxPagamento.textContent = 'Parcelamento em até 12x Sem Juros no Cartão';
+    }
     boxPagamento.className = 'resumo-dado text-warning fw-bold';
   } else {
-    boxPagamento.textContent = 'Valor integral à vista sob consulta';
-    boxPagamento.className = 'resumo-dado text-info';
+    if (modoAtualFormulario === 'pre-montado' && somaCarrinho > 0) {
+      boxPagamento.textContent = 'R$ ' + somaCarrinho.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + ' no Boleto';
+    } else {
+      boxPagamento.textContent = 'Valor à vista no Boleto Bancário';
+    }
+    boxPagamento.className = 'resumo-dado text-info fw-bold';
   }
 }
 
-/**
- * 2.3. Envio Dinâmico do Formulário para o WhatsApp com Dados do LocalStorage
- */
-function processarEnvioOrcamento(evento) {
+/* 7. FILTRO DO CATÁLOGO E ATALHOS DE SERVIÇOS (FOR + IF...ELSE)*/
+function filtrarCatalogo(categoriaEscolhida, botaoClicado) {
+  const botoes = document.getElementsByClassName('btn-filtro');
+  const cards = document.getElementsByClassName('produto-card');
+
+  for (let i = 0; i < botoes.length; i++) {
+    botoes[i].classList.remove('active');
+  }
+  botaoClicado.classList.add('active');
+
+  for (let i = 0; i < cards.length; i++) {
+    const categoriaCard = cards[i].getAttribute('data-categoria');
+    if (categoriaEscolhida === 'todos' || categoriaCard === categoriaEscolhida) {
+      cards[i].style.display = 'flex';
+    } else {
+      cards[i].style.display = 'none';
+    }
+  }
+}
+
+function selecionarServicoRapido(servicoId) {
+  document.getElementById('campo-servico').value = servicoId;
+  const selectOrcamento = document.getElementById('campo-orcamento');
+  if (selectOrcamento) {
+    selectOrcamento.value = 'apenas-manutencao';
+  }
+  atualizarVisibilidadeModo();
+}
+
+/* 8. VALIDAÇÃO RIGOROSA E ENVIO PARA O WHATSAPP (IF...ELSE)*/
+function enviarOrcamentoWhatsApp(evento) {
   evento.preventDefault();
 
   const nome = document.getElementById('campo-nome').value.trim();
   const whatsapp = document.getElementById('campo-whatsapp').value.trim();
+  const whatsappApenasNumeros = whatsapp.replace(/\D/g, '');
   const selectServico = document.getElementById('campo-servico');
-  const selectOrcamento = document.getElementById('campo-orcamento');
+  const servicoTexto = selectServico.options[selectServico.selectedIndex].text;
   const selectPagamento = document.getElementById('campo-pagamento');
-  const mensagemExtra = document.getElementById('campo-mensagem').value.trim();
+  const pagamentoTexto = selectPagamento.options[selectPagamento.selectedIndex].text;
+  const descricao = document.getElementById('campo-mensagem').value.trim();
   const concordo = document.getElementById('campo-concordo').checked;
 
-  const servicoTexto = (selectServico && selectServico.selectedIndex >= 0)
-    ? selectServico.options[selectServico.selectedIndex].text
-    : (selectServico ? selectServico.value : '');
-
-  const orcamentoTexto = (selectOrcamento && selectOrcamento.selectedIndex >= 0)
-    ? selectOrcamento.options[selectOrcamento.selectedIndex].text
-    : (selectOrcamento ? selectOrcamento.value : '');
-
-  const pagamentoTexto = (selectPagamento && selectPagamento.selectedIndex >= 0)
-    ? selectPagamento.options[selectPagamento.selectedIndex].text
-    : (selectPagamento ? selectPagamento.value : '');
-
-  // Validação simples com if..else
-  if (!nome || !whatsapp) {
-    alert('Por favor, preencha o seu nome e WhatsApp para contato.');
+  // 1) Validação do Nome (mínimo 3 letras, máximo 80, sem números)
+  if (nome.length < 3 || nome.length > 80) {
+    alert('Por favor, informe um nome válido (entre 3 e 80 caracteres).');
     return;
   }
 
+  // 2) Validação do WhatsApp (exige 10 ou 11 dígitos numéricos com DDD)
+  if (whatsappApenasNumeros.length < 10 || whatsappApenasNumeros.length > 11) {
+    alert('Por favor, digite um WhatsApp válido com DDD (apenas números, ex: 75 99999-9999).');
+    return;
+  }
+
+  // 3) Validação de limite da descrição (máximo 500 caracteres)
+  if (descricao.length > 500) {
+    alert('A mensagem excedeu o limite máximo de 500 caracteres.');
+    return;
+  }
+
+  // 4) Validação do termo de concordância
   if (!concordo) {
-    alert('É necessário concordar com os termos para envio do orçamento.');
+    alert('Confirme a caixa de concordância para enviar.');
     return;
   }
 
-  // Recupera itens do carrinho (LocalStorage) para incluir na mensagem
-  const carrinho = obterCarrinhoStorage();
-  let resumoItens = '';
-  let valorTotalCarrinho = 0;
+  let texto = '*ATENDIMENTO — EXTREME GAMER INFORMÁTICA*\n\n';
+  texto += '*Cliente:* ' + nome + '\n';
+  texto += '*WhatsApp:* ' + whatsapp + '\n';
+  texto += '*O que deseja fazer:* ' + servicoTexto + '\n';
 
-  if (carrinho.length > 0) {
-    resumoItens += '\n\n*Máquinas / Componentes no Orçamento:*';
+  // IF...ELSE: Monta a mensagem conforme o que foi selecionado
+  if (selectServico.value !== 'pc-completo') {
+    // Serviços Técnicos (Upgrade, Limpeza, Diagnóstico)
+    if (descricao.length < 5) {
+      alert('Por favor, descreva no campo de mensagem o serviço necessário ou os sintomas do aparelho (mínimo de 5 caracteres).');
+      return;
+    }
+
+    texto += '*Modalidade:* Solicitação de Serviço / Manutenção Técnica\n';
+    texto += '*Forma de Pagamento:* ' + pagamentoTexto + '\n';
+    texto += '\n*Detalhes do Serviço / Sintomas:*\n' + descricao + '\n';
+  } else if (modoAtualFormulario === 'pre-montado') {
+    const carrinho = obterCarrinho();
+
+    if (carrinho.length === 0) {
+      alert('Adicione pelo menos um PC Pré-Pronto no catálogo ou mude para a Opção 2 (Montar pelo Meu Orçamento)!');
+      return;
+    }
+
+    let somaTotal = 0;
+    texto += '*Modalidade:* Opção 1 — PC Pré-Pronto do Catálogo\n';
+    texto += '\n*Máquinas Escolhidas:*\n';
+
     for (let i = 0; i < carrinho.length; i++) {
       const item = carrinho[i];
-      const sub = item.preco * item.quantidade;
-      valorTotalCarrinho += sub;
-      resumoItens += `\n• ${item.quantidade}x ${item.nome} — R$ ${sub.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+      const subtotal = item.preco * item.quantidade;
+      somaTotal += subtotal;
+      texto += '• ' + item.quantidade + 'x ' + item.nome + ' — R$ ' + subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + '\n';
     }
-    resumoItens += `\n*Total Estimado:* R$ ${valorTotalCarrinho.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-    if (selectPagamento && selectPagamento.value === 'pix') {
-      const valorPix = valorTotalCarrinho * 0.90;
-      resumoItens += `\n*Total no Pix (10% OFF):* R$ ${valorPix.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+    texto += '\n*Total dos PCs:* R$ ' + somaTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + '\n';
+    if (selectPagamento.value === 'pix') {
+      const valorPix = somaTotal * 0.90;
+      texto += '*Valor com 10% OFF no Pix:* R$ ' + valorPix.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + '\n';
     }
+    texto += '*Forma de Pagamento:* ' + pagamentoTexto + '\n';
+
+    if (descricao !== '') {
+      texto += '\n*Observações:* ' + descricao + '\n';
+    }
+  } else {
+    // Opção 2 de Montar PC: Exige que o cliente escreva pelo menos 5 caracteres descrevendo o pedido
+    if (descricao.length < 5) {
+      alert('Por favor, descreva no campo de mensagem o que você deseja montar no PC (mínimo de 5 caracteres).');
+      return;
+    }
+
+    const selectOrcamento = document.getElementById('campo-orcamento');
+    const orcamentoTexto = selectOrcamento.options[selectOrcamento.selectedIndex].text;
+
+    texto += '*Modalidade:* Opção 2 — Montagem por Orçamento / Sob Medida\n';
+    texto += '*Orçamento Disponível:* ' + orcamentoTexto + '\n';
+    texto += '*Forma de Pagamento:* ' + pagamentoTexto + '\n';
+    texto += '\n*O que o cliente deseja montar / Descrição:*\n' + descricao + '\n';
   }
 
-  // Montagem da mensagem estruturada para o WhatsApp
-  let textoWhatsApp = `*SOLICITAÇÃO DE ORÇAMENTO — EXTREME GAMER INFORMÁTICA*`;
-  textoWhatsApp += `\n\n*Cliente:* ${nome}`;
-  textoWhatsApp += `\n*WhatsApp:* ${whatsapp}`;
-  textoWhatsApp += `\n*Serviço Escolhido:* ${servicoTexto}`;
-  textoWhatsApp += `\n*Faixa de Investimento:* ${orcamentoTexto}`;
-  textoWhatsApp += `\n*Forma de Pagamento:* ${pagamentoTexto}`;
-  
-  if (resumoItens) {
-    textoWhatsApp += resumoItens;
-  }
-
-  if (mensagemExtra) {
-    textoWhatsApp += `\n\n*Detalhes do Setup / Sintomas:* ${mensagemExtra}`;
-  }
-
-  textoWhatsApp += `\n\n_Mensagem enviada através da landing page oficial (UNIFAN TDE II)_`;
-
-  // Codificação da URL oficial do WhatsApp
-  const urlFinal = `https://api.whatsapp.com/send?phone=${NUMERO_WHATSAPP_LOJA}&text=${encodeURIComponent(textoWhatsApp)}`;
-  window.open(urlFinal, '_blank');
+  const urlWhatsApp = 'https://api.whatsapp.com/send?phone=' + WHATSAPP_LOJA + '&text=' + encodeURIComponent(texto);
+  window.open(urlWhatsApp, '_blank');
 }
 
-
-// =============================================================================
-// CONTROLE DE INTERFACE, MODAL/DRAWER E INICIALIZAÇÃO GERAL (EVENTOS)
-// =============================================================================
-
+/* =============================================================================
+   9. CONTROLE DA GAVETA LATERAL E INICIALIZAÇÃO DE EVENTOS
+   ============================================================================= */
 function abrirGavetaCarrinho() {
-  const painel = document.getElementById('painel-carrinho');
-  if (painel) {
-    painel.classList.add('aberto');
-    painel.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    const btnFechar = document.getElementById('btn-fechar-carrinho');
-    if (btnFechar) btnFechar.focus();
-  }
+  document.getElementById('painel-carrinho').classList.add('aberto');
 }
 
 function fecharGavetaCarrinho() {
-  const painel = document.getElementById('painel-carrinho');
-  if (painel) {
-    painel.classList.remove('aberto');
-    painel.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    const btnCarrinho = document.getElementById('btn-carrinho');
-    if (btnCarrinho) btnCarrinho.focus();
-  }
+  document.getElementById('painel-carrinho').classList.remove('aberto');
 }
 
-function exibirNotificacao(texto) {
-  let toast = document.getElementById('toast-notificacao');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'toast-notificacao';
-    toast.className = 'toast-notificacao';
-    document.body.appendChild(toast);
-  }
-  toast.textContent = texto;
+function mostrarNotificacao(mensagem) {
+  const toast = document.getElementById('toast-notificacao');
+  toast.textContent = mensagem;
   toast.classList.add('visivel');
-  setTimeout(() => {
+  setTimeout(function() {
     toast.classList.remove('visivel');
-  }, 3200);
+  }, 3000);
 }
 
-// Inicialização única disparada quando todo o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', () => {
-  // 1. Inicializa o estado visual do carrinho salvo no LocalStorage
-  atualizarInterfaceCarrinho();
+document.addEventListener('DOMContentLoaded', function() {
+  atualizarInterface();
+  alternarModoFormulario('pre-montado');
 
-  // 2. Inicializa os filtros do catálogo
-  inicializarFiltrosCatalogo();
-
-  // 3. Inicializa a sincronização dinâmica da navbar (Scroll Spy e menu mobile)
-  inicializarScrollSpy();
-
-  // 4. Configura eventos dos botões "Adicionar ao Orçamento" nos cards
-  document.addEventListener('click', (e) => {
-    // Botão Adicionar ao Carrinho
-    const btnAdd = e.target.closest('.btn-adicionar-carrinho');
-    if (btnAdd) {
-      const id = btnAdd.getAttribute('data-id');
-      const nome = btnAdd.getAttribute('data-nome');
-      const preco = btnAdd.getAttribute('data-preco');
-      const imagem = btnAdd.getAttribute('data-img');
-      adicionarAoCarrinho(id, nome, preco, imagem);
-    }
-
-    // Botão Remover Item
-    const btnRemover = e.target.closest('.btn-remover');
-    if (btnRemover) {
-      const id = btnRemover.getAttribute('data-id');
-      removerDoCarrinho(id);
-    }
-
-    // Botões de Quantidade (+ / -) no Carrinho
-    const btnMais = e.target.closest('.btn-qtd-mais');
-    if (btnMais) {
-      alterarQuantidade(btnMais.getAttribute('data-id'), 1);
-    }
-
-    const btnMenos = e.target.closest('.btn-qtd-menos');
-    if (btnMenos) {
-      alterarQuantidade(btnMenos.getAttribute('data-id'), -1);
-    }
-
-    // Botão de Agendamento Rápido em Serviços
-    const btnServico = e.target.closest('[data-selecionar-servico]');
-    if (btnServico) {
-      const servicoId = btnServico.getAttribute('data-selecionar-servico');
-      const selectServico = document.getElementById('campo-servico');
-      const selectOrcamento = document.getElementById('campo-orcamento');
-      if (selectServico) {
-        selectServico.value = servicoId;
-        atualizarDetalhesServico(servicoId);
-      }
-      if (selectOrcamento && (servicoId === 'limpeza' || servicoId === 'diagnostico' || servicoId === 'upgrade')) {
-        selectOrcamento.value = 'apenas-manutencao';
-      }
-    }
-
-    // Fechar gaveta ao clicar em 'Orçar no Form'
-    const btnFinalizar = e.target.closest('#btn-finalizar-orcamento');
-    if (btnFinalizar) {
-      fecharGavetaCarrinho();
-    }
+  // Eventos da Gaveta Lateral
+  document.getElementById('btn-carrinho').addEventListener('click', abrirGavetaCarrinho);
+  document.getElementById('btn-carrinho-mobile').addEventListener('click', abrirGavetaCarrinho);
+  document.getElementById('btn-fechar-carrinho').addEventListener('click', fecharGavetaCarrinho);
+  document.getElementById('carrinho-overlay').addEventListener('click', fecharGavetaCarrinho);
+  document.getElementById('btn-limpar-carrinho').addEventListener('click', limparCarrinho);
+  document.getElementById('btn-finalizar-orcamento').addEventListener('click', function() {
+    fecharGavetaCarrinho();
+    alternarModoFormulario('pre-montado');
   });
 
-  // 4. Configura abertura e fechamento da gaveta do carrinho
-  const btnAbrir = document.getElementById('btn-carrinho');
-  const btnAbrirMobile = document.getElementById('btn-carrinho-mobile');
-  const btnFechar = document.getElementById('btn-fechar-carrinho');
-  const overlay = document.getElementById('carrinho-overlay');
-  const btnLimpar = document.getElementById('btn-limpar-carrinho');
-
-  if (btnAbrir) btnAbrir.addEventListener('click', abrirGavetaCarrinho);
-  if (btnAbrirMobile) btnAbrirMobile.addEventListener('click', abrirGavetaCarrinho);
-  if (btnFechar) btnFechar.addEventListener('click', fecharGavetaCarrinho);
-  if (overlay) overlay.addEventListener('click', fecharGavetaCarrinho);
-  if (btnLimpar) btnLimpar.addEventListener('click', limparCarrinho);
-
-  // Acessibilidade: Fecha gaveta com a tecla Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      fecharGavetaCarrinho();
-    }
-  });
-
-  // 5. Configura eventos dinâmicos no Formulário de Orçamento
-  const campoServico = document.getElementById('campo-servico');
-  const campoPagamento = document.getElementById('campo-pagamento');
-  const formOrcamento = document.getElementById('form-orcamento');
-
-  if (campoServico) {
-    campoServico.addEventListener('change', (e) => {
-      atualizarDetalhesServico(e.target.value);
-    });
-    // Executa a primeira vez para exibir o estado inicial
-    atualizarDetalhesServico(campoServico.value);
-  }
-
-  if (campoPagamento) {
-    campoPagamento.addEventListener('change', (e) => {
-      calcularCondicaoPagamento(e.target.value);
-    });
-    // Executa no carregamento
-    calcularCondicaoPagamento(campoPagamento.value);
-  }
-
-  if (formOrcamento) {
-    formOrcamento.addEventListener('submit', processarEnvioOrcamento);
-  }
+  // Eventos dos Selects do Formulário
+  document.getElementById('campo-servico').addEventListener('change', atualizarVisibilidadeModo);
+  document.getElementById('campo-pagamento').addEventListener('change', atualizarPainelResumo);
+  document.getElementById('form-orcamento').addEventListener('submit', enviarOrcamentoWhatsApp);
 });

@@ -15,30 +15,28 @@
   <meta property="og:description" content="Extreme Gamer Informática - PC Gamer Premium de Verdade com 2 Anos de Garantia e Assistência Técnica Especializada em Feira de Santana, Bahia.">
   <meta property="og:type" content="website">
 
-  <!-- Fontes Google com Preconnect (Otimização CWV / Elimina bloqueio de FCP) -->
+  <!-- Fontes Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oxanium:wght@600;700;800;900&display=swap">
 
-  <!-- ETAPA 4: Bootstrap 5 CSS via CDN -->
+  <!-- Bootstrap 5 CSS e Bootstrap Icons via CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-  <!-- ETAPA 4: Bootstrap Icons via CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <!-- ETAPA 3: Estilização Autoral CSS3 (Precedência sobre Bootstrap) -->
+  <!-- Estilização Autoral CSS3 -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- =========================================================================
-       1. HEADER E NAVEGAÇÃO PRINCIPAL (MODELO BOOTSTRAP: NAVBAR)
+       1. HEADER E NAVEGAÇÃO PRINCIPAL (BOOTSTRAP NAVBAR)
        ========================================================================= -->
   <header id="topo" class="cabecalho-principal">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container header-container">
         
-        <!-- Logotipo da Marca (navbar-brand) -->
+        <!-- Logotipo da Marca -->
         <a class="navbar-brand logo-link" href="#inicio" title="Extreme Gamer Informática">
           <div class="logo-box">
             <span class="logo-titulo">EXTREME <span class="destaque-laranja">GAMER</span></span>
@@ -46,58 +44,46 @@
           </div>
         </a>
 
-        <!-- Botão Hambúrguer Mobile (navbar-toggler) -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- Botão Hambúrguer Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alternar navegação">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Menu de Navegação (collapse navbar-collapse) -->
+        <!-- Menu de Navegação -->
         <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
           <ul class="navbar-nav menu-lista">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#inicio">Início</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#sobre">Sobre Nós</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#produtos">Máquinas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#servicos">Serviços</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#diferenciais">Diferenciais</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#orcamento">Orçamento</a>
-            </li>
+            <li class="nav-item"><a class="nav-link active" href="#inicio">Início</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sobre">Sobre Nós</a></li>
+            <li class="nav-item"><a class="nav-link" href="#produtos">Máquinas</a></li>
+            <li class="nav-item"><a class="nav-link" href="#servicos">Serviços</a></li>
+            <li class="nav-item"><a class="nav-link" href="#diferenciais">Diferenciais</a></li>
+            <li class="nav-item"><a class="nav-link" href="#orcamento">Orçamento</a></li>
           </ul>
 
-          <!-- Botão WhatsApp e Carrinho no menu recolhido (Mobile) -->
+          <!-- Ações no Menu Mobile -->
           <div class="d-lg-none mt-3 text-center d-flex flex-column gap-2">
             <button type="button" id="btn-carrinho-mobile" class="btn btn-carrinho-header w-100 d-flex align-items-center justify-content-center gap-2">
               <i class="bi bi-cart3"></i>
-              <span>Ver Orçamento (<strong id="badge-carrinho-mobile">0</strong>)</span>
+              <span>Carrinho (<strong id="badge-carrinho-mobile">0</strong>)</span>
             </button>
             <a href="https://api.whatsapp.com/send?phone=5575999999999" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-header w-100">
               <i class="bi bi-whatsapp whatsapp-icon me-2" aria-hidden="true"></i>
-              Falar no Whatsapp
+              Falar no WhatsApp
             </a>
           </div>
         </div>
 
         <!-- Ações do Header (Desktop: Carrinho + WhatsApp) -->
         <div class="header-cta d-none d-lg-flex align-items-center gap-3">
-          <button type="button" id="btn-carrinho" class="btn btn-carrinho-header position-relative" aria-label="Abrir orçamento">
+          <button type="button" id="btn-carrinho" class="btn btn-carrinho-header position-relative" aria-label="Abrir carrinho">
             <i class="bi bi-cart3 me-1"></i>
-            <span>Orçamento</span>
-            <span id="badge-carrinho" class="badge-carrinho-contador">0</span>
+            <span>Carrinho</span>
+            <span id="badge-carrinho" class="badge-carrinho-contador badge-notificacao">0</span>
           </button>
 
           <a href="https://api.whatsapp.com/send?phone=5575999999999" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-header">
             <i class="bi bi-whatsapp whatsapp-icon me-2" aria-hidden="true"></i>
-            Falar no Whatsapp
+            Falar no WhatsApp
           </a>
         </div>
 
@@ -110,13 +96,10 @@
        ========================================================================= -->
   <main id="conteudo-principal">
 
-    <!-- ======================================================
-         SEÇÃO HERO / BOAS-VINDAS (MODELO BOOTSTRAP: CAROUSEL)
-         ====================================================== -->
+    <!-- SEÇÃO HERO / BOAS-VINDAS (CAROUSEL BOOTSTRAP) -->
     <section id="inicio" class="secao-hero" aria-label="Apresentação inicial e destaques">
       <div class="container hero-container">
         
-        <!-- Bloco de Texto e Chamada de Ação (Sem botões desnecessários) -->
         <div class="hero-texto">
           <h1 class="hero-titulo">
             PC GAMER <br>
@@ -127,40 +110,38 @@
           </p>
 
           <div class="hero-botoes">
-            <a href="#orcamento" class="btn btn-primario">MONTAR MEU SETUP</a>
-            <a href="#servicos" class="btn btn-secundario">Ver Nossos Serviços</a>
+            <a href="#orcamento" class="btn btn-primario" onclick="alternarModoFormulario('personalizado')">MONTAR PELO MEU ORÇAMENTO</a>
+            <a href="#produtos" class="btn btn-secundario">Ver PCs Pré-Montados</a>
           </div>
         </div>
 
-        
-          <div class="hero-imagem-wrapper">
-            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <div class="hero-card-pc">
-                    <img src="img/hero-pc.png" class="d-block w-100 hero-imagem" alt="Setup Gamer de Alta Performance Extreme" fetchpriority="high" width="600" height="500">
-                  </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="hero-card-pc">
-                    <img src="img/pc4.webp" class="d-block w-100 hero-imagem" alt="Setup Gamer Completo com Monitor Curvo" loading="lazy" width="600" height="500">
-                  </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="hero-card-pc">
-                    <img src="img/pc2.png" class="d-block w-100 hero-imagem" alt="PC Gamer Dual Chamber Custom RGB" loading="lazy" width="600" height="500">
-                  </div>
+        <div class="hero-imagem-wrapper">
+          <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="hero-card-pc">
+                  <img src="img/hero-pc.png" class="d-block w-100 hero-imagem" alt="Setup Gamer de Alta Performance Extreme" fetchpriority="high" width="600" height="500">
                 </div>
               </div>
-            
+              <div class="carousel-item">
+                <div class="hero-card-pc">
+                  <img src="img/pc4.webp" class="d-block w-100 hero-imagem" alt="Setup Gamer Completo com Monitor Curvo" loading="lazy" width="600" height="500">
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="hero-card-pc">
+                  <img src="img/pc2.png" class="d-block w-100 hero-imagem" alt="PC Gamer Dual Chamber Custom RGB" loading="lazy" width="600" height="500">
+                </div>
+              </div>
+            </div>
             
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
+              <span class="visually-hidden">Anterior</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
+              <span class="visually-hidden">Próximo</span>
             </button>
           </div>
         </div>
@@ -168,9 +149,7 @@
       </div>
     </section>
 
-    <!-- ======================================================
-         SEÇÃO SOBRE A MARCA
-         ====================================================== -->
+    <!-- SEÇÃO SOBRE A MARCA -->
     <section id="sobre" class="secao-sobre" aria-label="Sobre a Extreme Gamer Informática">
       <div class="container">
         
@@ -182,113 +161,88 @@
           </p>
         </header>
 
-        <!-- Grade de Pilares da Marca -->
         <div class="sobre-grid">
-          
-          <!-- Card 1: PC Gamer de Verdade -->
           <div class="sobre-card card">
             <div class="card-body p-0">
               <div class="sobre-card-cabecalho">
-                <div class="sobre-icone-box">
-                  <i class="bi bi-pc-display" aria-hidden="true"></i>
-                </div>
+                <div class="sobre-icone-box"><i class="bi bi-pc-display" aria-hidden="true"></i></div>
                 <div class="sobre-card-info">
                   <h3 class="sobre-card-titulo">PC Gamer</h3>
                   <span class="sobre-tag-sub">DE VERDADE</span>
                 </div>
               </div>
-              <p>
-                Montagens sob medida com cable management cirúrgico e testes rigorosos de temperatura.
-              </p>
+              <p>Montagens sob medida com cable management cirúrgico e testes rigorosos de temperatura.</p>
             </div>
           </div>
 
-          <!-- Card 2: 2 Anos de Garantia -->
           <div class="sobre-card card">
             <div class="card-body p-0">
               <div class="sobre-card-cabecalho">
-                <div class="sobre-icone-box">
-                  <i class="bi bi-shield-check" aria-hidden="true"></i>
-                </div>
+                <div class="sobre-icone-box"><i class="bi bi-shield-check" aria-hidden="true"></i></div>
                 <div class="sobre-card-info">
                   <h3 class="sobre-card-titulo">2 Anos de Garantia</h3>
                   <span class="sobre-tag-sub">EXCLUSIVIDADE REGIONAL</span>
                 </div>
               </div>
-              <p>
-                A única assistência da região que oferece cobertura estendida de 24 meses para a sua máquina.
-              </p>
+              <p>A única assistência da região que oferece cobertura estendida de 24 meses para a sua máquina.</p>
             </div>
           </div>
 
-          <!-- Card 3: Peças Selecionadas -->
           <div class="sobre-card card">
             <div class="card-body p-0">
               <div class="sobre-card-cabecalho">
-                <div class="sobre-icone-box">
-                  <i class="bi bi-cpu" aria-hidden="true"></i>
-                </div>
+                <div class="sobre-icone-box"><i class="bi bi-cpu" aria-hidden="true"></i></div>
                 <div class="sobre-card-info">
                   <h3 class="sobre-card-titulo">Peças Selecionadas</h3>
                   <span class="sobre-tag-sub">MARCAS CONFIÁVEIS</span>
                 </div>
               </div>
-              <p>
-                Trabalhamos exclusivamente com componentes originais certificados, com nota fiscal e procedência.
-              </p>
+              <p>Trabalhamos exclusivamente com componentes originais certificados, com nota fiscal e procedência.</p>
             </div>
           </div>
 
-          <!-- Card 4: Assistência Rápida -->
           <div class="sobre-card card">
             <div class="card-body p-0">
               <div class="sobre-card-cabecalho">
-                <div class="sobre-icone-box text-orange">
-                  <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i>
-                </div>
+                <div class="sobre-icone-box text-orange"><i class="bi bi-lightning-charge-fill" aria-hidden="true"></i></div>
                 <div class="sobre-card-info">
                   <h3 class="sobre-card-titulo">Assistência Rápida</h3>
                   <span class="sobre-tag-sub">SUPORTE ÁGIL</span>
                 </div>
               </div>
-              <p>
-                Diagnósticos precisos para PCs, notebooks, consoles e impressoras com o menor tempo de espera.
-              </p>
+              <p>Diagnósticos precisos para PCs, notebooks, consoles e impressoras com o menor tempo de espera.</p>
             </div>
           </div>
-
         </div>
 
       </div>
     </section>
 
-    <!-- ======================================================
-         SEÇÃO PRODUTOS / MÁQUINAS (MODELO BOOTSTRAP: CARDS)
-         ====================================================== -->
+    <!-- SEÇÃO PRODUTOS / MÁQUINAS PRÉ-PRONTAS -->
     <section id="produtos" class="secao-produtos" aria-label="Nossos Computadores Gamers">
       <div class="container">
         
         <header class="secao-cabecalho alinhado-esquerda">
-          <span class="subtitulo-secao">CATÁLOGO DE SETUPS COMPLETOS</span>
+          <span class="subtitulo-secao">OPÇÃO 1 • CATÁLOGO DE PCS PRÉ-PRONTOS</span>
           <h2 class="titulo-secao">MÁQUINAS MONTADAS COM 2 ANOS DE GARANTIA</h2>
           <p class="descricao-secao">
-            Equipamentos calibrados em bancada, com sistema otimizado e prontos para jogar em alta taxa de quadros (FPS).
+            Escolha um PC pré-pronto clicando em <strong>"Quero Este"</strong> para enviá-lo pelo formulário, ou role até o formulário abaixo caso prefira montar do zero pelo seu orçamento.
           </p>
         </header>
 
-        <!-- Barra de Filtros Interativos (Laço for + if..else) -->
+        <!-- Barra de Filtros Interativos (for + if..else) -->
         <div class="filtro-container mb-4" id="container-filtros">
           <div class="filtro-botoes-grupo">
-            <button type="button" class="btn btn-filtro active" data-categoria="todos">
+            <button type="button" class="btn btn-filtro active" onclick="filtrarCatalogo('todos', this)">
               <i class="bi bi-grid-fill me-1"></i> Todos os Setups
             </button>
-            <button type="button" class="btn btn-filtro" data-categoria="esports">
+            <button type="button" class="btn btn-filtro" onclick="filtrarCatalogo('esports', this)">
               <i class="bi bi-controller me-1"></i> eSports &amp; Entrada
             </button>
-            <button type="button" class="btn btn-filtro" data-categoria="streamer">
+            <button type="button" class="btn btn-filtro" onclick="filtrarCatalogo('streamer', this)">
               <i class="bi bi-broadcast me-1"></i> Streamer &amp; Criação
             </button>
-            <button type="button" class="btn btn-filtro" data-categoria="entusiasta">
+            <button type="button" class="btn btn-filtro" onclick="filtrarCatalogo('entusiasta', this)">
               <i class="bi bi-fire me-1"></i> Alta Performance 4K
             </button>
           </div>
@@ -318,14 +272,14 @@
                 <div class="preco-box">
                   <span class="preco-valor">R$ 3.890,00</span>
                 </div>
-                <button type="button" class="btn btn-primary btn-card btn-adicionar-carrinho" data-id="pc-arena" data-nome="PC Arena Competitivo" data-preco="3890" data-img="img/pc-tigeryt.jpg">
+                <button type="button" class="btn btn-primary btn-card" onclick="adicionarAoCarrinho('pc-arena', 'PC Arena Competitivo', 3890, 'img/pc-tigeryt.jpg')">
                   <i class="bi bi-cart-plus me-1"></i> Quero Este
                 </button>
               </div>
             </div>
           </article>
 
-          <!-- Setup 2: PC Streamer & Creator White Edition -->
+          <!-- Setup 2: PC Streamer & Creator -->
           <article class="card produto-card" id="pc-streamer" data-categoria="streamer">
             <div class="produto-topo-box">
               <img src="img/pc-h7-white.png" class="card-img-top produto-img" alt="PC Streamer &amp; Creator White Edition">
@@ -347,14 +301,14 @@
                 <div class="preco-box">
                   <span class="preco-valor">R$ 6.490,00</span>
                 </div>
-                <button type="button" class="btn btn-primary btn-card btn-adicionar-carrinho" data-id="pc-streamer" data-nome="PC Streamer & Creator" data-preco="6490" data-img="img/pc-h7-white.png">
+                <button type="button" class="btn btn-primary btn-card" onclick="adicionarAoCarrinho('pc-streamer', 'PC Streamer & Creator', 6490, 'img/pc-h7-white.png')">
                   <i class="bi bi-cart-plus me-1"></i> Quero Este
                 </button>
               </div>
             </div>
           </article>
 
-          <!-- Setup 3: PC Ultra 4K Titan (H9 Flow Black) -->
+          <!-- Setup 3: PC Ultra 4K Titan -->
           <article class="card produto-card" id="pc-titan" data-categoria="entusiasta">
             <div class="produto-topo-box">
               <img src="img/pc-h9-titan.png" class="card-img-top produto-img" alt="PC Ultra 4K Titan">
@@ -376,14 +330,14 @@
                 <div class="preco-box">
                   <span class="preco-valor">R$ 12.990,00</span>
                 </div>
-                <button type="button" class="btn btn-primary btn-card btn-adicionar-carrinho" data-id="pc-titan" data-nome="PC Ultra 4K Titan" data-preco="12990" data-img="img/pc-h9-titan.png">
+                <button type="button" class="btn btn-primary btn-card" onclick="adicionarAoCarrinho('pc-titan', 'PC Ultra 4K Titan', 12990, 'img/pc-h9-titan.png')">
                   <i class="bi bi-cart-plus me-1"></i> Quero Este
                 </button>
               </div>
             </div>
           </article>
 
-          <!-- Setup 4: PC Full Custom Ryzen 7000 AM5 -->
+          <!-- Setup 4: PC Full Custom AM5 -->
           <article class="card produto-card" id="pc-custom" data-categoria="entusiasta">
             <div class="produto-topo-box">
               <img src="img/pc-custom-ryzen.jpg" class="card-img-top produto-img" alt="PC Full Custom Ryzen 7000 AM5">
@@ -405,7 +359,7 @@
                 <div class="preco-box">
                   <span class="preco-valor">R$ 8.790,00</span>
                 </div>
-                <button type="button" class="btn btn-primary btn-card btn-adicionar-carrinho" data-id="pc-custom" data-nome="PC Full Custom AM5" data-preco="8790" data-img="img/pc-custom-ryzen.jpg">
+                <button type="button" class="btn btn-primary btn-card" onclick="adicionarAoCarrinho('pc-custom', 'PC Full Custom AM5', 8790, 'img/pc-custom-ryzen.jpg')">
                   <i class="bi bi-cart-plus me-1"></i> Quero Este
                 </button>
               </div>
@@ -417,9 +371,7 @@
       </div>
     </section>
 
-    <!-- ======================================================
-         SEÇÃO SERVIÇOS TÉCNICOS (MODELO BOOTSTRAP: CARDS)
-         ====================================================== -->
+    <!-- SEÇÃO SERVIÇOS TÉCNICOS -->
     <section id="servicos" class="secao-servicos" aria-label="Serviços Técnicos e Assistência Especializada">
       <div class="container">
         
@@ -440,26 +392,21 @@
             </div>
             <div class="card-body p-0 d-flex flex-column h-100">
               <div class="servico-card-cabecalho">
-                <div class="servico-icone-box">
-                  <i class="bi bi-tools" aria-hidden="true"></i>
-                </div>
+                <div class="servico-icone-box"><i class="bi bi-tools" aria-hidden="true"></i></div>
                 <div class="servico-cabecalho-texto">
                   <h3 class="card-title servico-titulo">Limpeza Preventiva</h3>
                   <span class="servico-subtitulo-tag">&amp; Troca de Pasta Térmica</span>
                 </div>
               </div>
-
               <p class="card-text servico-descricao">
                 Desmontagem técnica completa, desoxidação, higienização das ventoinhas e aplicação de pasta térmica premium Arctic MX-4.
               </p>
-
               <ul class="servico-lista-beneficios">
                 <li><i class="bi bi-check2 text-orange me-2" aria-hidden="true"></i>Redução de até 15°C na temperatura</li>
                 <li><i class="bi bi-check2 text-orange me-2" aria-hidden="true"></i>Fotos do antes e depois no WhatsApp</li>
               </ul>
-
               <div class="servico-btn-wrapper mt-auto">
-                <a href="#orcamento" class="btn btn-outline-servico" data-selecionar-servico="limpeza">Agendar Limpeza</a>
+                <a href="#orcamento" class="btn btn-outline-servico" onclick="selecionarServicoRapido('limpeza')">Agendar Limpeza</a>
               </div>
             </div>
           </article>
@@ -471,26 +418,21 @@
             </div>
             <div class="card-body p-0 d-flex flex-column h-100">
               <div class="servico-card-cabecalho">
-                <div class="servico-icone-box">
-                  <i class="bi bi-activity" aria-hidden="true"></i>
-                </div>
+                <div class="servico-icone-box"><i class="bi bi-activity" aria-hidden="true"></i></div>
                 <div class="servico-cabecalho-texto">
                   <h3 class="card-title servico-titulo">Diagnóstico &amp; Reparos</h3>
                   <span class="servico-subtitulo-tag tag-cyan">PC, Notebook e Consoles</span>
                 </div>
               </div>
-
               <p class="card-text servico-descricao">
                 Detecção rápida de falhas em placas, fontes, telas azuis, lentidões, formatação limpa e reparos para PS4, PS5 e Xbox.
               </p>
-
               <ul class="servico-lista-beneficios">
                 <li><i class="bi bi-check2 text-orange me-2" aria-hidden="true"></i>Diagnóstico transparente sem enrolação</li>
                 <li><i class="bi bi-check2 text-orange me-2" aria-hidden="true"></i>Peças de reposição originais</li>
               </ul>
-
               <div class="servico-btn-wrapper mt-auto">
-                <a href="#orcamento" class="btn btn-outline-servico" data-selecionar-servico="diagnostico">Solicitar Diagnóstico</a>
+                <a href="#orcamento" class="btn btn-outline-servico" onclick="selecionarServicoRapido('diagnostico')">Solicitar Diagnóstico</a>
               </div>
             </div>
           </article>
@@ -502,26 +444,21 @@
             </div>
             <div class="card-body p-0 d-flex flex-column h-100">
               <div class="servico-card-cabecalho">
-                <div class="servico-icone-box">
-                  <i class="bi bi-motherboard" aria-hidden="true"></i>
-                </div>
+                <div class="servico-icone-box"><i class="bi bi-motherboard" aria-hidden="true"></i></div>
                 <div class="servico-cabecalho-texto">
                   <h3 class="card-title servico-titulo">Montagem &amp; Upgrades</h3>
                   <span class="servico-subtitulo-tag tag-ouro">Cable Management de Elite</span>
                 </div>
               </div>
-
               <p class="card-text servico-descricao">
                 Montamos sua máquina com organização perfeita de cabos, fluxo de ar correto e BIOS atualizada com proteção contra quedas de energia.
               </p>
-
               <ul class="servico-lista-beneficios">
                 <li><i class="bi bi-check2 text-orange me-2" aria-hidden="true"></i>Atualização de BIOS segura</li>
                 <li><i class="bi bi-check2 text-orange me-2" aria-hidden="true"></i>Sistema otimizado para jogos</li>
               </ul>
-
               <div class="servico-btn-wrapper mt-auto">
-                <a href="#orcamento" class="btn btn-outline-servico" data-selecionar-servico="upgrade">Fazer Upgrade</a>
+                <a href="#orcamento" class="btn btn-outline-servico" onclick="selecionarServicoRapido('upgrade')">Fazer Upgrade</a>
               </div>
             </div>
           </article>
@@ -531,12 +468,9 @@
       </div>
     </section>
 
-    <!-- ======================================================
-         SEÇÃO CALLOUT: GARANTIA DESTAQUE (DIFERENCIAIS)
-         ====================================================== -->
+    <!-- SEÇÃO CALLOUT: GARANTIA DESTAQUE -->
     <section id="diferenciais" class="secao-banner-garantia" aria-label="Garantia Premium em Feira de Santana">
       <div class="container">
-        
         <div class="garantia-banner-box">
           <div class="garantia-banner-texto">
             <span class="banner-tag">SEGURANÇA E CONFIANÇA TOTAL</span>
@@ -545,79 +479,115 @@
               Tranquilidade absoluta para o seu investimento. Suporte humanizado e assistência direta no balcão sem enrolação.
             </p>
           </div>
-
           <div class="garantia-banner-cta">
             <a href="https://api.whatsapp.com/send?phone=5575999999999" target="_blank" rel="noopener noreferrer" class="btn btn-primario">
               <i class="bi bi-whatsapp me-2" aria-hidden="true"></i> Falar com o Especialista
             </a>
           </div>
         </div>
-
       </div>
     </section>
 
     <!-- ======================================================
-         SEÇÃO FORMULÁRIO DE ORÇAMENTO
+         SEÇÃO FORMULÁRIO COM AS 2 MODALIDADES DE PEDIDO
          ====================================================== -->
     <section id="orcamento" class="secao-orcamento" aria-label="Simulador de Orçamento e Agendamento">
       <div class="container">
         
         <header class="secao-cabecalho alinhado-esquerda">
-          <span class="subtitulo-secao">ORÇAMENTO E ATENDIMENTO</span>
-          <h2 class="titulo-secao">SIMULE SEU SETUP OU AGENDE UMA MANUTENÇÃO</h2>
+          <span class="subtitulo-secao">FINALIZAR PEDIDO OU MONTAR DO ZERO</span>
+          <h2 class="titulo-secao">ESCOLHA COMO DESEJA ENVIAR SEU ORÇAMENTO</h2>
           <p class="descricao-secao">
-            Receba uma cotação transparente e personalizada diretamente com os nossos técnicos de bancada em Feira de Santana.
+            Você pode fechar o pedido de um <strong>PC Pré-Pronto</strong> escolhido no catálogo ou informar seu <strong>Orçamento</strong> e descrever como quer sua máquina sob medida.
           </p>
         </header>
 
-        <!-- Formulário Funcional Semântico -->
         <div class="formulario-wrapper">
-          <form id="form-orcamento" class="form-estilizado" action="https://api.whatsapp.com/send" method="GET" target="_blank">
-            
+
+          <!-- Campo Geral (Fora do Formulário): O que você deseja fazer? -->
+          <div id="grupo-tipo-servico" class="bloco-servico-externo mb-4">
+            <label for="campo-servico" class="form-label d-flex align-items-center gap-2 mb-2">
+              <i class="bi bi-gear-wide-connected text-orange" aria-hidden="true"></i>
+              <span>O que você deseja fazer? *</span>
+            </label>
+            <div class="select-wrapper">
+              <select id="campo-servico" name="servico" class="form-select foco-laranja" required form="form-orcamento">
+                <option value="pc-completo" selected>Compra / Montagem de PC Gamer Completo (2 Anos Garantia)</option>
+                <option value="upgrade">Upgrade de Peças (Placa de Vídeo, RAM, SSD, Fonte)</option>
+                <option value="limpeza">Limpeza Preventiva &amp; Troca de Pasta Térmica</option>
+                <option value="diagnostico">Diagnóstico &amp; Conserto (PC, Notebook ou Console)</option>
+              </select>
+            </div>
+          </div>
+
+          <form id="form-orcamento" class="form-estilizado">
+
+            <!-- SELETOR DAS 2 OPÇÕES DO FORMULÁRIO (Exclusivo da opção Montar PC) -->
+            <div id="seletor-modo-pc" class="seletor-modo-wrapper mb-4">
+              <span class="form-label d-block mb-2">Qual opção você deseja enviar para a loja? *</span>
+              <div class="modo-botoes-grid">
+                <button type="button" id="btn-modo-pronto" class="btn-modo-orcamento active" onclick="alternarModoFormulario('pre-montado')">
+                  <i class="bi bi-pc-display-horizontal fs-4"></i>
+                  <div>
+                    <strong>Opção 1: PC Pré-Pronto do Catálogo</strong>
+                    <span>Enviar as máquinas que adicionei no carrinho (<strong id="qtd-itens-form">0</strong>)</span>
+                  </div>
+                </button>
+
+                <button type="button" id="btn-modo-personalizado" class="btn-modo-orcamento" onclick="alternarModoFormulario('personalizado')">
+                  <i class="bi bi-sliders fs-4"></i>
+                  <div>
+                    <strong>Opção 2: Montar de Acordo com Meu Orçamento</strong>
+                    <span>Escolher faixa de valor e descrever o que quero na máquina</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- ==============================================================
+                 ÁREA EXCLUSIVA DA OPÇÃO 1: PC PRÉ-PRONTO (CARRINHO)
+                 ============================================================== -->
+            <div id="bloco-modo-pronto" class="carrinho-integrado-form mb-4">
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 pb-2 border-bottom border-secondary">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-cart-check-fill text-orange fs-5"></i>
+                  <h4 class="m-0 fs-6 text-white">PC(s) Pré-Pronto(s) Selecionado(s)</h4>
+                </div>
+                <div class="d-flex gap-2">
+                  <button type="button" class="btn btn-sm btn-secundario py-1 px-3" onclick="abrirGavetaCarrinho()">
+                    <i class="bi bi-cart3 me-1"></i> Ver na Gaveta
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-danger py-1 px-3" onclick="limparCarrinho()">
+                    <i class="bi bi-trash3 me-1"></i> Limpar
+                  </button>
+                </div>
+              </div>
+
+              <!-- Lista sincronizada pelo laço FOR do script.js -->
+              <div id="lista-carrinho-form" class="lista-carrinho-form">
+                <!-- Preenchido dinamicamente via JavaScript -->
+              </div>
+            </div>
+
+            <!-- ==============================================================
+                 CAMPOS GERAIS DO FORMULÁRIO
+                 ============================================================== -->
             <div class="form-grid">
               
-              <!-- Campo: Nome Completo -->
+              <!-- Campo: Nome Completo (Trava de 3 a 80 caracteres e bloqueia números) -->
               <div class="form-grupo">
                 <label for="campo-nome" class="form-label">Seu Nome Completo *</label>
-                <input type="text" id="campo-nome" name="nome" class="form-input" placeholder="Ex: João Lucca Sotero" required autocomplete="name">
+                <input type="text" id="campo-nome" name="nome" class="form-input" placeholder="Ex: João Lucca Sotero" minlength="3" maxlength="80" oninput="filtrarCampoNome(this)" required autocomplete="name">
               </div>
 
-              <!-- Campo: WhatsApp / Telefone -->
+              <!-- Campo: WhatsApp / Telefone (Bloqueia letras na hora e limita a 15 caracteres com máscara) -->
               <div class="form-grupo">
-                <label for="campo-whatsapp" class="form-label">WhatsApp com DDD *</label>
-                <input type="tel" id="campo-whatsapp" name="whatsapp" class="form-input" placeholder="Ex: (75) 99999-9999" required autocomplete="tel">
+                <label for="campo-whatsapp" class="form-label">WhatsApp com DDD (Apenas números) *</label>
+                <input type="tel" id="campo-whatsapp" name="whatsapp" class="form-input" placeholder="Ex: (75) 99999-9999" minlength="14" maxlength="15" inputmode="numeric" oninput="mascaraTelefone(this)" required autocomplete="tel">
               </div>
 
-              <!-- Campo: Tipo de Atendimento / Serviço -->
-              <div class="form-grupo">
-                <label for="campo-servico" class="form-label">Tipo de Serviço Pretendido *</label>
-                <div class="select-wrapper">
-                  <select id="campo-servico" name="servico" class="form-select foco-laranja" required>
-                    <option value="pc-completo" selected>Montagem de PC Gamer Completo (2 Anos Garantia)</option>
-                    <option value="limpeza">Limpeza Preventiva &amp; Troca de Pasta Térmica</option>
-                    <option value="diagnostico">Diagnóstico &amp; Conserto (PC, Notebook ou Console)</option>
-                    <option value="upgrade">Upgrade de Componentes (GPU, RAM, SSD, Fonte)</option>
-                    <option value="outro">Outro serviço / Dúvida técnica</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Campo: Faixa de Orçamento Estimada -->
-              <div class="form-grupo">
-                <label for="campo-orcamento" class="form-label">Faixa Estimada de Investimento</label>
-                <div class="select-wrapper">
-                  <select id="campo-orcamento" name="faixa_valor" class="form-select">
-                    <option value="ate-4000">Até R$ 4.000,00</option>
-                    <option value="4000-7000" selected>R$ 4.000 a R$ 7.000</option>
-                    <option value="7000-12000">R$ 7.000 a R$ 12.000</option>
-                    <option value="acima-12000">Acima de R$ 12.000 (Linha Entusiasta)</option>
-                    <option value="apenas-manutencao">Apenas valor da manutenção técnica</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Campo: Forma de Pagamento e Descontos (if..else) -->
-              <div class="form-grupo">
+              <!-- Campo Comum: Forma de Pagamento (if..else) -->
+              <div id="grupo-pagamento" class="form-grupo full-width">
                 <label for="campo-pagamento" class="form-label">Condição de Pagamento Pretendida *</label>
                 <div class="select-wrapper">
                   <select id="campo-pagamento" name="pagamento" class="form-select foco-laranja" required>
@@ -628,52 +598,68 @@
                 </div>
               </div>
 
+              <!-- Campo Exclusivo da Opção 2: Faixa de Orçamento Estimada -->
+              <div id="grupo-faixa-orcamento" class="form-grupo" style="display: none;">
+                <label for="campo-orcamento" class="form-label">Qual o seu Orçamento Disponível para a Montagem / Serviço? *</label>
+                <div class="select-wrapper">
+                  <select id="campo-orcamento" name="faixa_valor" class="form-select foco-laranja">
+                    <option value="ate-4000">Até R$ 4.000,00</option>
+                    <option value="4000-7000" selected>De R$ 4.000 a R$ 7.000</option>
+                    <option value="7000-12000">De R$ 7.000 a R$ 12.000</option>
+                    <option value="acima-12000">Acima de R$ 12.000 (Linha Entusiasta 4K)</option>
+                    <option value="apenas-manutencao">Apenas valor da manutenção / serviço técnico</option>
+                  </select>
+                </div>
+              </div>
+
             </div>
 
-            <!-- Painel Reativo de Diagnóstico e Prazo (switch..case + if..else) -->
+            <!-- Painel Reativo de Resumo, Prazo e Cálculo de Valor (switch..case + if..else) -->
             <div id="resumo-atendimento" class="resumo-atendimento-box full-width my-3">
               <div class="resumo-cabecalho d-flex align-items-center gap-2 mb-2">
                 <i class="bi bi-cpu-fill text-orange fs-5"></i>
-                <h5 id="resumo-titulo-servico" class="m-0 text-white fs-6">Montagem de PC Gamer Completo Sob Medida</h5>
+                <h5 id="resumo-titulo-servico" class="m-0 text-white fs-6">Compra / Montagem de PC Gamer Completo</h5>
               </div>
               <div class="resumo-grid">
                 <div class="resumo-col">
                   <span class="resumo-rotulo">Prazo Estimado:</span>
-                  <strong id="prazo-estimado" class="resumo-dado text-orange">2 a 3 dias úteis</strong>
+                  <strong id="prazo-estimado" class="resumo-dado text-orange">1 a 3 dias úteis</strong>
                 </div>
                 <div class="resumo-col">
                   <span class="resumo-rotulo">Garantia Técnica:</span>
-                  <strong id="garantia-estimada" class="resumo-dado text-warning">2 Anos (24 Meses)</strong>
+                  <strong id="garantia-estimada" class="resumo-dado text-warning">2 Anos (24 Meses) de Garantia</strong>
                 </div>
                 <div class="resumo-col">
-                  <span class="resumo-rotulo">Condição de Pagamento:</span>
-                  <strong id="pagamento-estimado" class="resumo-dado text-success">10% de Desconto Especial Aplicado à Vista</strong>
+                  <span class="resumo-rotulo">Valor &amp; Condição Calculada:</span>
+                  <strong id="pagamento-estimado" class="resumo-dado text-success fw-bold">10% de Desconto no Pix</strong>
                 </div>
               </div>
               <p id="procedimento-estimado" class="resumo-procedimento text-muted small mt-2 mb-0">
-                Montagem com cable management cirúrgico e stress test de 24h na bancada.
+                Montagem com cable management cirúrgico, BIOS atualizada e stress test na bancada.
               </p>
             </div>
 
-            <!-- Campo: Detalhes do Pedido ou Sintomas do Aparelho -->
+            <!-- Campo: Descrição do que o cliente quer (Limite de 500 caracteres com contador ao vivo) -->
             <div class="form-grupo full-width">
-              <label for="campo-mensagem" class="form-label">Detalhes do Setup, Jogos Favoritos ou Sintomas do Equipamento</label>
-              <textarea id="campo-mensagem" name="mensagem" class="form-textarea" rows="4" placeholder="Quero jogar Warzone e CS2 em 144Hz. Gostaria de gabinete com vidro aquário e iluminação branca..."></textarea>
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <label id="label-mensagem" for="campo-mensagem" class="form-label m-0">Observações Adicionais (Periféricos, Alteração de Gabinete, etc.)</label>
+                <small class="text-muted"><span id="contador-caracteres">0</span>/500 caracteres</small>
+              </div>
+              <textarea id="campo-mensagem" name="mensagem" class="form-textarea" rows="3" maxlength="500" oninput="atualizarContadorTexto(this)" placeholder="Caso queira adicionar monitor, trocar a cor das ventoinhas ou tirar alguma dúvida, escreva aqui..."></textarea>
             </div>
 
             <!-- Termos e Checkbox de Consentimento -->
             <div class="form-grupo-checkbox full-width">
               <label class="checkbox-label" for="campo-concordo">
                 <input type="checkbox" id="campo-concordo" name="concordo" required checked>
-                <span class="custom-checkbox"></span>
-                <span class="checkbox-texto">Concordo em receber a cotação no meu WhatsApp oficial com os 2 anos de garantia.</span>
+                <span class="checkbox-texto">Concordo em enviar os dados acima para atendimento no WhatsApp oficial da Extreme Gamer.</span>
               </label>
             </div>
 
-            <!-- Botão de Envio do Formulário (MODELO BOOTSTRAP: BUTTON) -->
+            <!-- Botão de Envio -->
             <div class="form-botao-wrapper full-width">
-              <button type="submit" class="btn btn-submit">
-                <i class="bi bi-whatsapp me-2" aria-hidden="true"></i> ENVIAR SIMULAÇÃO PARA O WHATSAPP DA LOJA
+              <button type="submit" id="btn-enviar-form" class="btn btn-submit">
+                <i class="bi bi-whatsapp me-2" aria-hidden="true"></i> ENVIAR PEDIDO DO PC PRÉ-PRONTO NO WHATSAPP
               </button>
             </div>
 
@@ -690,10 +676,7 @@
        ========================================================================= -->
   <footer id="contato" class="rodape-principal">
     <div class="container">
-      
       <div class="rodape-grid">
-        
-        <!-- Coluna 1: Dados Institucionais da Loja -->
         <div class="rodape-coluna">
           <div class="logo-box">
             <span class="logo-titulo">EXTREME <span class="destaque-laranja">GAMER</span></span>
@@ -704,19 +687,17 @@
           </p>
         </div>
 
-        <!-- Coluna 2: Links Rápidos de Navegação -->
         <div class="rodape-coluna">
           <h4 class="rodape-titulo">NAVEGAÇÃO RÁPIDA</h4>
           <ul class="rodape-links">
-            <li><a href="#inicio"><i class="bi bi-chevron-right me-1" aria-hidden="true"></i>Início</a></li>
-            <li><a href="#sobre"><i class="bi bi-chevron-right me-1" aria-hidden="true"></i>Sobre Nós</a></li>
-            <li><a href="#produtos"><i class="bi bi-chevron-right me-1" aria-hidden="true"></i>Nossos PCs Gamers</a></li>
-            <li><a href="#servicos"><i class="bi bi-chevron-right me-1" aria-hidden="true"></i>Serviços de Assistência</a></li>
-            <li><a href="#orcamento"><i class="bi bi-chevron-right me-1" aria-hidden="true"></i>Simulação de Orçamento</a></li>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#sobre">Sobre Nós</a></li>
+            <li><a href="#produtos">Nossos PCs Gamers</a></li>
+            <li><a href="#servicos">Serviços de Assistência</a></li>
+            <li><a href="#orcamento">Simulação de Orçamento</a></li>
           </ul>
         </div>
 
-        <!-- Coluna 3: Informações de Contato e Redes Oficiais -->
         <div class="rodape-coluna">
           <h4 class="rodape-titulo">CONTATO &amp; LOCALIZAÇÃO</h4>
           <ul class="rodape-contatos">
@@ -726,24 +707,17 @@
             <li><i class="bi bi-clock-fill text-orange me-2" aria-hidden="true"></i> Atendimento: Segunda a Sábado</li>
           </ul>
         </div>
-
       </div>
 
-      <!-- Linha Divisória e Créditos Acadêmicos Obrigatórios -->
       <div class="rodape-creditos">
-        <p class="direitos">
-          &copy; 2026 Extreme Gamer Informática. Todos os direitos reservados.
-        </p>
-        <p class="projeto-academico">
-          UNIFAN • TDE Parte II • Programação Front-End (Prof. Gean Paulo) • João Lucca Sotero e Kauan Brandão
-        </p>
+        <p class="direitos">&copy; 2026 Extreme Gamer Informática. Todos os direitos reservados.</p>
+        <p class="projeto-academico">UNIFAN • TDE Parte II • Programação Front-End (Prof. Gean Paulo) • João Lucca Sotero e Kauan Brandão</p>
       </div>
-
     </div>
   </footer>
 
   <!-- =========================================================================
-       4. GAVETA / OFFCANVAS DE ORÇAMENTO (CARRINHO LOCALSTORAGE)
+       4. GAVETA LATERAL DE ORÇAMENTO (CARRINHO DE PCS PRÉ-PRONTOS)
        ========================================================================= -->
   <div id="painel-carrinho" class="carrinho-drawer" aria-hidden="true">
     <div class="carrinho-overlay" id="carrinho-overlay"></div>
@@ -751,19 +725,19 @@
       <header class="carrinho-header">
         <div class="d-flex align-items-center gap-2">
           <i class="bi bi-cart3 text-orange fs-4"></i>
-          <h3 id="carrinho-titulo" class="carrinho-titulo m-0">Seu Orçamento</h3>
+          <h3 id="carrinho-titulo" class="carrinho-titulo m-0">PCs Pré-Prontos</h3>
         </div>
-        <button type="button" id="btn-fechar-carrinho" class="btn-fechar-carrinho" aria-label="Fechar orçamento">&times;</button>
+        <button type="button" id="btn-fechar-carrinho" class="btn-fechar-carrinho" aria-label="Fechar carrinho">&times;</button>
       </header>
 
       <div id="lista-carrinho" class="carrinho-lista">
-        <!-- Itens renderizados dinamicamente via JS com laço for -->
+        <!-- Itens renderizados dinamicamente via JS -->
       </div>
 
       <footer class="carrinho-footer">
         <div class="carrinho-totais">
           <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="text-muted">Total Estimado:</span>
+            <span class="text-muted">Total dos PCs:</span>
             <strong id="total-carrinho" class="total-valor text-white fs-5">R$ 0,00</strong>
           </div>
           <div class="d-flex justify-content-between align-items-center mb-3">
@@ -776,17 +750,20 @@
             <i class="bi bi-trash3 me-1"></i> Limpar
           </button>
           <a href="#orcamento" id="btn-finalizar-orcamento" class="btn btn-submit btn-sm w-50 text-center">
-            <i class="bi bi-check2-circle me-1"></i> Orçar no Form
+            <i class="bi bi-check2-circle me-1"></i> Usar no Form
           </a>
         </div>
       </footer>
     </aside>
   </div>
 
-  <!-- ETAPA 4: Bootstrap 5 Bundle JS via CDN -->
+  <!-- Toast de Notificação -->
+  <div id="toast-notificacao" class="toast-notificacao"></div>
+
+  <!-- Bootstrap 5 Bundle JS via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-  <!-- ETAPA 5: Script Autoral TDE Parte II (Vanilla JavaScript) -->
+  <!-- Script Autoral Simplificado (TDE Parte II) -->
   <script src="script.js"></script>
 
 </body>
